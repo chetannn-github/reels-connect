@@ -3,10 +3,20 @@ import { PORT } from './config/env.js';
 import { connectToDB } from './config/db.js';
 
 
+import authRoutes from './routes/auth.route.js';
+import igRoutes from './routes/ig.route.js';
+import reelRoutes from './routes/reel.route.js';
+import keywordRoutes from './routes/keyword.route.js';
+import webhookRoutes from './routes/webhook.route.js';
+
 const app = express();
 app.use(express.json());
 
-
+app.use("/api/auth",authRoutes);
+app.use('/api/ig', igRoutes);
+app.use('/api/reels', reelRoutes);
+app.use('/api/keywords', keywordRoutes);
+app.use('/api/webhook', webhookRoutes);
 
 
 app.get('/test', (req, res) => {
