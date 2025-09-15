@@ -54,7 +54,9 @@ export const callbackIgAccount = async (req, res) => {
         };
         await user.save();
 
-        res.json({ message: 'Instagram account linked successfully' });
+        return getLongLivedToken(req,res);
+
+        
 
     } catch (error) {
         console.error(error.response?.data || error.message);
@@ -64,7 +66,7 @@ export const callbackIgAccount = async (req, res) => {
 
 
 export const getLongLivedToken = async (req, res) => {
-    const { access_token } = req.body;
+    const  access_token  = req.user?.instagram?.access_token;
 
     try {
         const response = await axios.get('https://graph.instagram.com/access_token', {
