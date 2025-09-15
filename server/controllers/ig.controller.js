@@ -1,4 +1,5 @@
 import { INSTAGRAM_APP_ID, INSTAGRAM_APP_SECRET, INSTAGRAM_REDIRECT_URI } from '../config/env.js';
+import axios from "axios";
 
 export const addIgAccount = (req, res) => {
     const scope = [
