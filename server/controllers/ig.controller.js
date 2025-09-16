@@ -1,5 +1,8 @@
 import { INSTAGRAM_APP_ID, INSTAGRAM_APP_SECRET, INSTAGRAM_REDIRECT_URI } from '../config/env.js';
 import axios from "axios";
+import qs from "qs"
+import User from '../models/user.model.js';
+
 
 export const addIgAccount = (req, res) => {
     const scope = [
@@ -23,21 +26,27 @@ export const addIgAccount = (req, res) => {
 
 export const callbackIgAccount = async (req, res) => {
     const { code } = req.query;
-
+    console.log(INSTAGRAM_APP_ID)
     if (!code) {
         return res.status(400).json({ message: 'Authorization code missing' });
     }
 
     try {
-        const response = await axios.post('https://api.instagram.com/oauth/access_token', null, {
-            params: {
-                client_id: INSTAGRAM_APP_ID,
-                client_secret: INSTAGRAM_APP_SECRET,
-                grant_type: 'authorization_code',
-                redirect_uri: INSTAGRAM_REDIRECT_URI,
-                code: code
-            }
+        const data = qs.stringify({
+            client_id: INSTAGRAM_APP_ID,
+            client_secret: INSTAGRAM_APP_SECRET,
+            grant_type: 'authorization_code',
+            redirect_uri: INSTAGRAM_REDIRECT_URI,
+            code: code
         });
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        };
+
+        const response = await axios.post('https://api.instagram.com/oauth/access_token', data, config);
 
         const { access_token, user_id } = response.data;
 
@@ -54,8 +63,10 @@ export const callbackIgAccount = async (req, res) => {
             ]
         };
         await user.save();
+        console.log(user);
+        return res.json({sucess : "majaa aagyaa broo"})
 
-        return getLongLivedToken(req,res);
+        // return getLongLivedToken(req,res);
 
         
 
@@ -67,14 +78,15 @@ export const callbackIgAccount = async (req, res) => {
 
 
 export const getLongLivedToken = async (req, res) => {
-    const  access_token  = req.user?.instagram?.access_token;
+    // const  access_token  = req.user.igAccounts;
+    // console.log(access_token)
 
     try {
         const response = await axios.get('https://graph.instagram.com/access_token', {
             params: {
                 grant_type: 'ig_exchange_token',
                 client_secret: INSTAGRAM_APP_SECRET,
-                access_token: access_token
+                access_token: "example_access_token",
             }
         });
 
