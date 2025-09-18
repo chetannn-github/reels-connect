@@ -50,7 +50,7 @@ export const callbackIgAccount = async (req, res) => {
 
         console.log(data)        
         console.log(INSTAGRAM_APP_ID);
-        console.log(INSTAGRAM_APP_CLIENT);
+        console.log(INSTAGRAM_APP_SECRET);
 
 
 
