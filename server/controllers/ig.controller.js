@@ -47,6 +47,16 @@ export const callbackIgAccount = async (req, res) => {
             code: code
         });
 
+
+        console.log(data)        
+        console.log(INSTAGRAM_APP_ID);
+        console.log(INSTAGRAM_APP_CLIENT);
+
+
+
+
+    
+
         const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
