@@ -32,6 +32,8 @@ export const addIgAccount = (req, res) => {
 
 export const callbackIgAccount = async (req, res) => {
     const { code } = req.query;
+
+
     if (!code) {
         return res.status(400).json({ message: 'Authorization code missing' });
     }
@@ -41,7 +43,7 @@ export const callbackIgAccount = async (req, res) => {
             client_id: INSTAGRAM_APP_ID,
             client_secret: INSTAGRAM_APP_SECRET,
             grant_type: 'authorization_code',
-            redirect_uri: INSTAGRAM_REDIRECT_URI,
+            redirect_uri: "https://reels-connect.onrender.com/api/ig/callback",
             code: code
         });
 
@@ -52,6 +54,9 @@ export const callbackIgAccount = async (req, res) => {
         };
 
         const response = await axios.post('https://api.instagram.com/oauth/access_token', data, config);
+
+
+
         const { access_token, user_id } = response.data;
 
         // Save access token in user profile
@@ -59,12 +64,6 @@ export const callbackIgAccount = async (req, res) => {
         user.instagram = {
             user_id,
             access_token,
-            permissions: [
-                'instagram_business_basic',
-                'instagram_business_content_publish',
-                'instagram_business_manage_messages',
-                'instagram_business_manage_comments'
-            ]
         };
         await user.save();
         return res.json({sucess : "majaa aagyaa broo"})
@@ -81,15 +80,14 @@ export const callbackIgAccount = async (req, res) => {
 
 
 export const getLongLivedToken = async (req, res) => {
-    // const  access_token  = req.user.igAccounts;
-    // console.log(access_token)
+    const  access_token  = req.user.instagram.access_token;
 
     try {
         const response = await axios.get('https://graph.instagram.com/access_token', {
             params: {
                 grant_type: 'ig_exchange_token',
                 client_secret: INSTAGRAM_APP_SECRET,
-                access_token: "example_access_token",
+                access_token,
             }
         });
 
@@ -111,7 +109,7 @@ export const getLongLivedToken = async (req, res) => {
 
 
 export const refreshLongLivedToken = async (req, res) => {
-    const { access_token } = req.body; // or from user.instagram.access_token
+    const access_token  = req.user.instagram.access_token;
 
     try {
         const response = await axios.get('https://graph.instagram.com/refresh_access_token', {
