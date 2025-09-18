@@ -5,7 +5,9 @@ import User from '../models/user.model.js';
 
 
 export const addIgAccount = (req, res) => {
-    const scope = [
+
+    try {
+         const scope = [
         'instagram_business_basic',
         'instagram_business_content_publish',
         'instagram_business_manage_messages',
@@ -18,6 +20,10 @@ export const addIgAccount = (req, res) => {
         `&response_type=code`;
 
     res.json({ url: instagramAuthUrl });
+    } catch (error) {
+        console.log(error.message)
+    }
+   
 };
 
 
@@ -26,7 +32,6 @@ export const addIgAccount = (req, res) => {
 
 export const callbackIgAccount = async (req, res) => {
     const { code } = req.query;
-    console.log(INSTAGRAM_APP_ID)
     if (!code) {
         return res.status(400).json({ message: 'Authorization code missing' });
     }
@@ -47,7 +52,6 @@ export const callbackIgAccount = async (req, res) => {
         };
 
         const response = await axios.post('https://api.instagram.com/oauth/access_token', data, config);
-
         const { access_token, user_id } = response.data;
 
         // Save access token in user profile
@@ -63,7 +67,6 @@ export const callbackIgAccount = async (req, res) => {
             ]
         };
         await user.save();
-        console.log(user);
         return res.json({sucess : "majaa aagyaa broo"})
 
         // return getLongLivedToken(req,res);
@@ -72,7 +75,7 @@ export const callbackIgAccount = async (req, res) => {
 
     } catch (error) {
         console.error(error.response?.data || error.message);
-        res.status(500).json({ message: 'Failed to link Instagram account' });
+        res.status(500).json({ message: error.response?.data || error.message });
     }
 };
 

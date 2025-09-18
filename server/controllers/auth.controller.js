@@ -16,14 +16,14 @@ export const signup = async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password, salt);
 
-        const user = new User({
+        let user = new User({
             email,
             passwordHash
         });
 
-        await user.save();
+        user = await user.save();
 
-        res.status(201).json({ message: 'User registered successfully' });
+        res.status(201).json({ message: 'User registered successfully', user });
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Server error' });
