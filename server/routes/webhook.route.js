@@ -17,6 +17,9 @@ let received_updates = [];
 // --------------------
 router.get("/", (req, res) => {
   const VERIFY_TOKEN = process.env.TOKEN || "token";
+  console.log(VERIFY_TOKEN);
+
+  console.log(req.query);
 
   if (
     req.query["hub.mode"] === "subscribe" &&
