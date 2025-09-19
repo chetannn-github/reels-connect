@@ -10,13 +10,14 @@ import keywordRoutes from './routes/keyword.route.js';
 import webhookRoutes from './routes/webhook.route.js';
 
 const app = express();
+app.use('/api/webhook', webhookRoutes);
 app.use(express.json());
 
 app.use("/api/auth",authRoutes);
 app.use('/api/ig', igRoutes);
 app.use('/api/reels', reelRoutes);
 app.use('/api/keywords', keywordRoutes);
-app.use('/api/webhook', webhookRoutes);
+
 
 
 app.get('/test', (req, res) => {
