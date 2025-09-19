@@ -1,7 +1,7 @@
 import { INSTAGRAM_APP_ID, INSTAGRAM_APP_SECRET, INSTAGRAM_REDIRECT_URI } from '../config/env.js';
 import axios from "axios";
 import qs from "qs"
-import User from '../models/user.model.js';
+import {User} from '../models/user.model.js';
 import { generateToken } from '../utils/jwt.js';
 
 

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { JWT_SECRET, VERIFY_TOKEN } from '../config/env.js';
-import User from '../models/user.model.js';
+import {User} from '../models/user.model.js';
 import { verifyToken } from '../utils/jwt.js';
 
 export const protect = async (req, res, next) => {
