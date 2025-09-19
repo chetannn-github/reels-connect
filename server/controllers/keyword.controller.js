@@ -1,15 +1,30 @@
-export const getKeywords = (req, res) => {
-    res.send('Get keywords endpoint');
+import { Reel } from "../models/user.model.js"; 
+
+
+export const addKeyword = async (req, res) => {
+    try {
+        const { reelId , keywords} = req.body; 
+        const userId = req.user._id;
+
+        if(!Array.isArray(keywords) || keywords.length === 0) {
+            return res.status(400).json({ error: "Keywords must be a non-empty array" });
+        }
+
+        const reel = await Reel.findOne({ reelId: reelId, user: userId });
+
+        if (!reel) return res.status(404).json({ error: "Reel not found" });
+        
+        const updatedKeywords = Array.from(new Set([...reel.keywords, ...keywords]));
+        reel.keywords = updatedKeywords;
+        await reel.save();
+
+        return res.json({
+            message: "Keywords added successfully",
+            reel,
+        });
+    } catch (error) {
+        console.error("Error adding keywords:", error);
+        return res.status(500).json({ error: "Something went wrong" });
+    }
 };
 
-export const addKeyword = (req, res) => {
-    res.send('Add keyword endpoint');
-};
-
-export const updateKeyword = (req, res) => {
-    res.send('Update keyword endpoint');
-};
-
-export const deleteKeyword = (req, res) => {
-    res.send('Delete keyword endpoint');
-};
