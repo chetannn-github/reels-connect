@@ -66,7 +66,26 @@ export const callbackIgAccount = async (req, res) => {
         await user.save();
         const jwtToken = generateToken({ user_id: user.user_id });
 
-        res.json({ message: 'Long-lived token updated', token: long_token, jwtToken });
+
+
+
+
+        const userInfoRes = await axios.get(`https://graph.instagram.com/v23.0/me`, {
+            params: {
+                fields: "id,username,followers_count,name,profile_picture_url,media_count",
+                access_token: long_token,
+            },
+        });
+
+        console.log(userInfoRes?.data)
+
+        const {username, followers_count, name, profile_picture_url, media_count } =userInfoRes?.data;
+        user.username = username;
+        user.followers = followers_count;
+        user.name = name;
+        user.profileURL = profile_picture_url;
+        await user.save();
+        res.json({ message: 'Long-lived token updated', token: long_token, jwtToken , user});
 
     } catch (error) {
         console.error(error.response?.data || error.message);
@@ -93,7 +112,7 @@ export const refreshLongLivedToken = async (req, res) => {
         user.access_token = new_token;
         await user.save();
 
-        res.json({ message: 'Token refreshed', access_token});
+        res.json({ message: 'Token refreshed', refreshToken:new_token});
 
     } catch (error) {
         console.error(error.response?.data || error.message);

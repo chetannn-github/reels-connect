@@ -11,6 +11,8 @@ const reelSchema = new mongoose.Schema({
 
 
 const userSchema = new mongoose.Schema({
+    name : {type: String, default : ""},
+    profileURL : {type: String, default : ""},
     username : {type: String, default : ""},
     followers :{type : Number , default : 0},
     user_id: { type: String, required: true },
