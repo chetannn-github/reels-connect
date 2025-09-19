@@ -34,7 +34,7 @@ router.post("/", (req, res) => {
   // }
 
   console.log("✅ Signature verified");
-  console.log("Request body:", JSON.stringify(req.body, null, 2));
+  console.log("Request body:", req.body));
 
   received_updates.unshift(req.body);
   res.sendStatus(200);
