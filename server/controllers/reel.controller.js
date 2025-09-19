@@ -26,7 +26,7 @@ export const getAllReels = async(req, res) => {
             timestamp : item.timestamp
         }));
 
-       console.log(response.data);
+    //    console.log(response.data);
 
         const updatedUser = await User.findOneAndUpdate(
             {_id: userId },
