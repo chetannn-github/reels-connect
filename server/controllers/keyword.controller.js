@@ -1,10 +1,11 @@
 import { Reel } from "../models/user.model.js"; 
 
 
-export const addKeyword = async (req, res) => {
+export const addKeywordAndMessage = async (req, res) => {
     try {
-        const { reelId , keywords} = req.body; 
+        const { reelId , keywords, message} = req.body; 
         const userId = req.user._id;
+
 
         if(!Array.isArray(keywords) || keywords.length === 0) {
             return res.status(400).json({ error: "Keywords must be a non-empty array" });
@@ -16,6 +17,7 @@ export const addKeyword = async (req, res) => {
         
         const updatedKeywords = Array.from(new Set([...reel.keywords, ...keywords]));
         reel.keywords = updatedKeywords;
+        reel.message = message;
         await reel.save();
 
         return res.json({
