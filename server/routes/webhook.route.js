@@ -1,61 +1,64 @@
 import express from "express";
-import crypto from "crypto";
+import xhub from "express-x-hub";
 
 const router = express.Router();
 
-const VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN; // apna secret string
-const APP_SECRET = process.env.APP_SECRET; // Meta App secret
+// Add express-x-hub middleware
+// Use sha256 because Instagram sends X-Hub-Signature-256
+router.use(
+  xhub({ algorithm: "sha256", secret: process.env.APP_SECRET })
+);
 
+// ✅ Store received events (optional for debugging)
+let received_updates = [];
 
+// --------------------
+// Verification Endpoint
+// --------------------
 router.get("/", (req, res) => {
-  const mode = req.query["hub.mode"];
-  const token = req.query["hub.verify_token"];
-  const challenge = req.query["hub.challenge"];
+  const VERIFY_TOKEN = process.env.TOKEN || "token";
 
-  if (mode && token) {
-    if (mode === "subscribe" && token === VERIFY_TOKEN) {
-      console.log("✅ WEBHOOK_VERIFIED");
-      return res.status(200).send(challenge);
-    } else {
-      return res.sendStatus(403);
-    }
+  if (
+    req.query["hub.mode"] === "subscribe" &&
+    req.query["hub.verify_token"] === VERIFY_TOKEN
+  ) {
+    console.log("✅ Webhook verified successfully!");
+    return res.status(200).send(req.query["hub.challenge"]);
+  } else {
+    console.log("❌ Verification failed");
+    return res.sendStatus(400);
   }
 });
 
-// ✅ POST: Event Notification
-router.post("/", express.json({ type: "application/json" }), (req, res) => {
-  const signature = req.headers["x-hub-signature-256"];
+// --------------------
+// Event Notification Endpoint
+// --------------------
+router.post("/", (req, res) => {
+  console.log("📩 Instagram Webhook Event Received");
 
-  if (!verifySignature(req.body, signature)) {
-    return res.status(401).send("Invalid signature");
+  // Signature validation
+  if (!req.isXHubValid()) {
+    console.log("❌ Invalid X-Hub-Signature-256");
+    return res.sendStatus(401);
   }
 
-  console.log("📩 Webhook Event Received:", JSON.stringify(req.body, null, 2));
+  console.log("✅ Signature verified");
+  console.log("Request body:", JSON.stringify(req.body, null, 2));
 
-  // Example: handle Instagram comments
-  req.body.entry?.forEach((entry) => {
-    entry.changes?.forEach((change) => {
+  // Save update for debugging
+  received_updates.unshift(req.body);
+
+  // Handle IG events (comments, mentions, etc.)
+  req.body.entry?.forEach(entry => {
+    entry.changes?.forEach(change => {
       if (change.field === "comments") {
-        console.log("💬 New Comment:", change.value);
+        console.log("💬 New Comment:", change.value.text);
+        console.log("👉 On Media ID:", change.value.media.id);
       }
     });
   });
 
-  res.sendStatus(200); // Must respond quickly
+  return res.sendStatus(200);
 });
-
-// Helper to verify payload signature
-function verifySignature(payload, signatureHeader) {
-  if (!signatureHeader) return false;
-
-  const expectedSignature =
-    "sha256=" +
-    crypto
-      .createHmac("sha256", APP_SECRET)
-      .update(JSON.stringify(payload))
-      .digest("hex");
-
-  return expectedSignature === signatureHeader.split("=")[1];
-}
 
 export default router;
