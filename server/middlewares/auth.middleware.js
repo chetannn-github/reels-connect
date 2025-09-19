@@ -1,21 +1,18 @@
 import jwt from 'jsonwebtoken';
-import { JWT_SECRET } from '../config/env.js';
+import { JWT_SECRET, VERIFY_TOKEN } from '../config/env.js';
 import User from '../models/user.model.js';
+import { verifyToken } from '../utils/jwt.js';
 
 export const protect = async (req, res, next) => {
     try {
-        const authHeader = req.headers.authorization;
+        const authHeader = req.headers["authorization"];
+        if (!authHeader) return res.status(401).json({ message: "No token provided" });
+        const token = authHeader.split(" ")[1];
+        if (!token) return res.status(401).json({ message: "Invalid token format" });
 
-        // if (!authHeader || !authHeader.startsWith('Bearer ')) {
-        //     return res.status(401).json({ message: 'Not authorized' });
-        // }
+        const decoded = verifyToken(token);
+        const user = await User.findOne({ user_id: decoded.user_id });
 
-        // const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2OGM2YmNiMDRkYWUwNzczOTAzODIyMDgiLCJpYXQiOjE3NTc5NDkxMDEsImV4cCI6MTc1ODU1MzkwMX0.fnvPXBGF_BhUN-KletZuaZBNjoSI0jQyLY8qB4f5w3I";
-        // const decoded = jwt.verify(token, JWT_SECRET);
-        
-
-
-        const user = await User.findById("68cc0ec4e6c6e32088b13588").select('-passwordHash');
 
         if (!user) {
             return res.status(401).json({ message: 'User not found' });
