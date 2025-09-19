@@ -68,8 +68,6 @@ export const callbackIgAccount = async (req, res) => {
 
 
 
-
-
         const userInfoRes = await axios.get(`https://graph.instagram.com/v23.0/me`, {
             params: {
                 fields: "id,username,followers_count,name,profile_picture_url,media_count",
@@ -84,8 +82,11 @@ export const callbackIgAccount = async (req, res) => {
         user.followers = followers_count;
         user.name = name;
         user.profileURL = profile_picture_url;
+        user.postCount = media_count;
         await user.save();
-        res.json({ message: 'Long-lived token updated', token: long_token, jwtToken , user});
+
+        
+        res.json({ message: 'your instagram account is successfully linked to us.', token: long_token, jwtToken , user});
 
     } catch (error) {
         console.error(error.response?.data || error.message);

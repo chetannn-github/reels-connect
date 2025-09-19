@@ -5,7 +5,8 @@ const reelSchema = new mongoose.Schema({
     reelTitle: { type: String, required: true },
     isActive: { type: Boolean, default: true },
     keywords: [{ type: String }],
-    message: { type: String }
+    message: { type: String , default : ""},
+    mediaURL : {type : String, default : ""}
 });
 
 
@@ -17,6 +18,7 @@ const userSchema = new mongoose.Schema({
     followers :{type : Number , default : 0},
     user_id: { type: String, required: true },
     access_token: { type: String, required: true },
+    postCount : {type : Number, default : 0},
     reels: [reelSchema] 
 }, { timestamps: true });
 
