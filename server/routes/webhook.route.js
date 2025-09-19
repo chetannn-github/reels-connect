@@ -1,43 +1,49 @@
 import express from "express";
-import crypto from "crypto";
 import { APP_SECRET } from "../config/env.js";
 import { verifyWebhook } from "../controllers/webhook.controller.js";
+
+import bodyParser from "body-parser";
+import xhub from "express-x-hub";
 
 const router = express.Router();
 let received_updates = [];
 
+router.use(xhub({ algorithm: "sha256", secret: APP_SECRET }));
+
+// Use raw body parser ONLY for POST requests
+router.use(bodyParser.raw({ type: "application/json" }));
+
 // GET for verification
 router.get("/", verifyWebhook);
 
-// POST for events
 router.post("/", (req, res) => {
-  console.log(req.headers);
-  const signature = req.headers["X-Hub-Signature-256"];
-  console.log(APP_SECRET);
-  // if (!signature) {
-  //   console.log("❌ No signature header found");
-  //   return res.sendStatus(401);
-  // }
- 
+  if (!req.isXHubValid()) {
+    console.log("❌ Invalid Instagram signature");
+    return res.sendStatus(401);
+  }
 
-  // // ✅ Use rawBody here, not JSON.stringify(req.body)
-  // const hash = crypto
-  //   .createHmac("sha256", APP_SECRET)
-  //   .update(req.rawBody) // 👈 raw body
-  //   .digest("hex");
+  console.log("✅ Instagram signature verified");
+  console.log("Request body:", req.body.toString());
 
-  // const expectedSignature = `sha256=${hash}`;
+  // Save updates for debugging
+  received_updates.unshift(req.body.toString());
 
-  // if (signature !== expectedSignature) {
-  //   console.log("❌ Invalid signature");
-  //   return res.sendStatus(401);
-  // }
+  // Example: handle IG comments
+  try {
+    const payload = JSON.parse(req.body.toString());
+    payload.entry?.forEach((entry) => {
+      entry.changes?.forEach((change) => {
+        if (change.field === "comments") {
+          console.log("💬 New Comment:", change.value.text);
+          console.log("👉 On Media ID:", change.value.media.id);
+        }
+      });
+    });
+  } catch (err) {
+    console.log("⚠️ Payload parsing error:", err.message);
+  }
 
-  console.log("✅ Signature verified");
-  console.log("Request body:", req.body);
-
-  received_updates.unshift(req.body);
-  res.sendStatus(200);
+  return res.sendStatus(200);
 });
 
 export default router;
