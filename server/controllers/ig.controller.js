@@ -5,7 +5,6 @@ import User from '../models/user.model.js';
 
 
 export const addIgAccount = (req, res) => {
-
     try {
          const scope = [
         'instagram_business_basic',
@@ -13,13 +12,11 @@ export const addIgAccount = (req, res) => {
         'instagram_business_manage_messages',
         'instagram_business_manage_comments'
     ].join(',');
-
     const instagramAuthUrl = `https://www.instagram.com/oauth/authorize?client_id=${INSTAGRAM_APP_ID}` +
         `&redirect_uri=${encodeURIComponent(INSTAGRAM_REDIRECT_URI)}` +
         `&scope=${encodeURIComponent(scope)}` +
         `&response_type=code`;
-
-    res.json({ url: instagramAuthUrl });
+    res.redirect(instagramAuthUrl);
     } catch (error) {
         console.log(error.message)
     }
@@ -27,16 +24,9 @@ export const addIgAccount = (req, res) => {
 };
 
 
-
-
-
 export const callbackIgAccount = async (req, res) => {
     const { code } = req.query;
-
-
-    if (!code) {
-        return res.status(400).json({ message: 'Authorization code missing' });
-    }
+    if (!code) return res.status(400).json({ message: 'Authorization code missing'});
 
     try {
         const data = qs.stringify({
@@ -47,53 +37,22 @@ export const callbackIgAccount = async (req, res) => {
             code: code
         });
 
-
-        console.log(data)        
-        console.log(INSTAGRAM_APP_ID);
-        console.log(INSTAGRAM_APP_SECRET);
-
-
-
-
-    
-
         const config = {
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         };
 
-        const response = await axios.post('https://api.instagram.com/oauth/access_token', data, config);
-
-
-
+        let response = await axios.post('https://api.instagram.com/oauth/access_token', data, config);
         const { access_token, user_id } = response.data;
-
-        // Save access token in user profile
-        const user = await User.findById(req.user._id);
-        user.instagram = {
-            user_id,
-            access_token,
-        };
-        await user.save();
-        return res.json({sucess : "majaa aagyaa broo"})
-
-        // return getLongLivedToken(req,res);
-
         
-
-    } catch (error) {
-        console.error(error.response?.data || error.message);
-        res.status(500).json({ message: error.response?.data || error.message });
-    }
-};
-
-
-export const getLongLivedToken = async (req, res) => {
-    const  access_token  = req.user.instagram.access_token;
-
-    try {
-        const response = await axios.get('https://graph.instagram.com/access_token', {
+        let user = await User.findOne({user_id});
+        if(!user) user = new User({user_id});
+        user.access_token = access_token;
+        await user.save();
+        
+        
+        response = await axios.get('https://graph.instagram.com/access_token', {
             params: {
                 grant_type: 'ig_exchange_token',
                 client_secret: INSTAGRAM_APP_SECRET,
@@ -101,18 +60,14 @@ export const getLongLivedToken = async (req, res) => {
             }
         });
 
-        const { access_token: long_token, expires_in } = response.data;
-
-        const user = await User.findById(req.user._id);
-        user.instagram.access_token = long_token;
-        user.instagram.expires_in = expires_in;
+        const { access_token: long_token } = response.data;
+        user.access_token = long_token;
         await user.save();
-
         res.json({ message: 'Long-lived token updated', token: long_token });
 
     } catch (error) {
         console.error(error.response?.data || error.message);
-        res.status(500).json({ message: 'Failed to refresh token' });
+        res.status(500).json({ message: error.response?.data || error.message });
     }
 };
 

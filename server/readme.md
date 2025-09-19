@@ -49,5 +49,3 @@ ReelConnect/
 
 Feel free to fork this repository, raise issues, or submit pull requests to improve functionality, security, or performance!
 
-
-https://www.instagram.com/consent/?flow=ig_biz_login_oauth&params_json=%7B%22client_id%22%3A%221116520140680050%22%2C%22redirect_uri%22%3A%22https%3A%5C%2F%5C%2Freels-connect.onrender.com%5C%2Fapi%5C%2Fig%5C%2Fcallback%22%2C%22response_type%22%3A%22code%22%2C%22state%22%3Anull%2C%22scope%22%3A%22instagram_business_basic-instagram_business_manage_comments-instagram_business_manage_messages-instagram_business_content_publish-instagram_business_manage_insights%22%2C%22logger_id%22%3A%226d2d676b-dec4-4469-8e32-15afa2cf3714%22%2C%22app_id%22%3A%221116520140680050%22%2C%22platform_app_id%22%3A%221116520140680050%22%7D&source=oauth_permissions_page_www

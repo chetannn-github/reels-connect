@@ -8,19 +8,11 @@ const reelSchema = new mongoose.Schema({
     message: { type: String }
 });
 
-const igAccountSchema = new mongoose.Schema({
-    user_id: { type: String, required: true },        // Instagram user ID
-    username: { type: String},       // Instagram username
-    access_token: { type: String, required: true },
-    refresh_token: { type: String },  // Short or long-lived access token
-    expires_in: { type: Number },                    // Token expiration period          
-                                 // Reels associated with this account
-},{ _id: false });
+
 
 const userSchema = new mongoose.Schema({
-    email: { type: String, required: true, unique: true },
-    passwordHash: { type: String, required: true },
-    instagram: { type: igAccountSchema, default: null },
+    user_id: { type: String, required: true },
+    access_token: { type: String, required: true },
     reels: [reelSchema] 
 }, { timestamps: true });
 

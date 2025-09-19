@@ -26,7 +26,6 @@ app.get('/test', (req, res) => {
 app.listen(PORT, async() => {
     try {
         await connectToDB();
-        console.log(INSTAGRAM_APP_ID,INSTAGRAM_APP_SECRET,INSTAGRAM_REDIRECT_URI)
         console.log(`Server running on port ${PORT}`);
     } catch (error) {
         console.log("error" + error.message);
