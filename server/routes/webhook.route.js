@@ -1,41 +1,18 @@
 import express from "express";
 import xhub from "express-x-hub";
+import { APP_SECRET } from "../config/env.js";
+import { verifyWebhook } from "../controllers/webhook.controller.js";
 
 const router = express.Router();
 
-// Add express-x-hub middleware
-// Use sha256 because Instagram sends X-Hub-Signature-256
-router.use(
-  xhub({ algorithm: "sha256", secret: process.env.APP_SECRET })
-);
+router.use(xhub({ algorithm: "sha256", secret: APP_SECRET }));
 
-// ✅ Store received events (optional for debugging)
 let received_updates = [];
 
-// --------------------
-// Verification Endpoint
-// --------------------
-router.get("/", (req, res) => {
-  const VERIFY_TOKEN = process.env.TOKEN || "token";
-  console.log(VERIFY_TOKEN);
 
-  console.log(req.query);
+router.get("/", verifyWebhook);
 
-  if (
-    req.query["hub.mode"] === "subscribe" &&
-    req.query["hub.verify_token"] === VERIFY_TOKEN
-  ) {
-    console.log("✅ Webhook verified successfully!");
-    return res.status(200).send(req.query["hub.challenge"]);
-  } else {
-    console.log("❌ Verification failed");
-    return res.sendStatus(400);
-  }
-});
 
-// --------------------
-// Event Notification Endpoint
-// --------------------
 router.post("/", (req, res) => {
   console.log("📩 Instagram Webhook Event Received");
 

@@ -12,3 +12,6 @@ export const INSTAGRAM_APP_SECRET = process.env.INSTAGRAM_APP_SECRET;
 export const INSTAGRAM_CLIENT_SECRET = process.env.INSTAGRAM_CLIENT_SECRET;
 export const INSTAGRAM_REDIRECT_URI = process.env.INSTAGRAM_REDIRECT_URI;
 export const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
+
+export const APP_SECRET = process.env.APP_SECRET;
+export const WEBHOOK_VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN
