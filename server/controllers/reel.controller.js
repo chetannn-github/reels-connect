@@ -14,7 +14,7 @@ export const getAllReels = async(req, res) => {
             }
         });
 
-        let reelsResponse = response.data.data;
+        // let reelsResponse = response.data.data;
 
         const reelsData = reelsResponse.map((item) => ({
             reelId: item.id,

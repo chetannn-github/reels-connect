@@ -75,7 +75,7 @@ export const callbackIgAccount = async (req, res) => {
             },
         });
 
-        console.log(userInfoRes?.data)
+        // console.log(userInfoRes?.data)
 
         const {username, followers_count, name, profile_picture_url, media_count } =userInfoRes?.data;
         user.username = username;
