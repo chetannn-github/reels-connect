@@ -22,10 +22,11 @@ export const getAllReels = async(req, res) => {
             mediaURL: item.media_url,
             isActive: false,
             keywords: [],
-            message: ""
+            message: "",
+            timestamp : item.timestamp
         }));
 
-        console.log(userId)
+       console.log(response.data);
 
         const updatedUser = await User.findOneAndUpdate(
             {_id: userId },
