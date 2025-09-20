@@ -1,5 +1,5 @@
 import express from 'express';
-import { INSTAGRAM_APP_ID, INSTAGRAM_APP_SECRET, INSTAGRAM_REDIRECT_URI, PORT } from './config/env.js';
+import { PORT } from './config/env.js';
 import { connectToDB } from './config/db.js';
 
 
