@@ -4,7 +4,7 @@ import { verifyWebhook } from "../controllers/webhook.controller.js";
 
 import bodyParser from "body-parser";
 import xhub from "express-x-hub";
-import { User } from "../models/user.model.js";
+import { Reel, User } from "../models/user.model.js";
 
 const router = express.Router();
 let received_updates = [];
@@ -21,7 +21,6 @@ router.post("/", async(req, res) => {
   //   return res.sendStatus(401);
   // }
 
-
   try {
     const payload = req.body;
     payload.entry?.forEach((entry) => {
@@ -30,14 +29,16 @@ router.post("/", async(req, res) => {
 
         console.log(change);
         if (change.field === "comments") {
+          
+          const commentID = change.value.id;
+          const reelID = change.media.id;
+          console.log("🆔 Comment ID:", commentID);
           console.log("💬 New Comment:", change.value.text);
-          console.log("🆔 Comment ID:", change.value.id);
-
-
-
-          // let user = User.findOne({user_id : })
+          let reel = await Reel.findOne({reelId : reelID}).populate("user");
+          const access_token = reel.user.access_token;
+    
           // DM USER
-          // await sendPrivateReply(userID,req.user.ACCESS_TOKEN,change.value.id);
+          await sendPrivateReply(userID,access_token,commentID);
         }
       });
     });
