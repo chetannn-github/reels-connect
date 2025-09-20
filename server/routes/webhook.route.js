@@ -4,6 +4,7 @@ import { verifyWebhook } from "../controllers/webhook.controller.js";
 
 import bodyParser from "body-parser";
 import xhub from "express-x-hub";
+import { User } from "../models/user.model.js";
 
 const router = express.Router();
 let received_updates = [];
@@ -26,11 +27,17 @@ router.post("/", async(req, res) => {
     payload.entry?.forEach((entry) => {
       const userID = entry.id;
       entry.changes?.forEach(async(change) => {
+
+        console.log(change);
         if (change.field === "comments") {
           console.log("💬 New Comment:", change.value.text);
           console.log("🆔 Comment ID:", change.value.id);
+
+
+
+          // let user = User.findOne({user_id : })
           // DM USER
-          await sendPrivateReply(userID,req.user.ACCESS_TOKEN,change.value.id);
+          // await sendPrivateReply(userID,req.user.ACCESS_TOKEN,change.value.id);
         }
       });
     });
