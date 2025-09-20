@@ -16,6 +16,7 @@ export const addKeywordAndMessage = async (req, res) => {
         if (!reel) return res.status(404).json({ error: "Reel not found" });
         
         const updatedKeywords = Array.from(new Set([...reel.keywords, ...keywords]));
+        reel.isActive = true;
         reel.keywords = updatedKeywords;
         reel.message = message;
         await reel.save();
