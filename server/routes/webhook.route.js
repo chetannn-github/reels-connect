@@ -28,9 +28,8 @@ router.post("/", (req, res) => {
       entry.changes?.forEach((change) => {
         if (change.field === "comments") {
           console.log("💬 New Comment:", change.value.text);
-          console.log("👉 On Media ID:", change.value.media.id);
+          ContentVisibilityAutoStateChangeEvent.log(change);
           console.log("from --> " , change.value.from);
-          console.log("media --> " , change.value.media);
           const commentId = change.value.id;
           console.log("🆔 Comment ID:", commentId);
         }
