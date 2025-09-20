@@ -20,8 +20,7 @@ router.post("/", (req, res) => {
   //   return res.sendStatus(401);
   // }
 
-  console.log("✅ Instagram signature verified");
-  console.log("Request body:", req.body);
+  console.log(req.body.entry.changes);
 
 
   try {
