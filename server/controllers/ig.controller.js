@@ -52,7 +52,7 @@ export const callbackIgAccount = async (req, res) => {
         user.access_token = access_token;
         await user.save();
         
-        
+        console.log("getting long lived token ")
         response = await axios.get('https://graph.instagram.com/access_token', {
             params: {
                 grant_type: 'ig_exchange_token',
@@ -60,14 +60,14 @@ export const callbackIgAccount = async (req, res) => {
                 access_token,
             }
         });
-
+        
         const { access_token: long_token } = response.data;
         user.access_token = long_token;
         await user.save();
         const jwtToken = generateToken({ user_id: user.user_id });
 
 
-
+        console.log("getting user infoo")
         const userInfoRes = await axios.get(`https://graph.instagram.com/v23.0/me`, {
             params: {
                 fields: "id,username,followers_count,name,profile_picture_url,media_count",
