@@ -23,9 +23,9 @@ router.post("/", (req, res) => {
   console.log("✅ Instagram signature verified");
   console.log("Request body:", req.body);
 
-return res.sendStatus(200);
+
   try {
-    const payload = JSON.parse(req.body.toString());
+    const payload = req.body;
     payload.entry?.forEach((entry) => {
       entry.changes?.forEach((change) => {
         if (change.field === "comments") {
@@ -37,7 +37,7 @@ return res.sendStatus(200);
   } catch (err) {
     console.log("⚠️ Payload parsing error:", err.message);
   }
-
+  return res.sendStatus(200);
   
 });
 
