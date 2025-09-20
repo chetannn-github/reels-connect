@@ -8,20 +8,15 @@ import { Reel, User } from "../models/user.model.js";
 import axios from "axios";
 
 const router = express.Router();
-let received_updates = [];
+
 console.log(APP_SECRET);
 router.use(xhub({ algorithm: "sha256", secret: APP_SECRET }));
 router.use(bodyParser.json());
 
-// GET for verification
+
 router.get("/", verifyWebhook);
 
 router.post("/", async(req, res) => {
-  // if (!req.isXHubValid()) {
-  //   console.log("❌ Invalid Instagram signature");
-  //   return res.sendStatus(401);
-  // }
-
   try {
     const payload = req.body;
     payload.entry?.forEach((entry) => {
@@ -31,15 +26,25 @@ router.post("/", async(req, res) => {
         console.log(change);
         if (change.field === "comments") {
           
-          const commentID = change.value.id;
-          const reelID = change.value.media.id;
-          console.log("🆔 Comment ID:", commentID);
-          console.log("💬 New Comment:", change.value.text);
-          let reel = await Reel.findOne({reelId : reelID}).populate("user");
+          const comment_id = change?.value?.id;
+          const reel_id = change?.value?.media?.id;
+          const comment = change?.value?.text?.toLowerCase();
+
+          console.log("🆔 Comment ID:", comment_id);
+          console.log("💬 New Comment:", comment);
+
+          let reel = await Reel.findOne({reelId : reel_id}).populate("user");
           const access_token = reel.user.access_token;
-    
-          // DM USER
-          await sendPrivateReply(userID,access_token,commentID);
+          const comment_message = reel.message;
+
+          const keywords = reel.keywords;
+
+          const matchedKeyword = keywords.find(keyword => 
+            comment.includes(keyword.toLowerCase())
+          );
+
+          if(matchedKeyword) console.log("keyword matched broo")
+          await sendPrivateReply(userID,access_token,comment_id, comment_message);
         }
       });
     });
@@ -53,13 +58,13 @@ router.post("/", async(req, res) => {
 
 
 
-const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID) => {
+const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,COMMENT_MESSAGE) => {
   try {
     const response = await axios.post(
       `https://graph.instagram.com/${IG_USER_ID}/messages`,
       {
         recipient: { comment_id: COMMENT_ID },
-        message: { text: "hello behenkeloddee this is automated messagee broo!! " },
+        message: { text: COMMENT_MESSAGE },
       },
       {
         headers: {
