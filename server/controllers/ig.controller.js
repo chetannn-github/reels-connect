@@ -68,23 +68,7 @@ export const callbackIgAccount = async (req, res) => {
 
 
         console.log("getting user infoo")
-        const userInfoRes = await axios.get(`https://graph.instagram.com/v23.0/me`, {
-            params: {
-                fields: "id,username,followers_count,name,profile_picture_url,media_count",
-                access_token: long_token,
-            },
-        });
-
-        // console.log(userInfoRes?.data)
-
-        const {username, followers_count, name, profile_picture_url, media_count } =userInfoRes?.data;
-        user.username = username;
-        user.followers = followers_count;
-        user.name = name;
-        user.profileURL = profile_picture_url;
-        user.postCount = media_count;
-        await user.save();
-
+        await getUserInfo(user);
         
         res.json({ message: 'your instagram account is successfully linked to us.', token: long_token, jwtToken , user});
 
@@ -120,3 +104,24 @@ export const refreshLongLivedToken = async (req, res) => {
         res.status(500).json({ message: 'Failed to refresh token' });
     }
 };
+
+
+const getUserInfo = async (user) => {
+     const userInfoRes = await axios.get(`https://graph.instagram.com/v23.0/me`, {
+            params: {
+                fields: "id,username,followers_count,name,profile_picture_url,media_count",
+                access_token: user.access_token,
+            },
+        });
+
+        // console.log(userInfoRes?.data)
+
+        const {username, followers_count, name, profile_picture_url, media_count } =userInfoRes?.data;
+        user.username = username;
+        user.followers = followers_count;
+        user.name = name;
+        user.profileURL = profile_picture_url;
+        user.postCount = media_count;
+        await user.save();
+
+}
