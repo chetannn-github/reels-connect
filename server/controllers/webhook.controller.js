@@ -36,7 +36,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
 
           let reel = await Reel.findOne({reelId : reel_id}).populate("user");
           const access_token = reel.user.access_token;
-          const comment_message = reel.message;
+          const comment_reply = reel.message;
 
           const keywords = reel.keywords;
 
@@ -44,8 +44,15 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
             comment.includes(keyword.toLowerCase())
           );
 
+          // !TODO if keyword then only send message and if reel is isActive
           if(matchedKeyword) console.log("keyword matched broo")
-          await sendPrivateReply(userID,access_token,comment_id, comment_message);
+          await sendPrivateReply(userID,access_token,comment_id, comment_reply);
+        }
+
+        else if(change.field === "message") {
+          const incomingMessage = change.message.text;
+          console.log("Incoming Message -> " + incomingMessage);
+          // await sendPrivateReply(userID,access_token,)
         }
       });
     });
@@ -60,6 +67,8 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
 export const subscribeWebhook = async(req,res) => {
   let user_id = req.user?.user_id;
   const access_token = req.user?.access_token;
+
+  console.log(access_token)
 
   try {
     const response = await axios.post(
@@ -81,13 +90,13 @@ export const subscribeWebhook = async(req,res) => {
 
 
 
-const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,COMMENT_MESSAGE) => {
+const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,DM_MESSAGE) => {
   try {
     const response = await axios.post(
       `https://graph.instagram.com/${IG_USER_ID}/messages`,
       {
         recipient: { comment_id: COMMENT_ID },
-        message: { text: COMMENT_MESSAGE },
+        message: { text: DM_MESSAGE },
       },
       {
         headers: {
