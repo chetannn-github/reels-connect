@@ -47,8 +47,11 @@ export const callbackIgAccount = async (req, res) => {
         let response = await axios.post('https://api.instagram.com/oauth/access_token', data, config);
         const { access_token, user_id } = response.data;
         
+        let isUserPreExists = false;
         let user = await User.findOne({user_id});
         if(!user) user = new User({user_id});
+        else isUserPreExists = true;
+
         user.access_token = access_token;
         await user.save();
         
@@ -68,7 +71,7 @@ export const callbackIgAccount = async (req, res) => {
 
 
         console.log("getting user infoo")
-        await getUserInfo(user);
+        if(!isUserPreExists) await getUserInfo(user);
         
         res.json({ message: 'your instagram account is successfully linked to us.', token: long_token, jwtToken , user});
 
