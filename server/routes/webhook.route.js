@@ -20,7 +20,6 @@ router.post("/", (req, res) => {
   //   return res.sendStatus(401);
   // }
 
-  console.log(req.body.entry[0].changes);
 
 
   try {
@@ -32,6 +31,8 @@ router.post("/", (req, res) => {
           console.log("👉 On Media ID:", change.value.media.id);
           console.log("from --> " , change.value.from);
           console.log("media --> " , change.value.media);
+          const commentId = change.value.id;
+          console.log("🆔 Comment ID:", commentId);
         }
       });
     });
