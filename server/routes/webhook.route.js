@@ -20,7 +20,7 @@ router.post("/", (req, res) => {
   //   return res.sendStatus(401);
   // }
 
-  console.log(req.body.entry.changes);
+  console.log(req.body.entry[0].changes);
 
 
   try {
