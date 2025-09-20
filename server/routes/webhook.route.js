@@ -22,7 +22,7 @@ router.post("/", async(req, res) => {
 
 
   try {
-    
+    const payload = req.body;
     payload.entry?.forEach((entry) => {
       const userID = entry.id;
       entry.changes?.forEach(async(change) => {
