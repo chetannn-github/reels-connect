@@ -35,10 +35,10 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           console.log("💬 New Comment:", comment);
 
           let reel = await Reel.findOne({reelId : reel_id}).populate("user");
-          const access_token = reel.user.access_token;
-          const comment_reply = reel.message;
+          const access_token = reel?.user?.access_token;
+          const comment_reply = reel?.message || "";
 
-          const keywords = reel.keywords;
+          const keywords = reel?.keywords || [];
 
           const matchedKeyword = keywords.find(keyword => 
             comment.includes(keyword.toLowerCase())
@@ -47,12 +47,15 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           // !TODO if keyword then only send message and if reel is isActive
           if(matchedKeyword) console.log("keyword matched broo")
           await sendPrivateReply(userID,access_token,comment_id, comment_reply);
+        
         }
-
+        
         else if(change.field === "messages") {
           const incomingMessage = change?.value?.message?.text;
           console.log("Incoming Message -> " + incomingMessage);
           // await sendPrivateReply(userID,access_token,)
+        }else {
+          console.log(change);
         }
       });
     });
