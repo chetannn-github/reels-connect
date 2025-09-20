@@ -42,7 +42,7 @@ export const getAllReels = async (req, res) => {
 
         return res.json({ user: updatedUser });
     } catch (error) {
-        console.error("Error fetching reels:", error);
+        console.error("Error fetching reels:", error.message);
         return res.status(500).json({ error: "Something went wrong" });
     }
 };
