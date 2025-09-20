@@ -49,7 +49,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           await sendPrivateReply(userID,access_token,comment_id, comment_reply);
         }
 
-        else if(change.field === "message") {
+        else if(change.field === "messages") {
           const incomingMessage = change.message.text;
           console.log("Incoming Message -> " + incomingMessage);
           // await sendPrivateReply(userID,access_token,)
