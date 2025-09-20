@@ -7,11 +7,9 @@ import xhub from "express-x-hub";
 
 const router = express.Router();
 let received_updates = [];
-
+console.log(APP_SECRET);
 router.use(xhub({ algorithm: "sha256", secret: APP_SECRET }));
-
-// Use raw body parser ONLY for POST requests
-router.use(bodyParser.raw({ type: "application/json" }));
+router.use(bodyParser.json());
 
 // GET for verification
 router.get("/", verifyWebhook);
@@ -23,12 +21,9 @@ router.post("/", (req, res) => {
   // }
 
   console.log("✅ Instagram signature verified");
-  console.log("Request body:", req.body.toString());
+  console.log("Request body:", req.body);
 
-  // Save updates for debugging
-  received_updates.unshift(req.body.toString());
-
-  // Example: handle IG comments
+return res.sendStatus(200);
   try {
     const payload = JSON.parse(req.body.toString());
     payload.entry?.forEach((entry) => {
@@ -43,7 +38,7 @@ router.post("/", (req, res) => {
     console.log("⚠️ Payload parsing error:", err.message);
   }
 
-  return res.sendStatus(200);
+  
 });
 
 export default router;
