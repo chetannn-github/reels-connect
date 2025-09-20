@@ -30,6 +30,8 @@ router.post("/", (req, res) => {
         if (change.field === "comments") {
           console.log("💬 New Comment:", change.value.text);
           console.log("👉 On Media ID:", change.value.media.id);
+          console.log("from --> " , change.value.from);
+          console.log("media --> " , change.value.media);
         }
       });
     });
