@@ -24,8 +24,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
     payload.entry?.forEach((entry) => {
       const userID = entry.id;
       entry.changes?.forEach(async(change) => {
-
-        console.log(change);
+        
         if (change.field === "comments") {
           
           const comment_id = change?.value?.id;
