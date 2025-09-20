@@ -50,7 +50,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         }
 
         else if(change.field === "messages") {
-          const incomingMessage = change.message.text;
+          const incomingMessage = change?.value?.message?.text;
           console.log("Incoming Message -> " + incomingMessage);
           // await sendPrivateReply(userID,access_token,)
         }
