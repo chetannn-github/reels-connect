@@ -15,11 +15,14 @@ export const getAllReels = async (req, res) => {
             },
         });
 
-        let reelsResponse = response.data.data;
+       let reelsResponse = response.data.data;
 
-        await Reel.deleteMany({ user: userId });
+        const existingReels = await Reel.find({ user: userId }, "reelId");
+        const existingReelIds = existingReels.map(r => r.reelId);
 
-        const reelsData = reelsResponse.map((item) => ({
+        const newReelsData = reelsResponse
+        .filter(item => !existingReelIds.includes(item.id))
+        .map(item => ({
             reelId: item.id,
             reelTitle: item.caption || " ",
             mediaURL: item.media_url,
@@ -30,14 +33,15 @@ export const getAllReels = async (req, res) => {
             user: userId,
         }));
 
-        const createdReels = await Reel.insertMany(reelsData);
 
-        const reelIds = createdReels.map((r) => r._id);
+        const createdReels = await Reel.insertMany(newReelsData);
+
+        const allReels = [...existingReels.map(r => r._id), ...createdReels.map(r => r._id)];
 
         const updatedUser = await User.findByIdAndUpdate(
-            userId,
-            { reels: reelIds },
-            { new: true }
+        userId,
+        { reels: allReels },
+        { new: true }
         ).populate("reels");
 
         return res.json({ user: updatedUser });
