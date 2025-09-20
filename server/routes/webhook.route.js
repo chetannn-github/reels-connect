@@ -5,6 +5,7 @@ import { verifyWebhook } from "../controllers/webhook.controller.js";
 import bodyParser from "body-parser";
 import xhub from "express-x-hub";
 import { Reel, User } from "../models/user.model.js";
+import axios from "axios";
 
 const router = express.Router();
 let received_updates = [];
