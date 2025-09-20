@@ -25,7 +25,7 @@ export const getAllReels = async (req, res) => {
             mediaURL: item.media_url,
             isActive: false,
             keywords: [],
-            message: "",
+            message: "this is an automated message from reels-connect",
             timestamp: item.timestamp,
             user: userId,
         }));
