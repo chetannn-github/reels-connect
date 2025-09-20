@@ -31,7 +31,7 @@ router.post("/", async(req, res) => {
         if (change.field === "comments") {
           
           const commentID = change.value.id;
-          const reelID = change.media.id;
+          const reelID = change.value.media.id;
           console.log("🆔 Comment ID:", commentID);
           console.log("💬 New Comment:", change.value.text);
           let reel = await Reel.findOne({reelId : reelID}).populate("user");
