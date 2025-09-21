@@ -4,7 +4,7 @@ import { createOrder } from '../controllers/payment.controller.js';
 
 const router = express.Router();
 
-router.post('/', protect, createOrder);
+router.post('/order', protect, createOrder);
 
 
 export default router;

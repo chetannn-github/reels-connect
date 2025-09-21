@@ -1,9 +1,13 @@
 import { Button } from "./ui/Button";
 import { Check, Star, Crown, Zap } from "lucide-react";
+import api from "../lib/api"
+import { useNavigate } from "react-router-dom";
 
 const PricingSection = () => {
+  const navigate = useNavigate();
   const plans = [
     {
+      type : "free",
       name: "Free",
       icon: Zap,
       price: "₹0",
@@ -22,6 +26,7 @@ const PricingSection = () => {
       disabled: false,
     },
     {
+      type : "basic",
       name: "Pro",
       icon: Star,
       price: "₹1000",
@@ -42,6 +47,7 @@ const PricingSection = () => {
       disabled: false,
     },
     {
+      type : "premium",
       name: "AI Pro",
       icon: Crown,
       price: "₹2500",
@@ -63,6 +69,16 @@ const PricingSection = () => {
       disabled: true,
     },
   ];
+
+  const createOrder = async (planType) => {
+    if(planType == "free") return 
+    const token = localStorage.getItem("jwt");
+    
+    if (!token) return navigate("/");
+    const orderRes = await api.post("/payment/order",{plan : planType}, token);
+    console.log(orderRes)
+    
+  }
 
   return (
     <section className="py-24 px-6">
@@ -139,6 +155,7 @@ const PricingSection = () => {
 
                   {/* Button */}
                   <Button 
+                    onClick  = {()=> createOrder(plan.type)}
                     variant={plan.buttonVariant} 
                     size="lg" 
                     className="w-full"
