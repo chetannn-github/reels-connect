@@ -159,8 +159,9 @@ function Dashboard() {
             <Tabs defaultValue="setup" className="space-y-6">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="setup">Campaign Setup</TabsTrigger>
-                <TabsTrigger value="analytics">Analytics</TabsTrigger>
                 <TabsTrigger value="triggered-reels">Triggered Reels</TabsTrigger>
+                <TabsTrigger value="analytics">Analytics</TabsTrigger>
+               
               </TabsList>
 
               <TabsContent value="setup" className="space-y-6">
@@ -248,7 +249,47 @@ function Dashboard() {
                 </Card>
               </TabsContent>
 
-    
+              <TabsContent value="triggered-reels" className="space-y-6">
+                <Card className="glass-effect border border-gray-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Play className="h-5 w-5 text-primary" /> Active (Triggered) Reels
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid gap-4 md:grid-cols-3">
+                    {user.reels.filter(reel => reel.isActive).length === 0 ? (
+                      <p className="text-muted-foreground text-sm">No active reels found.</p>
+                    ) : (
+                      user.reels
+                        .filter(reel => reel.isActive)
+                        .map((reel) => (
+                          <div
+                            key={reel.reelId}
+                            className={`cursor-pointer rounded-lg border-2 p-3 transition-all ${
+                              selectedReel === reel.reelId
+                                ? "border-primary shadow-lg"
+                                : "border-border hover:border-primary/50"
+                            }`}
+                            onClick={() => setSelectedReel(reel.reelId)}
+                          >
+                            <img
+                              src={reel.thumbnailURL || reel.mediaURL}
+                              alt={reel.reelTitle || "Reel"}
+                              className="w-full h-32 object-cover rounded-md mb-3"
+                            />
+                            <h4 className="font-medium text-sm text-foreground mb-2">
+                              {reel.reelTitle || "Untitled"}
+                            </h4>
+                            <p className="text-xs text-muted-foreground mb-1">
+                              {reel.message || "No message"}
+                            </p>
+                          </div>
+                        ))
+                    )}
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
             </Tabs>
           </div>
 
