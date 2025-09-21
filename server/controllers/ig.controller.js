@@ -1,4 +1,4 @@
-import { INSTAGRAM_APP_ID, INSTAGRAM_APP_SECRET, INSTAGRAM_REDIRECT_URI } from '../config/env.js';
+import { FRONTEND_BASEURL, INSTAGRAM_APP_ID, INSTAGRAM_APP_SECRET, INSTAGRAM_REDIRECT_URI, JWT_SECRET } from '../config/env.js';
 import axios from "axios";
 import qs from "qs"
 import {User} from '../models/user.model.js';
@@ -17,7 +17,7 @@ export const addIgAccount = (req, res) => {
         `&redirect_uri=${encodeURIComponent(INSTAGRAM_REDIRECT_URI)}` +
         `&scope=${encodeURIComponent(scope)}` +
         `&response_type=code`;
-    res.redirect(instagramAuthUrl);
+    return res.json({"redirectURL" :instagramAuthUrl});
     } catch (error) {
         console.log(error.message)
     }
@@ -72,8 +72,9 @@ export const callbackIgAccount = async (req, res) => {
 
         console.log("getting user infoo")
         if(!isUserPreExists) await getUserInfo(user);
-        
-        res.json({ message: 'your instagram account is successfully linked to us.', token: long_token, jwtToken , user});
+        res.redirect(`${FRONTEND_BASEURL}/ig-success?token=${jwtToken}`);
+
+        // res.json({ message: 'your instagram account is successfully linked to us.', token: long_token, jwtToken , user});
 
     } catch (error) {
         console.error(error.response?.data || error.message);
