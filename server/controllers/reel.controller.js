@@ -5,7 +5,7 @@ import { User, Reel } from "../models/user.model.js";
 export const getAllReels = async (req, res) => {
     const access_token = req.user.access_token;
     const userId = req.user._id;
-    const fields = ["id", "caption", "media_url", "timestamp"].join(",");
+    const fields = ["id", "caption", "media_url", "timestamp", "thumbnail_url"].join(",");
 
     try {
         const response = await axios.get("https://graph.instagram.com/me/media", {
@@ -16,6 +16,8 @@ export const getAllReels = async (req, res) => {
         });
 
        let reelsResponse = response.data.data;
+
+    //    console.log(reelsResponse)
 
         const existingReels = await Reel.find({ user: userId }, "reelId");
         const existingReelIds = existingReels.map(r => r.reelId);
@@ -31,6 +33,7 @@ export const getAllReels = async (req, res) => {
             message: "this is an automated message from reels-connect",
             timestamp: item.timestamp,
             user: userId,
+            thumbnailURL : item.thumbnail_url || ""
         }));
 
 
@@ -43,8 +46,10 @@ export const getAllReels = async (req, res) => {
         { reels: allReels },
         { new: true }
         ).populate("reels");
-
-        return res.json({ user: updatedUser });
+        
+        let user = updatedUser;
+        user.access_token = undefined;
+        return res.json(updatedUser);
     } catch (error) {
         console.error("Error fetching reels:", error.message);
         return res.status(500).json({ error: "Something went wrong" });

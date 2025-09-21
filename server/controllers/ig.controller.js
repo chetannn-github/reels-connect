@@ -24,7 +24,7 @@ export const addIgAccount = (req, res) => {
    
 };
 
-
+//! to do if callback fails with some reason then redirect to frontend /dashboard with some error 
 export const callbackIgAccount = async (req, res) => {
     const { code } = req.query;
     if (!code) return res.status(400).json({ message: 'Authorization code missing'});
