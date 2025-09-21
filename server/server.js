@@ -1,7 +1,7 @@
 import express from 'express';
 import { PORT } from './config/env.js';
 import { connectToDB } from './config/db.js';
-
+import cors from "cors";
 
 import authRoutes from './routes/auth.route.js';
 import igRoutes from './routes/ig.route.js';
@@ -10,6 +10,7 @@ import keywordRoutes from './routes/keyword.route.js';
 import webhookRoutes from './routes/webhook.route.js';
 
 const app = express();
+  app.use(cors({ origin: "*" }));
 app.use('/api/webhook', webhookRoutes);
 app.use(express.json());
 
