@@ -1,14 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
 
-function Home() {
-  return <h1>Home Page</h1>;
-}
-
-function Dashboard() {
-  return <h1>Dashboard Page</h1>;
-}
 
 function App() {
   return (
