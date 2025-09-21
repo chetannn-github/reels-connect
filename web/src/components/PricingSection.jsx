@@ -2,6 +2,7 @@ import { Button } from "./ui/Button";
 import { Check, Star, Crown, Zap } from "lucide-react";
 import api from "../lib/api"
 import { useNavigate } from "react-router-dom";
+import { RAZORPAY_KEY_ID } from "../lib/constant";
 
 const PricingSection = () => {
   const navigate = useNavigate();
@@ -77,7 +78,37 @@ const PricingSection = () => {
     if (!token) return navigate("/");
     const orderRes = await api.post("/payment/order",{plan : planType}, token);
     console.log(orderRes)
+    await handlePaymentAndVerify(orderRes)
     
+  }
+
+
+  const handlePaymentAndVerify = async (order) => {
+    const options = {
+      key : RAZORPAY_KEY_ID,
+      amount : order.amount,
+      current : order.currency,
+      name : "Reels - Connect",
+      description :"Payment",
+      order_id : order.id,
+      handler : async (response) => {
+        try {
+          const res = await api.post("/payment/verify", {
+            razorpay_order_id : response.razorpay_order_id,
+            razorpay_payment_id : response.razorpay_payment_id,
+            razorpay_signature : response.razorpay_signature,
+          })
+
+          console.log(res.message);
+        } catch (error) {
+          console.log(error);
+        }
+       
+      }
+    }
+
+    const razorpayWindow = new window.Razorpay(options);
+    razorpayWindow.open();
   }
 
   return (
