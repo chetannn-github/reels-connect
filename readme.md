@@ -1,6 +1,9 @@
 
 # 📽️ ReelConnect – Instagram Reels Automation
 
+![Hero Image](https://raw.githubusercontent.com/chetannn-github/reels-connect/main/web/src/assets/hero.png)
+![Timeline Image](https://raw.githubusercontent.com/chetannn-github/reels-connect/main/web/src/assets/timeline.png)
+![Hero Image](https://raw.githubusercontent.com/chetannn-github/reels-connect/main/web/src/assets/pricing.png)
 
 **ReelConnect** is a full-stack application that helps creators automate interactions on their Instagram Reels. Users can connect their Instagram accounts, manage multiple reels, and set keyword-based triggers to send automated DMs to users who comment with specific keywords.  
 
