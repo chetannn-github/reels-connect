@@ -100,6 +100,10 @@ const PricingSection = () => {
           })
 
           console.log(res.message);
+
+          if(!res.error) {
+            navigate("/dashboard")
+          }
         } catch (error) {
           console.log(error);
         }
@@ -190,7 +194,7 @@ const PricingSection = () => {
                     variant={plan.buttonVariant} 
                     size="lg" 
                     className="w-full"
-                    disabled={plan.disabled}
+                    // disabled={plan.disabled}
                   >
                     {plan.buttonText}
                   </Button>
