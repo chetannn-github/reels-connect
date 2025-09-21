@@ -4,22 +4,42 @@ import api from "../lib/api";
 import { setAuth } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 
+import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card";
+import { Button } from "../components/ui/Button";
+import { Input } from "../components/ui/Input";
+import { Label } from "../components/ui/Label";
+import { Badge } from "../components/ui/Badge";
+import { Textarea } from "../components/ui/Textarea";
+import { Switch } from "../components/ui/Switch";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/Select";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs";
+
+import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock } from "lucide-react";
+import { useToast } from "../hooks/use-toast";
+
 function Dashboard() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const [loading, setLoading] = useState(true);
+  const [selectedReel, setSelectedReel] = useState("");
+  const [keywords, setKeywords] = useState([]);
+  const [newKeyword, setNewKeyword] = useState("");
+  const [messageTemplate, setMessageTemplate] = useState("");
+  const [automationEnabled, setAutomationEnabled] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
       try {
         const token = localStorage.getItem("jwt");
-        if(!token) navigate("/");
+        if (!token) return navigate("/");
 
-        const response = await api.get("/auth/me",token); 
-        const userData = response;
+        const userData = await api.get("/reels", token);
         dispatch(setAuth({ user: userData, token }));
+        setKeywords(userData.keywords || []);
+        setMessageTemplate(userData.messageTemplate || "");
       } catch (err) {
         console.error("Failed to fetch user info:", err);
       } finally {
@@ -28,82 +48,215 @@ function Dashboard() {
     };
 
     fetchUser();
-  }, [dispatch]);
+  }, [dispatch, navigate]);
 
-  if (loading) {
-    return <div>Loading dashboard...</div>;
-  }
+  const addKeyword = () => {
+    const kw = newKeyword.trim().toLowerCase();
+    if (kw && !keywords.includes(kw)) {
+      setKeywords([...keywords, kw]);
+      setNewKeyword("");
+      toast({ title: "Keyword Added", description: `"${kw}" has been added.` });
+    }
+  };
+
+  const removeKeyword = (kw) => {
+    setKeywords(keywords.filter(k => k !== kw));
+    toast({ title: "Keyword Removed", description: `"${kw}" has been removed.` });
+  };
+
+  const toggleAutomation = () => {
+    setAutomationEnabled(!automationEnabled);
+    toast({
+      title: automationEnabled ? "Automation Stopped" : "Automation Started",
+      description: automationEnabled 
+        ? "Your automation campaign has been paused." 
+        : "Your automation campaign is now active!"
+    });
+  };
+
+  if (loading) return <div className="text-center py-20 text-xl">Loading dashboard...</div>;
 
   return (
-    <DashboardCard user={user}/>
-  );
-}
-
-export default Dashboard;
-
-
-
-
-
- function DashboardCard({ user }) {
-  return (
-    <div className="max-w-5xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-2xl border border-gray-200">
-      {/* Profile Section */}
-      <div className="flex items-center space-x-6">
-        <img
-          src={user.profileURL}
-          alt={user.username}
-          className="w-28 h-28 rounded-full object-cover border-2 border-indigo-500"
-        />
-        <div>
-          <h2 className="text-3xl font-bold text-gray-800">{user.name}</h2>
-          <p className="text-gray-500">@{user.username}</p>
-          <div className="flex space-x-6 mt-2">
-            <span className="text-gray-700 font-medium">{user.followers} Followers</span>
-            <span className="text-gray-700 font-medium">{user.postCount} Posts</span>
-          </div>
-        </div>
+    <div className="min-h-screen bg-background relative">
+      <div className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/80" />
       </div>
 
-      {/* Reels Section */}
-      <div className="mt-8">
-        <h3 className="text-xl font-semibold text-gray-700 mb-4">Reels</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {user.reels.map((reel) => (
-            <div
-              key={reel._id}
-              className="bg-gray-50 rounded-xl shadow p-3 flex flex-col items-center"
+      <div className="relative z-10 container mx-auto px-6 py-10">
+        {/* User Stats */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+          <Card className="glass-effect border border-gray-200 shadow-lg">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Username</p>
+                <p className="text-2xl font-bold">@{user.username}</p>
+              </div>
+              <Users className="h-8 w-8 text-purple-600" />
+            </CardContent>
+          </Card>
+          <Card className="glass-effect border border-gray-200 shadow-lg">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Followers</p>
+                <p className="text-2xl font-bold">{user.followers}</p>
+              </div>
+              <Users className="h-8 w-8 text-blue-600" />
+            </CardContent>
+          </Card>
+          <Card className="glass-effect border border-gray-200 shadow-lg">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Posts</p>
+                <p className="text-2xl font-bold">{user.postCount}</p>
+              </div>
+              <Target className="h-8 w-8 text-green-600" />
+            </CardContent>
+          </Card>
+          <Card className="glass-effect border border-gray-200 shadow-lg">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Total Messages Sent</p>
+                <p className="text-2xl font-bold">{user.totalMessages || 0}</p>
+              </div>
+              <MessageCircle className="h-8 w-8 text-orange-600" />
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid gap-8 lg:grid-cols-3">
+          {/* Main Campaign Setup */}
+          <div className="lg:col-span-2">
+            <Tabs defaultValue="setup" className="space-y-6">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="setup">Campaign Setup</TabsTrigger>
+                <TabsTrigger value="analytics">Analytics</TabsTrigger>
+                <TabsTrigger value="triggered-reels">Triggered Reels</TabsTrigger>
+              </TabsList>
+
+              <TabsContent value="setup" className="space-y-6">
+                {/* Reels Selection */}
+                <Card className="glass-effect border border-gray-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Play className="h-5 w-5 text-primary" /> Select Instagram Reel
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="grid gap-4 md:grid-cols-3">
+                    {user.reels.map((reel) => (
+                      <div
+                        key={reel._id}
+                        className={`cursor-pointer rounded-lg border-2 p-3 transition-all ${
+                          selectedReel === reel._id
+                            ? 'border-primary shadow-lg'
+                            : 'border-border hover:border-primary/50'
+                        }`}
+                        onClick={() => setSelectedReel(reel._id)}
+                      >
+                         
+                          <img
+                            src={ reel.thumbnailURL || reel.mediaURL}
+                            alt={reel.reelTitle || "Reel"}
+                            className="w-full h-32 object-cover rounded-md mb-3"
+                          />
+                        
+                        <h4 className="font-medium text-sm text-foreground mb-2">{reel.reelTitle || "Untitled"}</h4>
+                        <p className="text-xs text-muted-foreground mb-1">{reel.message || "No message"}</p>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+
+                {/* Keywords */}
+                <Card className="glass-effect border border-gray-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Target className="h-5 w-5 text-primary" /> Trigger Keywords
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Enter keyword..."
+                        value={newKeyword}
+                        onChange={(e) => setNewKeyword(e.target.value)}
+                        onKeyPress={(e) => e.key === 'Enter' && addKeyword()}
+                      />
+                      <Button onClick={addKeyword} size="sm">
+                        <Plus className="h-4 w-4" />
+                      </Button>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {keywords.map((kw, i) => (
+                        <Badge key={i} className="flex items-center gap-1 bg-primary/10 text-primary hover:bg-primary/20">
+                          {kw}
+                          <button onClick={() => removeKeyword(kw)}>
+                            <Trash2 className="h-3 w-3" />
+                          </button>
+                        </Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Message Template */}
+                <Card className="glass-effect border border-gray-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <MessageCircle className="h-5 w-5 text-primary" /> Auto-Reply Message
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Label htmlFor="message">Message Template</Label>
+                    <Textarea
+                      id="message"
+                      value={messageTemplate}
+                      onChange={(e) => setMessageTemplate(e.target.value)}
+                      rows={4}
+                      className="mt-2"
+                    />
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Analytics & Triggered Reels Tabs can be added similarly */}
+            </Tabs>
+          </div>
+
+          {/* Control Panel */}
+          <div className="space-y-6">
+            {/* Automation */}
+            <Card className="glass-effect border border-gray-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Zap className="h-5 w-5 text-primary" /> Automation Control
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <Label className="text-base font-medium">
+                      {automationEnabled ? "Campaign Active" : "Campaign Paused"}
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      {automationEnabled ? "Automatically responding to comments" : "Click to start automation"}
+                    </p>
+                  </div>
+                  <Switch checked={automationEnabled} onCheckedChange={toggleAutomation} />
+                </div>
+              </CardContent>
+            </Card>
+
+            <Button 
+              className="w-full bg-gradient-to-r from-primary to-accent text-white shadow-lg hover:shadow-glow transition-all duration-300"
+              disabled={!selectedReel || keywords.length === 0}
             >
-              {reel.mediaURL.endsWith(".mp4") ? (
-                <video
-                  src={reel.mediaURL}
-                  controls
-                  className="w-full h-48 object-cover rounded-lg mb-2"
-                />
-              ) : (
-                <img
-                  src={reel.mediaURL}
-                  alt={reel.reelTitle || "Reel"}
-                  className="w-full h-48 object-cover rounded-lg mb-2"
-                />
-              )}
-              <p className="text-gray-600 text-sm text-center mb-1">
-                {reel.message || "No message"}
-              </p>
-              <p className="text-gray-400 text-xs mb-1">
-                {new Date(reel.timestamp).toLocaleString()}
-              </p>
-              <span
-                className={`px-2 py-1 text-xs rounded-full ${
-                  reel.isActive ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-                }`}
-              >
-                {reel.isActive ? "Active" : "Inactive"}
-              </span>
-            </div>
-          ))}
+              Save Campaign
+            </Button>
+          </div>
         </div>
       </div>
     </div>
   );
 }
+
+export default Dashboard;
