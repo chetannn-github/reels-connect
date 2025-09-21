@@ -110,7 +110,7 @@ export const refreshLongLivedToken = async (req, res) => {
 };
 
 
-const getUserInfo = async (user) => {
+export const getUserInfo = async (user) => {
      const userInfoRes = await axios.get(`https://graph.instagram.com/v23.0/me`, {
             params: {
                 fields: "id,username,followers_count,name,profile_picture_url,media_count",

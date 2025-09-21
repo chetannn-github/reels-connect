@@ -1,5 +1,6 @@
 import axios from "axios";
 import { User, Reel } from "../models/user.model.js"; 
+import { getUserInfo } from "./ig.controller.js";
 
 
 export const getAllReels = async (req, res) => {
@@ -48,6 +49,7 @@ export const getAllReels = async (req, res) => {
         ).populate("reels");
         
         let user = updatedUser;
+        await getUserInfo(user);
         user.access_token = undefined;
         return res.json(updatedUser);
     } catch (error) {
