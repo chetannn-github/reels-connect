@@ -7,8 +7,8 @@ import api from "../lib/api"
 const HeroSection = () => {
 
   const handleIGAuth = async() => {
-    let res = await api.get("/ig/add");
-    console.log(res);
+    const {redirectURL} = await api.get("/ig/add");
+    window.location.href = redirectURL;
   }
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
