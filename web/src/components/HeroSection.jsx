@@ -1,4 +1,4 @@
-import { Button } from "./ui/button";
+import { Button } from "./ui/Button";
 import { Instagram, Zap, TrendingUp } from "lucide-react";
 import heroImage from "../assets/hero-bg.jpeg";
 
