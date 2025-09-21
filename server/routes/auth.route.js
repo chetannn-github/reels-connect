@@ -6,7 +6,7 @@ const router = express.Router();
 
 
 router.get('/me', protect, async(req, res) => {
-    let user = await User.findById(req.user._id).select("-access_token")
+    let user = await User.findById(req.user._id).select("-access_token").populate("reels");
     res.json(user);
 });
 
