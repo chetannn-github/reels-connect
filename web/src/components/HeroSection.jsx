@@ -1,8 +1,15 @@
 import { Button } from "./ui/Button";
 import { Instagram, Zap, TrendingUp } from "lucide-react";
 import heroImage from "../assets/hero-bg.jpeg";
+import api from "../lib/api"
+
 
 const HeroSection = () => {
+
+  const handleIGAuth = async() => {
+    let res = await api.get("/ig/add");
+    console.log(res);
+  }
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
@@ -47,7 +54,7 @@ const HeroSection = () => {
             Scale your content creation like never before.
           </p>
           
-          <div className="flex justify-center">
+          <div className="flex justify-center" onClick={handleIGAuth}>
             <Button variant="hero" size="xl" className="animate-glow-pulse">
               Start Free Automation
             </Button>
