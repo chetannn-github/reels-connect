@@ -2,6 +2,8 @@ import React from 'react'
 import HeroSection from '../components/HeroSection'
 import UserJourney from '../components/UserJourney'
 import FeaturesSection from '../components/FeaturesSection'
+import PricingSection from '../components/PricingSection'
+import Footer from '../components/Footer'
 
 function Home() {
   return (
@@ -9,8 +11,8 @@ function Home() {
       <HeroSection />
       <UserJourney />
       <FeaturesSection />
-      {/* <PricingSection />
-      <Footer /> */}
+      <PricingSection />
+      <Footer />
     </div>
   )
 }
