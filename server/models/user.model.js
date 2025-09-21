@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
     user_id: { type: String, required: true },
     access_token: { type: String, required: true },
     postCount : { type : Number, default : 0 },
-    reels: [{ type: mongoose.Schema.Types.ObjectId, ref: "Reel" }] 
+    reels: [{ type: mongoose.Schema.Types.ObjectId, ref: "Reel" }],
+    messagesSent : { type : Number, default : 0 },
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

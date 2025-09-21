@@ -1,6 +1,6 @@
 import { WEBHOOK_VERIFY_TOKEN } from "../config/env.js";
 import axios from "axios";
-import { Reel } from "../models/user.model.js";
+import { Reel, User } from "../models/user.model.js";
 
 
 
@@ -47,6 +47,10 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           // !TODO if keyword then only send message and if reel is isActive
           if(matchedKeyword) console.log("keyword matched broo")
           await sendPrivateReply(userID,access_token,comment_id, comment_reply);
+          
+          let postOwner = await User.findById(reel?.user._id);
+          postOwner.messagesSent += 1;
+          await postOwner.save();
         
         }
         
