@@ -16,4 +16,6 @@ export const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 export const APP_SECRET = process.env.APP_SECRET;
 export const WEBHOOK_VERIFY_TOKEN = process.env.WEBHOOK_VERIFY_TOKEN
 
-export const FRONTEND_BASEURL = "http://localhost:5173/"
+
+export const FRONTEND_BASEURL = "http://localhost:5173" ;
+// export const FRONTEND_BASEURL =  "https://reel-connect.onrender.com";
