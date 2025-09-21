@@ -116,7 +116,7 @@ function Dashboard() {
             <CardContent className="p-6 flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Total Messages Sent</p>
-                <p className="text-2xl font-bold">{user.totalMessages || 0}</p>
+                <p className="text-2xl font-bold">{user.messagesSent || 0}</p>
               </div>
               <MessageCircle className="h-8 w-8 text-orange-600" />
             </CardContent>
