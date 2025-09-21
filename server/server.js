@@ -8,16 +8,21 @@ import igRoutes from './routes/ig.route.js';
 import reelRoutes from './routes/reel.route.js';
 import keywordRoutes from './routes/keyword.route.js';
 import webhookRoutes from './routes/webhook.route.js';
+import paymentRoutes from './routes/payment.route.js'
 
 const app = express();
-  app.use(cors({ origin: "*" }));
+
+app.use(cors({ origin: "*" }));
 app.use('/api/webhook', webhookRoutes);
+
+
 app.use(express.json());
 
 app.use("/api/auth",authRoutes);
 app.use('/api/ig', igRoutes);
 app.use('/api/reels', reelRoutes);
 app.use('/api/keywords', keywordRoutes);
+app.use('/api/payment', paymentRoutes)
 
 
 
