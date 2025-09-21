@@ -6,6 +6,8 @@ export const addKeywordAndMessage = async (req, res) => {
         const { reelId , keywords, message} = req.body; 
         const userId = req.user._id;
 
+        
+
 
         if(!Array.isArray(keywords) || keywords.length === 0) {
             return res.status(400).json({ error: "Keywords must be a non-empty array" });
@@ -15,7 +17,7 @@ export const addKeywordAndMessage = async (req, res) => {
 
         if (!reel) return res.status(404).json({ error: "Reel not found" });
         
-        const updatedKeywords = Array.from(new Set([...reel.keywords, ...keywords]));
+        const updatedKeywords = Array.from(new Set([...keywords]));
         reel.isActive = true;
         reel.keywords = updatedKeywords;
         reel.message = message;
