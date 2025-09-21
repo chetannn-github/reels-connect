@@ -1,12 +1,13 @@
 import { Reel, User } from "../models/user.model.js"; 
+import { USER_LIMIT } from "../utils/constant.js";
 
 
 export const addKeywordAndMessage = async (req, res) => {
     try {
         const { reelId , keywords, message, isActive} = req.body; 
+        let user = req.user;
         const userId = req.user._id;
 
-    
         if(!Array.isArray(keywords) || keywords.length === 0) {
             return res.status(400).json({ error: "Keywords must be a non-empty array" });
         }
@@ -14,16 +15,23 @@ export const addKeywordAndMessage = async (req, res) => {
         const reel = await Reel.findOne({ reelId: reelId, user: userId });
 
         if (!reel) return res.status(404).json({ error: "Reel not found" });
+
+        
+        // prohibit user to automate more than one reel
+        if(isActive &&  user.activeReelsCount >= USER_LIMIT[user.plan]) {
+            return res.json({error : "You can automate more than  reel."})
+        }
         
         const updatedKeywords = Array.from(new Set([...keywords]));
         reel.isActive = isActive;
         reel.keywords = updatedKeywords;
         reel.message = message;
+        
         await reel.save();
-
+        user.activeReelsCount += isActive ? 1 : -1;
+        await user.save();
         // console.log(reel)
-
-        let user = await User.findOne({_id : reel.user}).populate("reels")
+        user = await User.findOne({_id : reel.user}).populate("reels")
 
         return res.json({
             message: "Keywords added successfully",

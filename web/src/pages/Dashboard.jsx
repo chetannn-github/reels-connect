@@ -85,8 +85,8 @@ function Dashboard() {
         message: messageTemplate,
         isActive : automationEnabled
       }, token);
-
-      dispatch(setAuth({user : res.user, token}));
+      if(res.error) console.log(res.error);
+      else dispatch(setAuth({user : res.user, token}));
 
     } catch (err) {
       console.error(err);

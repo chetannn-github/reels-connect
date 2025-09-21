@@ -11,7 +11,7 @@ export const protect = async (req, res, next) => {
         if (!token) return res.status(401).json({ message: "Invalid token format" });
 
         const decoded = verifyToken(token);
-        const user = await User.findOne({ user_id: decoded.user_id });
+        const user = await User.findOne({ user_id: decoded.user_id }).populate("reels");
 
 
         if (!user) {
