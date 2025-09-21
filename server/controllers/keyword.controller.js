@@ -19,16 +19,21 @@ export const addKeywordAndMessage = async (req, res) => {
         
         // prohibit user to automate more than one reel
         if(isActive &&  user.activeReelsCount >= USER_LIMIT[user.plan]) {
-            return res.json({error : "You can automate more than  reel."})
+            return res.json({error : `You can automate more than ${USER_LIMIT[user.plan]} reel.`, user})
         }
         
         const updatedKeywords = Array.from(new Set([...keywords]));
+        if(reel.isActive ^ isActive) user.activeReelsCount += isActive ? 1 : -1;
+
         reel.isActive = isActive;
         reel.keywords = updatedKeywords;
         reel.message = message;
         
         await reel.save();
-        user.activeReelsCount += isActive ? 1 : -1;
+
+        
+        
+        
         await user.save();
         // console.log(reel)
         user = await User.findOne({_id : reel.user}).populate("reels")
