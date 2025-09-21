@@ -6,9 +6,15 @@ export const USER_LIMIT = {
 }
 
 export const PRICING = {
-    "basic" : "100",
-    "premium" : "250"
+    "basic" : 1,
+    "premium" : 2
 
+}
+
+
+export const PRICE_TO_PLAN = {
+    1 : "basic",
+    2 : "premium"
 }
 
 

@@ -25,7 +25,9 @@ const userSchema = new mongoose.Schema({
     postCount : { type : Number, default : 0 },
     reels: [{ type: mongoose.Schema.Types.ObjectId, ref: "Reel" }],
     messagesSent : { type : Number, default : 0 },
-    activeReelsCount: { type: Number, default: 0 }, 
+    activeReelsCount: { type: Number, default: 0 },
+    plan_expiry: {type : Date},
+    payment : {type: mongoose.Schema.Types.ObjectId, ref: "Payment" },
     plan: { 
         type: String, 
         enum: ["free", "basic", "premium"], 
