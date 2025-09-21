@@ -54,25 +54,55 @@ function Dashboard() {
     const kw = newKeyword.trim().toLowerCase();
     if (kw && !keywords.includes(kw)) {
       setKeywords([...keywords, kw]);
-      setNewKeyword("");
-      toast({ title: "Keyword Added", description: `"${kw}" has been added.` });
+      setNewKeyword("");  
     }
   };
 
   const removeKeyword = (kw) => {
     setKeywords(keywords.filter(k => k !== kw));
-    toast({ title: "Keyword Removed", description: `"${kw}" has been removed.` });
+    
+  };
+
+
+  useEffect(() => {
+    if (!selectedReel) return;
+    const reel = user.reels.find(r => r.reelId === selectedReel);
+    if (reel) {
+      setKeywords(reel.keywords || []);
+      setMessageTemplate(reel.message || "");
+      setAutomationEnabled(reel.isActive || false);
+    }
+  }, [selectedReel, user?.reels]);
+
+  const handleSave = async () => {
+    try {
+      const token = localStorage.getItem("jwt");
+      if (!token) return navigate("/");
+
+      let res  = await api.post(`/keywords`, {
+        reelId : selectedReel,
+        keywords,
+        message: messageTemplate,
+        isActive : automationEnabled
+      }, token);
+
+      dispatch(setAuth({user : res.user, token}));
+
+    } catch (err) {
+      console.error(err);
+      toast({
+        title: "Error",
+        description: "Failed to update reel.",
+        variant: "destructive",
+      });
+    }
   };
 
   const toggleAutomation = () => {
     setAutomationEnabled(!automationEnabled);
-    toast({
-      title: automationEnabled ? "Automation Stopped" : "Automation Started",
-      description: automationEnabled 
-        ? "Your automation campaign has been paused." 
-        : "Your automation campaign is now active!"
-    });
   };
+
+ 
 
   if (loading) return <div className="text-center py-20 text-xl">Loading dashboard...</div>;
 
@@ -144,13 +174,13 @@ function Dashboard() {
                   <CardContent className="grid gap-4 md:grid-cols-3">
                     {user.reels.map((reel) => (
                       <div
-                        key={reel._id}
+                        key={reel.reelId}
                         className={`cursor-pointer rounded-lg border-2 p-3 transition-all ${
-                          selectedReel === reel._id
+                          selectedReel === reel.reelId
                             ? 'border-primary shadow-lg'
                             : 'border-border hover:border-primary/50'
                         }`}
-                        onClick={() => setSelectedReel(reel._id)}
+                        onClick={() => setSelectedReel(reel.reelId)}
                       >
                          
                           <img
@@ -218,11 +248,11 @@ function Dashboard() {
                 </Card>
               </TabsContent>
 
-              {/* Analytics & Triggered Reels Tabs can be added similarly */}
+    
             </Tabs>
           </div>
 
-          {/* Control Panel */}
+           {/* Control Panel */}
           <div className="space-y-6">
             {/* Automation */}
             <Card className="glass-effect border border-gray-200 shadow-lg">
@@ -249,10 +279,12 @@ function Dashboard() {
             <Button 
               className="w-full bg-gradient-to-r from-primary to-accent text-white shadow-lg hover:shadow-glow transition-all duration-300"
               disabled={!selectedReel || keywords.length === 0}
+              onClick = {handleSave}
             >
               Save Campaign
             </Button>
-          </div>
+          </div>      
+      
         </div>
       </div>
     </div>
