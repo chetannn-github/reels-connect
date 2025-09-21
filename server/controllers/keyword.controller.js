@@ -1,14 +1,12 @@
-import { Reel } from "../models/user.model.js"; 
+import { Reel, User } from "../models/user.model.js"; 
 
 
 export const addKeywordAndMessage = async (req, res) => {
     try {
-        const { reelId , keywords, message} = req.body; 
+        const { reelId , keywords, message, isActive} = req.body; 
         const userId = req.user._id;
 
-        
-
-
+    
         if(!Array.isArray(keywords) || keywords.length === 0) {
             return res.status(400).json({ error: "Keywords must be a non-empty array" });
         }
@@ -18,14 +16,18 @@ export const addKeywordAndMessage = async (req, res) => {
         if (!reel) return res.status(404).json({ error: "Reel not found" });
         
         const updatedKeywords = Array.from(new Set([...keywords]));
-        reel.isActive = true;
+        reel.isActive = isActive;
         reel.keywords = updatedKeywords;
         reel.message = message;
         await reel.save();
 
+        // console.log(reel)
+
+        let user = await User.findOne({_id : reel.user}).populate("reels")
+
         return res.json({
             message: "Keywords added successfully",
-            reel,
+            user
         });
     } catch (error) {
         console.error("Error adding keywords:", error);
