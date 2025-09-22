@@ -3,7 +3,7 @@ import { Instagram, Zap, TrendingUp, Loader2 } from "lucide-react";
 import heroImage from "../assets/hero-bg.jpeg";
 import api from "../lib/api"
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { sleep } from "../lib/constant";
 
@@ -11,6 +11,7 @@ import { sleep } from "../lib/constant";
 const HeroSection = () => {
   const user = useSelector((state) => state.auth?.user);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleIGAuth = async() => {
     if(isLoading) return;
@@ -26,6 +27,20 @@ const HeroSection = () => {
       setIsLoading(false);
     }
     
+  }
+
+
+  const handleNavigate = async ()=>{
+     if(isLoading) return;
+    try {
+      setIsLoading(true)
+      await sleep(1);
+      navigate("/dashboard")
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   }
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -78,13 +93,14 @@ const HeroSection = () => {
           </div>}
 
 
-          {user && <Link to={"/dashboard"}>
-            <div className="flex justify-center">
+          {user && 
+            <div className="flex justify-center" onClick={handleNavigate}>
               <Button variant="hero" size="xl" className="animate-glow-pulse">
-                Explore Dashboard
+                {isLoading ? <><Loader2 className="h-4 w-4 animate-spin"/> Redirecting...</>  : "Explore Dashboard"}
+               
               </Button>
             </div>
-          </Link>}
+          }
           
           <div className="mt-16 flex items-center justify-center gap-8 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
