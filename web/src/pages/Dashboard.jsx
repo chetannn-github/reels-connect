@@ -11,7 +11,6 @@ import { Label } from "../components/ui/Label";
 import { Badge } from "../components/ui/Badge";
 import { Textarea } from "../components/ui/Textarea";
 import { Switch } from "../components/ui/Switch";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/Select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs";
 
 import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2 } from "lucide-react";
@@ -32,6 +31,8 @@ function Dashboard() {
   const [automationEnabled, setAutomationEnabled] = useState(false);
 
   const [isSaving, setIsSaving] = useState(false);
+  const [isAddingKeyword, setIsAddingKeyword] =  useState(false);
+  const [removingKeywordID,setRemovingKeywordID] = useState(null);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -53,17 +54,23 @@ function Dashboard() {
     fetchUser();
   }, [dispatch, navigate]);
 
-  const addKeyword = () => {
+  const addKeyword = async() => {
+    setIsAddingKeyword(true)
+    await sleep(0.4);
+
     const kw = newKeyword.trim().toLowerCase();
     if (kw && !keywords.includes(kw)) {
       setKeywords([...keywords, kw]);
       setNewKeyword("");  
     }
+    setIsAddingKeyword(false);
   };
 
-  const removeKeyword = (kw) => {
+  const removeKeyword = async(kw) => {
+    setRemovingKeywordID(kw)
+    await sleep(0.4);
     setKeywords(keywords.filter(k => k !== kw));
-    
+    setRemovingKeywordID(null)
   };
 
 
@@ -220,7 +227,8 @@ function Dashboard() {
                         onKeyPress={(e) => e.key === 'Enter' && addKeyword()}
                       />
                       <Button onClick={addKeyword} size="sm">
-                        <Plus className="h-4 w-4" />
+                        {!isAddingKeyword && <Plus className="h-4 w-4" />}
+                        {isAddingKeyword && <Loader2 className="h-4 w-4 animate-spin" />}
                       </Button>
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -228,7 +236,8 @@ function Dashboard() {
                         <Badge key={i} className="flex items-center gap-1 bg-primary/10 text-primary hover:bg-primary/20">
                           {kw}
                           <button onClick={() => removeKeyword(kw)}>
-                            <Trash2 className="h-3 w-3" />
+                            {removingKeywordID !== kw && <Trash2 className="h-3 w-3" />}
+                            {removingKeywordID === kw && <Loader2 className="h-3 w-3 animate-spin" />}
                           </button>
                         </Badge>
                       ))}
@@ -329,7 +338,7 @@ function Dashboard() {
               disabled={!selectedReel || keywords.length === 0}
               onClick = {handleSave}
             >
-              {isSaving && <><Loader2 className="w-4 h-4 animate-spin" /> Saving..</>}
+              {isSaving && <><Loader2 className="w-4 h-4 animate-spin" /> Saving...</>}
 
               {!isSaving && <>Save Campaign</>}
             </Button>
