@@ -17,6 +17,7 @@ import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2, 
 import { useToast } from "../hooks/use-toast";
 import { PLAN_TO_LABEL, sleep } from "../lib/constant";
 import Fireworks from "../components/ui/Firework";
+import { FullScreenLoader } from "../components/ui/FullScreenLoader";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -152,7 +153,7 @@ function Dashboard() {
 
  
 
-  if (loading) return <div className="text-center py-20 text-xl">Loading dashboard...</div>;
+  if (loading) return <FullScreenLoader variant="orbit" message="Welcome to Dashboard" isVisible={loading}/>
 
   return (
     <div className="min-h-screen bg-background relative">
