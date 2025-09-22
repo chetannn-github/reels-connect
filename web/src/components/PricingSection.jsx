@@ -15,73 +15,74 @@ const PricingSection = () => {
   const [isLoading,setIsLoading] = useState(null);
 
 
-  const plans = [
-    {
-      type: "free",
-      name: "Free",
-      icon: Zap,
-      price: "₹0",
-      period: "forever",
-      description: "Perfect for getting started",
-      features: [
-        "1 reel automation based on keywords",
-        "Automated replies to reel comments",
-        "Basic templates",
-        "Email support",
-        "Instagram analytics",
-      ],
-      buttonText: "Start Free",
-      buttonVariant: "outline",
-      buttonLoadingText: "Starting...",
-      popular: false,
-      disabled: false,
-    },
-    {
-      type: "basic",
-      name: "Pro",
-      icon: Star,
-      price: "₹1000",
-      period: "per month",
-      description: "For serious content creators",
-      features: [
-        "Up to 30 reels automation",
-        "Advanced keyword targeting",
-        "Automated comment replies",
-        "Premium templates",
-        "Priority support",
-        "Advanced analytics",
-        "Custom scheduling",
-      ],
-      buttonText: "Get Pro",
-      buttonVariant: "hero",
-      buttonLoadingText: "Processing...",
-      popular: true,
-      disabled: false,
-    },
-    {
-      type: "premium",
-      name: "AI Pro",
-      icon: Crown,
-      price: "₹2500",
-      period: "per month",
-      description: "AI-powered automation (Coming Soon)",
-      features: [
-        "Unlimited reel automation",
-        "AI-powered content creation",
-        "Smart keyword research",
-        "Custom AI chatbot for DMs",
-        "Advanced automation rules",
-        "Dedicated account manager",
-        "White-label solution",
-        "API access",
-      ],
-      buttonText: "Coming Soon",
-      buttonVariant: "outline",
-      buttonLoadingText: "Launching Soon...",
-      popular: false,
-      disabled: true,
-    },
-  ];
+const plans = [
+  {
+    type: "free",
+    name: "Free",
+    icon: Zap,
+    price: "₹0",
+    period: "forever",
+    description: "Perfect for getting started",
+    features: [
+      "upto 1 reel automation",
+      "20 automated messages",
+      "Automated replies to reel comments",
+      "Basic templates",
+      "Email support",
+      "Limited analytics",
+    ],
+    buttonText: "Start Free",
+    buttonVariant: "outline",
+    buttonLoadingText: "Starting...",
+    popular: false,
+    disabled: false,
+  },
+  {
+    type: "basic",
+    name: "Pro",
+    icon: Star,
+    price: "₹1000",
+    period: "per month",
+    description: "For serious content creators",
+    features: [
+      "Up to 30 reels automation",
+      "Advanced keyword targeting",
+      "Automated comment replies",
+      "Premium templates",
+      "Priority support",
+      "Advanced analytics",
+    ],
+    buttonText: "Get Pro",
+    buttonVariant: "hero",
+    buttonLoadingText: "Processing...",
+    popular: true,
+    disabled: false,
+  },
+  {
+    type: "premium",
+    name: "AI Pro",
+    icon: Crown,
+    price: "₹2500",
+    period: "per month",
+    description: "AI-powered automation (Coming Soon)",
+    features: [
+      "Unlimited reel automation",
+      "AI-powered content creation",
+      "Smart keyword research",
+      "Custom AI chatbot for DMs",
+      "Premium templates",
+      "Priority support",
+      "Advanced analytics",
+    ],
+    buttonText: "Coming Soon",
+    buttonVariant: "outline",
+    buttonLoadingText: "Launching Soon...",
+    popular: false,
+    disabled: true,
+  },
+];
+
+
 
 
   const createOrder = async (planType) => {
@@ -266,10 +267,6 @@ const PricingSection = () => {
             All plans include our core automation features and 24/7 support
           </p>
           <div className="flex flex-wrap justify-center gap-8 text-sm text-muted-foreground">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-success rounded-full"></div>
-              30-day money back guarantee
-            </div>
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-primary rounded-full"></div>
               No setup fees
