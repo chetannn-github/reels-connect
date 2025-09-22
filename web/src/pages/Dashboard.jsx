@@ -14,8 +14,9 @@ import { Switch } from "../components/ui/Switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/Select";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs";
 
-import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock } from "lucide-react";
+import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2 } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
+import { sleep } from "../lib/constant";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -29,6 +30,8 @@ function Dashboard() {
   const [newKeyword, setNewKeyword] = useState("");
   const [messageTemplate, setMessageTemplate] = useState("");
   const [automationEnabled, setAutomationEnabled] = useState(false);
+
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -76,6 +79,8 @@ function Dashboard() {
 
   const handleSave = async () => {
     try {
+      setIsSaving(true);
+      await sleep(1);
       const token = localStorage.getItem("jwt");
       if (!token) return navigate("/");
 
@@ -95,6 +100,8 @@ function Dashboard() {
         description: "Failed to update reel.",
         variant: "destructive",
       });
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -322,7 +329,9 @@ function Dashboard() {
               disabled={!selectedReel || keywords.length === 0}
               onClick = {handleSave}
             >
-              Save Campaign
+              {isSaving && <><Loader2 className="w-4 h-4 animate-spin" /> Saving..</>}
+
+              {!isSaving && <>Save Campaign</>}
             </Button>
           </div>      
       
