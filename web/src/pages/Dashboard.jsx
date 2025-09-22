@@ -13,7 +13,7 @@ import { Textarea } from "../components/ui/Textarea";
 import { Switch } from "../components/ui/Switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs";
 
-import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2, Video, Crown } from "lucide-react";
+import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2, Video, Crown, BarChart3 } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
 import { PLAN_TO_LABEL, sleep } from "../lib/constant";
 
@@ -34,8 +34,10 @@ function Dashboard() {
   const [isAddingKeyword, setIsAddingKeyword] =  useState(false);
   const [removingKeywordID,setRemovingKeywordID] = useState(null);
 
+  const [analytics, setAnalytics] = useState({})
+
   useEffect(() => {
-    const fetchUser = async () => {
+    const fetchUserAndAnalytics = async () => {
       try {
         const token = localStorage.getItem("jwt");
         if (!token) return navigate("/");
@@ -44,7 +46,10 @@ function Dashboard() {
         dispatch(setAuth({ user: userData, token }));
         setKeywords(userData?.keywords || []);
         setMessageTemplate(userData?.messageTemplate || "");
-        setSelectedReel(userData?.reels[0]?.reelId)
+        setSelectedReel(userData?.reels[0]?.reelId);
+
+        const analyticsRes = await api.get("/analytics", token);
+        setAnalytics(analyticsRes)
       } catch (err) {
         console.error("Failed to fetch user info:", err);
       } finally {
@@ -52,7 +57,7 @@ function Dashboard() {
       }
     };
 
-    fetchUser();
+    fetchUserAndAnalytics();
   }, [dispatch, navigate]);
 
   const addKeyword = async() => {
@@ -335,6 +340,57 @@ function Dashboard() {
                   </CardContent>
                 </Card>
               </TabsContent>
+
+
+             <TabsContent value="analytics" className="space-y-6">
+                <Card className="glass-effect border border-gray-200 shadow-lg">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <BarChart3 className="h-5 w-5 text-primary" /> Comments Analytics
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {analytics?.data?.map((item) => (
+                      <div
+                        key={item._id}
+                        className="flex items-center gap-4 rounded-lg border p-4 shadow hover:shadow-lg transition-all"
+                      >
+                        {/* Reel Thumbnail as Circle */}
+                        <img
+                          src={item.reel.thumbnailURL || item.reel.mediaURL}
+                          alt="Reel Thumbnail"
+                          className="w-16 h-16 rounded-full object-cover border"
+                        />
+
+                        {/* Details */}
+                        <div className="flex-1">
+                          {/* Commenter */}
+                          <h4 className="font-semibold text-sm mb-1">@{item.commentor}</h4>
+
+                          {/* Comment Text */}
+                          <p className="text-sm text-gray-700 mb-1">Comment : {item.commentText}</p>
+
+                          {/* DM Info */}
+                          {item.dmSent ? (
+                            <p className="text-xs text-green-600">
+                              DM Sent: "{item.dmMessage}"
+                            </p>
+                          ) : (
+                            <p className="text-xs text-red-600">❌ DM Not Sent</p>
+                          )}
+
+                          {/* Time */}
+                          <p className="text-xs text-muted-foreground mt-1">
+                            {new Date(item.createdAt).toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+            </TabsContent>
+
+
 
             </Tabs>
           </div>
