@@ -56,12 +56,12 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           await postOwner.save();
 
           const comment = new commentAnalytics({
-            userId : postOwner,
-            reelId : reel,
+            user: postOwner,
+            reel,
             commentText,
             dmMessage : comment_reply,
             dmSent : true,
-            commenter : commentorUsername
+            commentor : commentorUsername
           });
 
           await comment.save();

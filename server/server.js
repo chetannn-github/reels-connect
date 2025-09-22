@@ -9,6 +9,7 @@ import reelRoutes from './routes/reel.route.js';
 import keywordRoutes from './routes/keyword.route.js';
 import webhookRoutes from './routes/webhook.route.js';
 import paymentRoutes from './routes/payment.route.js'
+import analyticsRoutes from './routes/analytics.route.js'
 
 const app = express();
 
@@ -22,7 +23,8 @@ app.use("/api/auth",authRoutes);
 app.use('/api/ig', igRoutes);
 app.use('/api/reels', reelRoutes);
 app.use('/api/keywords', keywordRoutes);
-app.use('/api/payment', paymentRoutes)
+app.use('/api/payment', paymentRoutes);
+app.use('/api/analytics', analyticsRoutes)
 
 
 

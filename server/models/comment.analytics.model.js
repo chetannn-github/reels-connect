@@ -3,17 +3,17 @@ import mongoose from "mongoose";
 
 const commentAnalyticsSchema = new mongoose.Schema(
   {
-    reelId: {
+    reel: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Reel",
       required: true,
     },
-    userId: {
+    user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-    commenter:  { type: String, required: true }, 
+    commentor:  { type: String, required: true }, 
     
     commentText: {
       type: String,
