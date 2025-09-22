@@ -235,7 +235,7 @@ function Dashboard() {
           {((user.plan === "free" && (user?.messagesSent || 0) >= 10) ||
             (user.plan === "basic" && (user?.activeReelsCount || 0) >= 30)) && (
               <Card
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate("/plans")}
                 className="cursor-pointer bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-xl hover:scale-105 transition-transform"
               >
                 <CardContent className="p-6 flex items-center justify-between">

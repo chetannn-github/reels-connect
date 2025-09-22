@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import api from "./lib/api"
 import { setAuth } from "./store/authSlice";
 import { FullScreenLoader } from "./components/ui/FullScreenLoader";
+import Plans from "./pages/Plans";
 
 
 function App() {
@@ -40,7 +41,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<Dashboard />} />
-         <Route path="/ig-success" element={<IGSuccess />} />
+        <Route path="/ig-success" element={<IGSuccess />} />
+         <Route path="/plans" element={<Plans />} />
+
       </Routes>
     </Router>
   );
