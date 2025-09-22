@@ -7,7 +7,8 @@ import { useSelector } from "react-redux";
 
 const PricingSection = () => {
   const navigate = useNavigate();
-  const current_plan = useSelector((state) => state.auth?.user?.plan);
+  const user = useSelector((state) => state.auth?.user);
+  const current_plan = user?.plan;
   const planIndex = getPlanIndex(current_plan);
 
 
@@ -120,6 +121,11 @@ const PricingSection = () => {
     razorpayWindow.open();
   }
 
+  const handleIGAuth = async() => {
+      const {redirectURL} = await api.get("/ig/add");
+      window.location.href = redirectURL;
+    }
+
   return (
     <section className="py-24 px-6">
       <div className="max-w-7xl mx-auto">
@@ -194,7 +200,7 @@ const PricingSection = () => {
                   </div>
         
                   {/* Button */}
-                  <Button 
+                  {user && <Button 
                     onClick  = {()=> createOrder(plan.type)}
                     variant={plan.buttonVariant} 
                     size="lg" 
@@ -203,7 +209,19 @@ const PricingSection = () => {
 
                   >
                     {plan.buttonText}
-                  </Button>
+                  </Button>}
+
+
+                   {!user && <Button 
+                    onClick  = {handleIGAuth }
+                    variant={plan.buttonVariant} 
+                    size="lg" 
+                    className="w-full"
+                    disabled={planIndex >= index || plan.disabled}
+
+                  >
+                    {plan.buttonText}
+                  </Button>}
                 </div>
               </div>
             );
