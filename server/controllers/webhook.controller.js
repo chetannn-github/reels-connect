@@ -1,6 +1,7 @@
 import { WEBHOOK_VERIFY_TOKEN } from "../config/env.js";
 import axios from "axios";
 import { Reel, User } from "../models/user.model.js";
+import commentAnalytics from "../models/comment.analytics.model.js";
 
 
 
@@ -29,10 +30,12 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           
           const comment_id = change?.value?.id;
           const reel_id = change?.value?.media?.id;
-          const comment = change?.value?.text?.toLowerCase();
+          const commentText = change?.value?.text?.toLowerCase();
+
+          const commentorUsername = change?.value?.from?.username;
 
           console.log("🆔 Comment ID:", comment_id);
-          console.log("💬 New Comment:", comment);
+          console.log("💬 New Comment:", commentText);
 
           let reel = await Reel.findOne({reelId : reel_id}).populate("user");
           const access_token = reel?.user?.access_token;
@@ -41,7 +44,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           const keywords = reel?.keywords || [];
 
           const matchedKeyword = keywords.find(keyword => 
-            comment.includes(keyword.toLowerCase())
+            commentText.includes(keyword.toLowerCase())
           );
 
           // !TODO if keyword then only send message and if reel is isActive
@@ -51,6 +54,17 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           let postOwner = await User.findById(reel?.user._id);
           postOwner.messagesSent += 1;
           await postOwner.save();
+
+          const comment = new commentAnalytics({
+            userId : postOwner,
+            reelId : reel_id,
+            commentText,
+            dmMessage : comment_reply,
+            dmSent : true,
+            commenter : commentorUsername
+          });
+
+          await comment.save();
         
         }
         
