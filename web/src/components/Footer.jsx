@@ -14,23 +14,27 @@ const Footer = () => {
               The ultimate Instagram automation platform for creators who want to scale their content without the hassle.
             </p>
             <div className="flex gap-4">
-              <a href="#" className="p-2 glass-effect rounded-lg hover:scale-110 transition-transform">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="p-2 glass-effect rounded-lg hover:scale-110 transition-transform">
-                <Twitter className="w-5 h-5" />
-              </a>
-              <a href="#" className="p-2 glass-effect rounded-lg hover:scale-110 transition-transform">
+              <a
+                href="https://www.linkedin.com/in/chetannn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 glass-effect rounded-lg hover:scale-110 transition-transform"
+              >
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 glass-effect rounded-lg hover:scale-110 transition-transform">
+              <a
+                href="mailto:chetan.rajawat25@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-2 glass-effect rounded-lg hover:scale-110 transition-transform"
+              >
                 <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>
 
           {/* Product */}
-          <div>
+          {/* <div>
             <h4 className="font-semibold mb-4">Product</h4>
             <ul className="space-y-3 text-muted-foreground">
               <li><a href="#" className="hover:text-foreground transition-colors">Features</a></li>
@@ -38,10 +42,10 @@ const Footer = () => {
               <li><a href="#" className="hover:text-foreground transition-colors">API</a></li>
               <li><a href="#" className="hover:text-foreground transition-colors">Integrations</a></li>
             </ul>
-          </div>
+          </div> */}
 
           {/* Support */}
-          <div>
+          {/* <div>
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-3 text-muted-foreground">
               <li><a href="#" className="hover:text-foreground transition-colors">Documentation</a></li>
@@ -49,17 +53,17 @@ const Footer = () => {
               <li><a href="#" className="hover:text-foreground transition-colors">Contact</a></li>
               <li><a href="#" className="hover:text-foreground transition-colors">Status</a></li>
             </ul>
-          </div>
+          </div> */}
         </div>
 
         <div className="border-t border-border/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-muted-foreground text-sm">
-            © 2024 ReelAutomate. All rights reserved.
+            © 2025 Reels Connecy. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition-colors">Privacy Policy</a>
+            <a href="https://www.termsfeed.com/live/d6c011a0-2cd0-4da7-8797-f9dcf42705a8" className="hover:text-foreground transition-colors">Privacy Policy</a>
             <a href="#" className="hover:text-foreground transition-colors">Terms of Service</a>
-            <a href="#" className="hover:text-foreground transition-colors">Cookie Policy</a>
+            {/* <a href="#" className="hover:text-foreground transition-colors">Cookie Policy</a> */}
           </div>
         </div>
       </div>
