@@ -2,9 +2,12 @@ import { Button } from "./ui/Button";
 import { Instagram, Zap, TrendingUp } from "lucide-react";
 import heroImage from "../assets/hero-bg.jpeg";
 import api from "../lib/api"
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 
 const HeroSection = () => {
+  const user = useSelector((state) => state.auth?.user);
 
   const handleIGAuth = async() => {
     const {redirectURL} = await api.get("/ig/add");
@@ -54,11 +57,20 @@ const HeroSection = () => {
             Scale your content creation like never before.
           </p>
           
-          <div className="flex justify-center" onClick={handleIGAuth}>
+          {!user && <div className="flex justify-center" onClick={handleIGAuth}>
             <Button variant="hero" size="xl" className="animate-glow-pulse">
               Start Free Automation
             </Button>
-          </div>
+          </div>}
+
+
+          {user && <Link to={"/dashboard"}>
+            <div className="flex justify-center">
+              <Button variant="hero" size="xl" className="animate-glow-pulse">
+                Explore Dashboard
+              </Button>
+            </div>
+          </Link>}
           
           <div className="mt-16 flex items-center justify-center gap-8 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
