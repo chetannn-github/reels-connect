@@ -18,7 +18,7 @@ export const addKeywordAndMessage = async (req, res) => {
 
         
         // prohibit user to automate more than one reel
-        if(isActive &&  user.activeReelsCount >= USER_LIMIT[user.plan]) {
+        if(!reel.isActive && isActive &&  user.activeReelsCount >= USER_LIMIT[user.plan]) {
             return res.json({error : `You cannot automate more than ${USER_LIMIT[user.plan]} reel.`, user})
         }
         
