@@ -19,3 +19,5 @@ export const PRICE_TO_PLAN = {
 
 
 export const ALLOWED_PAID_PLANS = ["basic", "premium"];
+
+export const FREE_USER_MESSAGES_LIMIT = 10;

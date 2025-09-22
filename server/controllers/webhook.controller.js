@@ -2,6 +2,7 @@ import { WEBHOOK_VERIFY_TOKEN } from "../config/env.js";
 import axios from "axios";
 import { Reel, User } from "../models/user.model.js";
 import commentAnalytics from "../models/comment.analytics.model.js";
+import { FREE_USER_MESSAGES_LIMIT } from "../utils/constant.js";
 
 
 
@@ -37,7 +38,9 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           console.log("💬 New Comment:", commentText);
 
           let reel = await Reel.findOne({reelId : reel_id}).populate("user");
+          let postOwner = await User.findById(reel?.user._id);
 
+          if(postOwner.plan === "free" && postOwner.messagesSent >= FREE_USER_MESSAGES_LIMIT) return;
           if(!reel.isActive) return;
 
           const access_token = reel?.user?.access_token;
@@ -48,11 +51,11 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
             commentText.includes(keyword.toLowerCase())
           );
 
-  
+          
           if(!matchedKeyword) return;
           await sendPrivateReply(userID,access_token,comment_id, comment_reply);
           
-          let postOwner = await User.findById(reel?.user._id);
+          
           postOwner.messagesSent += 1;
           await postOwner.save();
 
