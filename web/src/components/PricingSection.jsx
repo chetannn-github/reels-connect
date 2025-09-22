@@ -7,11 +7,9 @@ import { useSelector } from "react-redux";
 
 const PricingSection = () => {
   const navigate = useNavigate();
-  const user = useSelector((state) => state.auth.user);
-  const current_plan = user?.plan;
-
+  const current_plan = useSelector((state) => state.auth?.user?.plan);
   const planIndex = getPlanIndex(current_plan);
-console.log(planIndex)
+
 
   const plans = [
     {
@@ -201,7 +199,7 @@ console.log(planIndex)
                     variant={plan.buttonVariant} 
                     size="lg" 
                     className="w-full"
-                    disabled={planIndex >= index}
+                    disabled={planIndex >= index || plan.disabled}
 
                   >
                     {plan.buttonText}
