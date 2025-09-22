@@ -42,8 +42,9 @@ function Dashboard() {
 
         const userData = await api.get("/reels", token);
         dispatch(setAuth({ user: userData, token }));
-        setKeywords(userData.keywords || []);
-        setMessageTemplate(userData.messageTemplate || "");
+        setKeywords(userData?.keywords || []);
+        setMessageTemplate(userData?.messageTemplate || "");
+        setSelectedReel(userData?.reels[0]?.reelId)
       } catch (err) {
         console.error("Failed to fetch user info:", err);
       } finally {
