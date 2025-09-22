@@ -142,8 +142,7 @@ const PricingSection = () => {
 
   const handleIGAuth = async(planType) => {
       try {
-        console.log(planType)
-        console.log("click hua")
+        if(isLoading) return;
         setIsLoading(planType)
         await sleep(1)
         const {redirectURL} = await api.get("/ig/add");
