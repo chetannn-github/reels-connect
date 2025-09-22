@@ -1,17 +1,31 @@
 import { Button } from "./ui/Button";
-import { Instagram, Zap, TrendingUp } from "lucide-react";
+import { Instagram, Zap, TrendingUp, Loader2 } from "lucide-react";
 import heroImage from "../assets/hero-bg.jpeg";
 import api from "../lib/api"
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { sleep } from "../lib/constant";
 
 
 const HeroSection = () => {
   const user = useSelector((state) => state.auth?.user);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleIGAuth = async() => {
-    const {redirectURL} = await api.get("/ig/add");
-    window.location.href = redirectURL;
+    if(isLoading) return;
+    try {
+      setIsLoading(true)
+      await sleep(1);
+      const {redirectURL} = await api.get("/ig/add");
+      
+      window.location.href = redirectURL;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+    
   }
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -59,7 +73,7 @@ const HeroSection = () => {
           
           {!user && <div className="flex justify-center" onClick={handleIGAuth}>
             <Button variant="hero" size="xl" className="animate-glow-pulse">
-              Start Free Automation
+              {isLoading ? <><Loader2 className="h-4 w-4 animate-spin"/> Starting....</>  : "Start Free Automation"}
             </Button>
           </div>}
 

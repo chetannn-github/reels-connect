@@ -1,9 +1,10 @@
 import { Button } from "./ui/Button";
-import { Check, Star, Crown, Zap } from "lucide-react";
+import { Check, Star, Crown, Zap, Loader2 } from "lucide-react";
 import api from "../lib/api"
 import { useNavigate } from "react-router-dom";
-import { getPlanIndex, RAZORPAY_KEY_ID } from "../lib/constant";
+import { getPlanIndex, RAZORPAY_KEY_ID, sleep } from "../lib/constant";
 import { useSelector } from "react-redux";
+import { useState } from "react";
 
 const PricingSection = () => {
   const navigate = useNavigate();
@@ -11,10 +12,12 @@ const PricingSection = () => {
   const current_plan = user?.plan;
   const planIndex = getPlanIndex(current_plan);
 
+  const [isLoading,setIsLoading] = useState(null);
+
 
   const plans = [
     {
-      type : "free",
+      type: "free",
       name: "Free",
       icon: Zap,
       price: "₹0",
@@ -29,11 +32,12 @@ const PricingSection = () => {
       ],
       buttonText: "Start Free",
       buttonVariant: "outline",
+      buttonLoadingText: "Starting...",
       popular: false,
       disabled: false,
     },
     {
-      type : "basic",
+      type: "basic",
       name: "Pro",
       icon: Star,
       price: "₹1000",
@@ -50,11 +54,12 @@ const PricingSection = () => {
       ],
       buttonText: "Get Pro",
       buttonVariant: "hero",
+      buttonLoadingText: "Processing...",
       popular: true,
       disabled: false,
     },
     {
-      type : "premium",
+      type: "premium",
       name: "AI Pro",
       icon: Crown,
       price: "₹2500",
@@ -72,19 +77,32 @@ const PricingSection = () => {
       ],
       buttonText: "Coming Soon",
       buttonVariant: "outline",
+      buttonLoadingText: "Launching Soon...",
       popular: false,
       disabled: true,
     },
   ];
 
+
   const createOrder = async (planType) => {
-    if(planType == "free") return 
-    const token = localStorage.getItem("jwt");
+    if(isLoading) return;
+    try {
+      setIsLoading(planType);
+      await sleep(0.8);
+      if(planType == "free") {navigate("/dashboard")}
+
+      const token = localStorage.getItem("jwt");
+      if (!token) return navigate("/");
+
+      const orderRes = await api.post("/payment/order",{plan : planType}, token);
+
+      await handlePaymentAndVerify(orderRes)
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(null);
+    }
     
-    if (!token) return navigate("/");
-    const orderRes = await api.post("/payment/order",{plan : planType}, token);
-    console.log(orderRes)
-    await handlePaymentAndVerify(orderRes)
     
   }
 
@@ -122,10 +140,22 @@ const PricingSection = () => {
     razorpayWindow.open();
   }
 
-  const handleIGAuth = async() => {
-      const {redirectURL} = await api.get("/ig/add");
-      window.location.href = redirectURL;
-    }
+  const handleIGAuth = async(planType) => {
+      try {
+        console.log(planType)
+        console.log("click hua")
+        setIsLoading(planType)
+        await sleep(1)
+        const {redirectURL} = await api.get("/ig/add");
+        
+        window.location.href = redirectURL;
+      } catch (error) {
+        console.log(error);
+      } finally{
+        setIsLoading(null)
+      }
+      
+  }
 
   return (
     <section className="py-24 px-6">
@@ -206,22 +236,24 @@ const PricingSection = () => {
                     variant={plan.buttonVariant} 
                     size="lg" 
                     className="w-full"
-                    // disabled={planIndex >= index || plan.disabled}
+                    disabled={planIndex >= index || plan.disabled}
 
                   >
-                    {plan.buttonText}
+                    {isLoading === plan.type && <><Loader2 className="h-4 w-4 animate-spin" /> {plan.buttonLoadingText} </>}
+                    {isLoading !== plan.type && plan.buttonText}
                   </Button>}
 
 
                    {!user && <Button 
-                    onClick  = {handleIGAuth }
+                    onClick  = {()=> handleIGAuth(plan?.type) }
                     variant={plan.buttonVariant} 
                     size="lg" 
                     className="w-full"
-                    disabled={planIndex >= index || plan.disabled}
-
+                    disabled={plan.disabled}
                   >
-                    {plan.buttonText}
+                     {isLoading === plan.type && <><Loader2 className="h-4 w-4 animate-spin" /> {plan.buttonLoadingText} </>}
+                    {isLoading !== plan.type && plan.buttonText}
+                    
                   </Button>}
                 </div>
               </div>
