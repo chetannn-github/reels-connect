@@ -13,3 +13,11 @@ export const PLAN_TO_LABEL = {
   "premium" : "AI Pro",
   "free" : "Free"
 }
+
+
+export const getPlanIndex = (plan) => {
+  if(plan === null) return -1;
+  if(plan == "basic") return 1;
+  if(plan == "free") return 0;
+  if(plan == "premium") return 2;
+}

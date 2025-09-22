@@ -2,7 +2,7 @@ import { Button } from "./ui/Button";
 import { Check, Star, Crown, Zap } from "lucide-react";
 import api from "../lib/api"
 import { useNavigate } from "react-router-dom";
-import { RAZORPAY_KEY_ID } from "../lib/constant";
+import { getPlanIndex, RAZORPAY_KEY_ID } from "../lib/constant";
 import { useSelector } from "react-redux";
 
 const PricingSection = () => {
@@ -10,6 +10,8 @@ const PricingSection = () => {
   const user = useSelector((state) => state.auth.user);
   const current_plan = user?.plan;
 
+  const planIndex = getPlanIndex(current_plan);
+console.log(planIndex)
 
   const plans = [
     {
@@ -192,14 +194,14 @@ const PricingSection = () => {
                       </div>
                     ))}
                   </div>
-
+        
                   {/* Button */}
                   <Button 
                     onClick  = {()=> createOrder(plan.type)}
                     variant={plan.buttonVariant} 
                     size="lg" 
                     className="w-full"
-                    disabled={plan.type === current_plan || (plan.type === "free" && current_plan !==null && current_plan !== "free")}
+                    disabled={planIndex >= index}
 
                   >
                     {plan.buttonText}
