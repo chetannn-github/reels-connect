@@ -13,9 +13,9 @@ import { Textarea } from "../components/ui/Textarea";
 import { Switch } from "../components/ui/Switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs";
 
-import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2 } from "lucide-react";
+import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2, Video, Crown } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
-import { sleep } from "../lib/constant";
+import { PLAN_TO_LABEL, sleep } from "../lib/constant";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -129,6 +129,7 @@ function Dashboard() {
       <div className="relative z-10 container mx-auto px-6 py-10">
         {/* User Stats */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+          {/* Username */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
             <CardContent className="p-6 flex items-center justify-between">
               <div>
@@ -138,6 +139,8 @@ function Dashboard() {
               <Users className="h-8 w-8 text-purple-600" />
             </CardContent>
           </Card>
+
+          {/* Followers */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
             <CardContent className="p-6 flex items-center justify-between">
               <div>
@@ -147,6 +150,8 @@ function Dashboard() {
               <Users className="h-8 w-8 text-blue-600" />
             </CardContent>
           </Card>
+
+          {/* Posts */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
             <CardContent className="p-6 flex items-center justify-between">
               <div>
@@ -156,6 +161,8 @@ function Dashboard() {
               <Target className="h-8 w-8 text-green-600" />
             </CardContent>
           </Card>
+
+          {/* Total Messages Sent */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
             <CardContent className="p-6 flex items-center justify-between">
               <div>
@@ -163,6 +170,28 @@ function Dashboard() {
                 <p className="text-2xl font-bold">{user.messagesSent || 0}</p>
               </div>
               <MessageCircle className="h-8 w-8 text-orange-600" />
+            </CardContent>
+          </Card>
+
+          {/* Active Reels Count */}
+          <Card className="glass-effect border border-gray-200 shadow-lg">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Active Reels</p>
+                <p className="text-2xl font-bold">{user.activeReelsCount || 0}</p>
+              </div>
+              <Video className="h-8 w-8 text-red-600" /> 
+            </CardContent>
+          </Card>
+
+          {/* Current Plan */}
+          <Card className="glass-effect border border-gray-200 shadow-lg">
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Current Plan</p>
+                <p className="text-2xl font-bold">{PLAN_TO_LABEL[user.plan] || "Free"}</p>
+              </div>
+              <Crown className="h-8 w-8 text-yellow-600" />
             </CardContent>
           </Card>
         </div>

@@ -6,3 +6,10 @@ export const sleep = async (time) => {
     setTimeout(resolve, time * 1000);
   });
 };
+
+
+export const PLAN_TO_LABEL = {
+  "basic" : "Pro",
+  "premium" : "AI Pro",
+  "free" : "Free"
+}
