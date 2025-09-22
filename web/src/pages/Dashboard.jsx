@@ -231,6 +231,24 @@ function Dashboard() {
               <Crown className="h-8 w-8 text-yellow-600" />
             </CardContent>
           </Card>
+
+          {((user.plan === "free" && (user?.messagesSent || 0) >= 10) ||
+            (user.plan === "basic" && (user?.activeReelsCount || 0) >= 30)) && (
+              <Card
+                onClick={() => navigate("/dashboard")}
+                className="cursor-pointer bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-xl hover:scale-105 transition-transform"
+              >
+                <CardContent className="p-6 flex items-center justify-between">
+                  <div>
+                    <p className="text-sm opacity-90">Limit Reached 🚀</p>
+                    <p className="text-2xl font-bold">Upgrade Your Plan</p>
+                  </div>
+                  <Crown className="h-10 w-10 text-yellow-300" />
+                </CardContent>
+            </Card>
+          )}
+
+        
         </div>
 
         <div className="grid gap-8 lg:grid-cols-3">
