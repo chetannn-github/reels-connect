@@ -1,50 +1,50 @@
 import { Bot, TrendingUp, Shield, Clock, BarChart3, MessageCircle } from "lucide-react";
 
 const FeaturesSection = () => {
-  const features = [
-    {
-      icon: Bot,
-      title: "AI-Powered Content",
-      description: "Advanced AI creates engaging reels tailored to your keywords and audience preferences",
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-    },
-    {
-      icon: TrendingUp,
-      title: "Viral Optimization",
-      description: "Algorithm-optimized posting times and hashtag strategies to maximize your reach",
-      color: "text-accent",
-      bgColor: "bg-accent/10",
-    },
-    {
-      icon: Shield,
-      title: "Secure & Safe",
-      description: "Bank-level security with Instagram-compliant automation that won't risk your account",
-      color: "text-success",
-      bgColor: "bg-success/10",
-    },
-    {
-      icon: Clock,
-      title: "Smart Scheduling",
-      description: "Optimal posting times based on your audience activity and engagement patterns",
-      color: "text-warning",
-      bgColor: "bg-warning/10",
-    },
-    {
-      icon: BarChart3,
-      title: "Advanced Analytics",
-      description: "Deep insights into performance, growth metrics, and ROI tracking for your content",
-      color: "text-primary",
-      bgColor: "bg-primary/10",
-    },
-    {
-      icon: MessageCircle,
-      title: "DM Automation",
-      description: "Intelligent chatbot handles Instagram DMs, converts followers to customers automatically",
-      color: "text-accent",
-      bgColor: "bg-accent/10",
-    },
-  ];
+ const features = [
+  {
+    icon: Bot,
+    title: "AI-Powered Content",
+    description:
+      "Advanced AI creates engaging reels tailored to your keywords and audience preferences",
+    color: "text-primary",
+    bgColor: "bg-primary/10",
+    comingSoon: true, // abhi "coming soon"
+  },
+  {
+    icon: TrendingUp,
+    title: "Viral Optimization",
+    description:
+      "Algorithm-optimized posting times and hashtag strategies to maximize your reach",
+    color: "text-accent",
+    bgColor: "bg-accent/10",
+  },
+  {
+    icon: Shield,
+    title: "Secure & Safe",
+    description:
+      "Bank-level security with Instagram-compliant automation that won't risk your account",
+    color: "text-success",
+    bgColor: "bg-success/10",
+  },
+  {
+    icon: BarChart3,
+    title: "Advanced Analytics",
+    description:
+      "Deep insights into performance, growth metrics, and ROI tracking for your content",
+    color: "text-primary",
+    bgColor: "bg-primary/10",
+  },
+  {
+    icon: MessageCircle,
+    title: "DM Automation",
+    description:
+      "Intelligent chatbot handles Instagram DMs, converts followers to customers automatically",
+    color: "text-accent",
+    bgColor: "bg-accent/10",
+  },
+];
+
 
   return (
     <section className="py-24 px-6 bg-gradient-to-b from-background to-muted/20">
@@ -96,11 +96,11 @@ const FeaturesSection = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="w-2 h-2 bg-success rounded-full animate-pulse"></div>
-                <span>500+ happy customers</span>
+                <span>100+ happy customers</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-                <span>10M+ reels automated</span>
+                <span>1000+ reels automated</span>
               </div>
               <div className="flex items-center gap-2 text-sm text-muted-foreground">
                 <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
