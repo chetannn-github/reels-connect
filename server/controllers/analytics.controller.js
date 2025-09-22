@@ -4,10 +4,10 @@ export const getAnalytics = async (req, res) => {
   try {
     const userId = req.user._id;
 
-    const analytics = await CommentAnalytics.find({ userId })
+    const analytics = await CommentAnalytics.find({ user : userId })
       .sort({ createdAt: -1 })
       .populate({
-        path: "reelId",
+        path: "reel",
         select: "mediaURL thumbnailURL", 
       })
       
