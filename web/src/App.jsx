@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home";
@@ -7,11 +7,13 @@ import { IGSuccess } from "./pages/IGSuccess";
 import { useDispatch, useSelector } from "react-redux";
 import api from "./lib/api"
 import { setAuth } from "./store/authSlice";
+import { FullScreenLoader } from "./components/ui/FullScreenLoader";
 
 
 function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
       const fetchUser = async () => {
@@ -24,11 +26,15 @@ function App() {
          
         } catch (err) {
           console.error("Failed to fetch user info:", err);
+        } finally {
+          setIsLoading(false);
         }
       };
   
       fetchUser();
-    }, [dispatch]);
+  }, [dispatch]);
+
+  if(isLoading) return <FullScreenLoader variant="orbit" message="Welcome to Reels Connect" isVisible={isLoading}/>
   return (
     <Router>
       <Routes>
