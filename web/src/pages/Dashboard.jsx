@@ -35,6 +35,7 @@ function Dashboard() {
   const [removingKeywordID,setRemovingKeywordID] = useState(null);
 
   const [analytics, setAnalytics] = useState({})
+  const [selectedTab, setSelectedTab] = useState("setup");
 
   useEffect(() => {
     const fetchUserAndAnalytics = async () => {
@@ -122,6 +123,24 @@ function Dashboard() {
     setAutomationEnabled(!automationEnabled);
   };
 
+
+ 
+
+  useEffect(() => {
+    const savedTab = localStorage.getItem("selectedTab");
+    if (savedTab) setSelectedTab(savedTab);
+    
+    return () => {
+      localStorage.removeItem("selectedTab");
+    };
+  }, []);
+
+  // Save to localStorage whenever tab changes
+  const handleTabChange = (value) => {
+    setSelectedTab(value);
+    localStorage.setItem("selectedTab", value);
+  };
+
  
 
   if (loading) return <div className="text-center py-20 text-xl">Loading dashboard...</div>;
@@ -205,7 +224,7 @@ function Dashboard() {
         <div className="grid gap-8 lg:grid-cols-3">
           {/* Main Campaign Setup */}
           <div className="lg:col-span-2">
-            <Tabs defaultValue="setup" className="space-y-6">
+            <Tabs  className="space-y-6" onValueChange={handleTabChange} value={selectedTab}>
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="setup">Campaign Setup</TabsTrigger>
                 <TabsTrigger value="triggered-reels">Triggered Reels</TabsTrigger>
@@ -349,7 +368,7 @@ function Dashboard() {
                       <BarChart3 className="h-5 w-5 text-primary" /> Comments Analytics
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="space-y-4">
+                  <CardContent className="space-y-4 max-h-96 overflow-y-auto">
                     {analytics?.data?.map((item) => (
                       <div
                         key={item._id}
@@ -388,7 +407,7 @@ function Dashboard() {
                     ))}
                   </CardContent>
                 </Card>
-            </TabsContent>
+              </TabsContent>
 
 
 
