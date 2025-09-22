@@ -57,7 +57,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
 
           const comment = new commentAnalytics({
             userId : postOwner,
-            reelId : reel_id,
+            reelId : reel,
             commentText,
             dmMessage : comment_reply,
             dmSent : true,
