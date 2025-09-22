@@ -11,7 +11,7 @@ export const IGSuccess = () => {
   useEffect(() => {
     const params = new URLSearchParams(search);
     const token = params.get("token");
-
+    localStorage.setItem("firework", "true");
     if (token) {
       localStorage.setItem("jwt", token);
       dispatch(setAuth({ user : null , token }));
