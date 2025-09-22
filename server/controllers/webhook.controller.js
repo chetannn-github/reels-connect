@@ -31,24 +31,25 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           const comment_id = change?.value?.id;
           const reel_id = change?.value?.media?.id;
           const commentText = change?.value?.text?.toLowerCase();
-
           const commentorUsername = change?.value?.from?.username;
 
           console.log("🆔 Comment ID:", comment_id);
           console.log("💬 New Comment:", commentText);
 
           let reel = await Reel.findOne({reelId : reel_id}).populate("user");
+
+          if(!reel.isActive) return;
+
           const access_token = reel?.user?.access_token;
           const comment_reply = reel?.message || "";
-
           const keywords = reel?.keywords || [];
 
           const matchedKeyword = keywords.find(keyword => 
             commentText.includes(keyword.toLowerCase())
           );
 
-          // !TODO if keyword then only send message and if reel is isActive
-          if(matchedKeyword) console.log("keyword matched broo")
+  
+          if(!matchedKeyword) return;
           await sendPrivateReply(userID,access_token,comment_id, comment_reply);
           
           let postOwner = await User.findById(reel?.user._id);
