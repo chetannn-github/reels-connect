@@ -107,8 +107,9 @@ const PricingSection = () => {
 
           console.log(res.message);
 
-          if(!res.error) {
-            navigate("/dashboard")
+          if (!res.error) {
+            localStorage.setItem("firework", "true");
+            navigate("/dashboard");
           }
         } catch (error) {
           console.log(error);
@@ -205,7 +206,7 @@ const PricingSection = () => {
                     variant={plan.buttonVariant} 
                     size="lg" 
                     className="w-full"
-                    disabled={planIndex >= index || plan.disabled}
+                    // disabled={planIndex >= index || plan.disabled}
 
                   >
                     {plan.buttonText}

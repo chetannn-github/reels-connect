@@ -16,6 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs"
 import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2, Video, Crown, BarChart3 } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
 import { PLAN_TO_LABEL, sleep } from "../lib/constant";
+import Fireworks from "../components/ui/Firework";
 
 function Dashboard() {
   const dispatch = useDispatch();
@@ -36,7 +37,18 @@ function Dashboard() {
 
   const [analytics, setAnalytics] = useState({})
   const [selectedTab, setSelectedTab] = useState("setup");
+  
+  const [trigger, setTrigger] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("firework") === "true") {
+      setTrigger(true);
+      localStorage.removeItem("firework");
+    }
+  }, []);
+
+
+  
   useEffect(() => {
     const fetchUserAndAnalytics = async () => {
       try {
@@ -124,8 +136,6 @@ function Dashboard() {
   };
 
 
- 
-
   useEffect(() => {
     const savedTab = localStorage.getItem("selectedTab");
     if (savedTab) setSelectedTab(savedTab);
@@ -135,7 +145,6 @@ function Dashboard() {
     };
   }, []);
 
-  // Save to localStorage whenever tab changes
   const handleTabChange = (value) => {
     setSelectedTab(value);
     localStorage.setItem("selectedTab", value);
@@ -150,6 +159,8 @@ function Dashboard() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/80" />
       </div>
+
+      <Fireworks trigger= {trigger}/>
 
       <div className="relative z-10 container mx-auto px-6 py-10">
         {/* User Stats */}
