@@ -13,7 +13,12 @@ import analyticsRoutes from './routes/analytics.route.js'
 
 const app = express();
 
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: ["https://reel-connect.onrender.com"],
+    credentials: true,
+  })
+);
 app.use('/api/webhook', webhookRoutes);
 
 
