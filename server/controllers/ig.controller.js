@@ -34,7 +34,7 @@ export const callbackIgAccount = async (req, res) => {
             client_id: INSTAGRAM_APP_ID,
             client_secret: INSTAGRAM_APP_SECRET,
             grant_type: 'authorization_code',
-            redirect_uri: "https://reels-connect.onrender.com/api/ig/callback",
+            redirect_uri: `${INSTAGRAM_REDIRECT_URI}`,
             code: code
         });
 
