@@ -38,6 +38,8 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           console.log("💬 New Comment:", commentText);
 
           let reel = await Reel.findOne({reelId : reel_id}).populate("user");
+
+          if(!reel) return ; // if it is not in db but comment can come
           let postOwner = await User.findById(reel?.user._id);
 
           if(postOwner.plan === "free" && postOwner.messagesSent >= FREE_USER_MESSAGES_LIMIT) return;
