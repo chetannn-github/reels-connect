@@ -80,11 +80,14 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         const senderID = entry.messaging[0]?.sender?.id;
         if(userID === senderID) return;
         const message = entry.messaging[0]?.message?.text;
+        console.log(payload);
+        console.log(payload.entry);
+        
 
         if(message) {
           console.log(message)
           const token = "IGAAP3eBpeq3JBZAE9zRHRNN1BMNmRoa003cXpSUldsU1AyWVFXdFpJWUpDXy16YXoxTVVaU1EtMm80aHUxU1p4cUpaVlpValZA6MjNaSWRpeElyWjZAuVWpJNXhJZA0pZAQnNUSmNYOUpmRGdoOVdvd3loSlFR"
-          await sendPrivateReply(userID,token,senderID,"AUTOMATED Message");
+          await sendPrivateReply(userID,token,senderID,"Hello !!");
         }
         
       }
