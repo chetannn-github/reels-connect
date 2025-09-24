@@ -285,7 +285,7 @@ function Dashboard() {
                           <img
                             src={ reel.thumbnailURL || reel.mediaURL}
                             alt={reel.reelTitle || "Reel"}
-                            className="w-full h-32 object-contains rounded-md mb-3"
+                            className="w-full h-56 object-contain rounded-md mb-3"
                           />
                         
                         <h4 className="font-medium text-sm text-foreground mb-2">{reel.reelTitle || ""}</h4>
@@ -321,7 +321,7 @@ function Dashboard() {
                             <img
                               src={reel.thumbnailURL || reel.mediaURL}
                               alt={reel.reelTitle || "Reel"}
-                              className="w-full h-32 object-contains rounded-md mb-3"
+                              className="w-full h-56 object-contain rounded-md mb-3"
                             />
                             <h4 className="font-medium text-sm text-foreground mb-2">
                               {reel.reelTitle || ""}
@@ -348,12 +348,7 @@ function Dashboard() {
                         key={item._id}
                         className="flex items-center gap-4 rounded-lg border p-4 shadow hover:shadow-lg transition-all"
                       >
-                        {/* Reel Thumbnail as Circle */}
-                        <img
-                          src={item.reel.thumbnailURL || item.reel.mediaURL}
-                          alt="Reel Thumbnail"
-                          className="w-16 h-16 rounded-full object-contains border"
-                        />
+                        
 
                         {/* Details */}
                         <div className="flex-1">
