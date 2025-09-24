@@ -23,6 +23,7 @@ export const verifyWebhook = (req, res) => {
 export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
   try {
     const payload = req.body;
+    console.log(req.body);
     payload.entry?.forEach(async (entry) => {
       const userID = entry.id;
       console.log(userID)
@@ -81,9 +82,9 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         const senderID = entry.messaging[0]?.sender?.id;
         if(userID === senderID) return;
         const message = entry.messaging[0]?.message?.text;
-        console.log(userID);
-        console.log(senderID)
-        console.log(entry.messaging[0]?.recipient?.id);
+        // console.log(userID);
+        // console.log(senderID)
+        // console.log(entry.messaging[0]?.recipient?.id);
 
         if(message) {
           console.log(message)
