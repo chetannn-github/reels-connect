@@ -55,7 +55,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
 
           
           if(!matchedKeyword) return;
-          await sendPrivateReply(userID,access_token,comment_id, comment_reply);
+          await sendDMOnComment(userID,access_token,comment_id, comment_reply);
           await replyToComment(comment_id,"Check your DM 🔥", access_token);
           
           postOwner.messagesSent += 1;
@@ -74,27 +74,20 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         
         }
         
-        else if(change.field === "messages") {
-          const incomingMessage = change?.value?.message?.text;
-          console.log("Incoming Message -> " + incomingMessage);
-          // await sendPrivateReply(userID,access_token,)
-        }else {
-          console.log(change);
-        }
       });
 
       if(entry.messaging) {
-        console.log(userID);
-        console.log(entry.messaging)
         const senderID = entry.messaging[0]?.sender?.id;
+        console.log(entry.messaging)
         const message = entry.messaging[0]?.message?.text;
 
-        // if(message) then proceed  
-        const token = "IGAAP3eBpeq3JBZAE9zRHRNN1BMNmRoa003cXpSUldsU1AyWVFXdFpJWUpDXy16YXoxTVVaU1EtMm80aHUxU1p4cUpaVlpValZA6MjNaSWRpeElyWjZAuVWpJNXhJZA0pZAQnNUSmNYOUpmRGdoOVdvd3loSlFR"
-        await sendPrivateReply(userID,token,senderID,"AUTOMATED");
+        if(message) {
+          console.log(message)
+          const token = "IGAAP3eBpeq3JBZAE9zRHRNN1BMNmRoa003cXpSUldsU1AyWVFXdFpJWUpDXy16YXoxTVVaU1EtMm80aHUxU1p4cUpaVlpValZA6MjNaSWRpeElyWjZAuVWpJNXhJZA0pZAQnNUSmNYOUpmRGdoOVdvd3loSlFR"
+          await sendPrivateReply(userID,token,senderID,"AUTOMATED Message");
+        }
+        
       }
-
-    
     });
   } catch (err) {
     console.log("⚠️ Payload parsing error:", err.message);
@@ -130,7 +123,30 @@ export const subscribeWebhook = async(req,res) => {
 
 
 
-const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,DM_MESSAGE) => {
+const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,RECIEVER_ID,DM_MESSAGE) => {
+  try {
+    const response = await axios.post(
+      `https://graph.instagram.com/${IG_USER_ID}/messages`,
+      {
+        recipient: { id: RECIEVER_ID },
+        message: { text: DM_MESSAGE },
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      }
+    );
+
+    console.log("✅ Private reply sent:", response.data);
+  } catch (error) {
+    console.error("❌ Error sending private reply:", error.response?.data || error.message);
+  }
+}
+
+
+const sendDMOnComment = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,DM_MESSAGE) => {
   try {
     const response = await axios.post(
       `https://graph.instagram.com/${IG_USER_ID}/messages`,
