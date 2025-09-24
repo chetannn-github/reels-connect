@@ -25,8 +25,8 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
     const payload = req.body;
     payload.entry?.forEach((entry) => {
       const userID = entry.id;
+      
       entry.changes?.forEach(async(change) => {
-        
         if (change.field === "comments") {
           
           const comment_id = change?.value?.id;
@@ -82,6 +82,12 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           console.log(change);
         }
       });
+
+      if(entry.messaging) {
+        console.log(entry.messaging)
+      }
+
+    
     });
   } catch (err) {
     console.log("⚠️ Payload parsing error:", err.message);
