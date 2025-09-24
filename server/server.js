@@ -15,7 +15,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://reel-connect.onrender.com"],
+    origin: ["https://reel-connect.onrender.com", "http://localhost:5173"],
     credentials: true,
   })
 );

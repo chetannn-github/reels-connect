@@ -46,7 +46,10 @@ export const getAllReels = async (req, res) => {
         userId,
         { reels: allReels },
         { new: true }
-        ).populate("reels");
+        ).populate({
+            path: "reels",
+            options: { sort: { timestamp: -1 } }
+        });
         
         let user = updatedUser;
         await getUserInfo(user);
