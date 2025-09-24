@@ -285,7 +285,7 @@ function Dashboard() {
                           <img
                             src={ reel.thumbnailURL || reel.mediaURL}
                             alt={reel.reelTitle || "Reel"}
-                            className="w-full h-32 object-cover rounded-md mb-3"
+                            className="w-full h-32 object-contains rounded-md mb-3"
                           />
                         
                         <h4 className="font-medium text-sm text-foreground mb-2">{reel.reelTitle || ""}</h4>
@@ -321,7 +321,7 @@ function Dashboard() {
                             <img
                               src={reel.thumbnailURL || reel.mediaURL}
                               alt={reel.reelTitle || "Reel"}
-                              className="w-full h-32 object-cover rounded-md mb-3"
+                              className="w-full h-32 object-contains rounded-md mb-3"
                             />
                             <h4 className="font-medium text-sm text-foreground mb-2">
                               {reel.reelTitle || ""}
@@ -352,7 +352,7 @@ function Dashboard() {
                         <img
                           src={item.reel.thumbnailURL || item.reel.mediaURL}
                           alt="Reel Thumbnail"
-                          className="w-16 h-16 rounded-full object-cover border"
+                          className="w-16 h-16 rounded-full object-contains border"
                         />
 
                         {/* Details */}
