@@ -82,7 +82,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         const message = entry.messaging[0]?.message?.text;
         console.log(userID);
         console.log(senderID)
-        console.log(entry.messaging[0]?.recipient?.id;)
+        console.log(entry.messaging[0]?.recipient?.id);
 
         if(message) {
           console.log(message)
