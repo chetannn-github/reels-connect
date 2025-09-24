@@ -270,7 +270,7 @@ function Dashboard() {
                       <Play className="h-5 w-5 text-primary" /> Select Instagram Reel
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="grid gap-4 md:grid-cols-3">
+                  <CardContent className="grid gap-4 md:grid-cols-3 max-h-96 overflow-y-auto">
                     {user.reels.map((reel) => (
                       <div
                         key={reel.reelId}
@@ -288,63 +288,9 @@ function Dashboard() {
                             className="w-full h-32 object-cover rounded-md mb-3"
                           />
                         
-                        <h4 className="font-medium text-sm text-foreground mb-2">{reel.reelTitle || "Untitled"}</h4>
-                        <p className="text-xs text-muted-foreground mb-1">{reel.message || "No message"}</p>
+                        <h4 className="font-medium text-sm text-foreground mb-2">{reel.reelTitle || ""}</h4>
                       </div>
                     ))}
-                  </CardContent>
-                </Card>
-
-                {/* Keywords */}
-                <Card className="glass-effect border border-gray-200 shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Target className="h-5 w-5 text-primary" /> Trigger Keywords
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <div className="flex gap-2">
-                      <Input
-                        placeholder="Enter keyword..."
-                        value={newKeyword}
-                        onChange={(e) => setNewKeyword(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && addKeyword()}
-                      />
-                      <Button onClick={addKeyword} size="sm">
-                        {!isAddingKeyword && <Plus className="h-4 w-4" />}
-                        {isAddingKeyword && <Loader2 className="h-4 w-4 animate-spin" />}
-                      </Button>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {keywords.map((kw, i) => (
-                        <Badge key={i} className="flex items-center gap-1 bg-primary/10 text-primary hover:bg-primary/20">
-                          {kw}
-                          <button onClick={() => removeKeyword(kw)}>
-                            {removingKeywordID !== kw && <Trash2 className="h-3 w-3" />}
-                            {removingKeywordID === kw && <Loader2 className="h-3 w-3 animate-spin" />}
-                          </button>
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Message Template */}
-                <Card className="glass-effect border border-gray-200 shadow-lg">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <MessageCircle className="h-5 w-5 text-primary" /> Auto-Reply Message
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <Label htmlFor="message">Message Template</Label>
-                    <Textarea
-                      id="message"
-                      value={messageTemplate}
-                      onChange={(e) => setMessageTemplate(e.target.value)}
-                      rows={4}
-                      className="mt-2"
-                    />
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -378,11 +324,9 @@ function Dashboard() {
                               className="w-full h-32 object-cover rounded-md mb-3"
                             />
                             <h4 className="font-medium text-sm text-foreground mb-2">
-                              {reel.reelTitle || "Untitled"}
+                              {reel.reelTitle || ""}
                             </h4>
-                            <p className="text-xs text-muted-foreground mb-1">
-                              {reel.message || "No message"}
-                            </p>
+                            
                           </div>
                         ))
                     )}
@@ -446,6 +390,63 @@ function Dashboard() {
 
            {/* Control Panel */}
           <div className="space-y-6">
+
+
+
+            {/* Keywords */}
+            { selectedTab === "setup" &&<> <Card className="glass-effect border border-gray-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Target className="h-5 w-5 text-primary" /> Trigger Keywords
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Enter keyword..."
+                    value={newKeyword}
+                    onChange={(e) => setNewKeyword(e.target.value)}
+                    onKeyPress={(e) => e.key === 'Enter' && addKeyword()}
+                  />
+                  <Button onClick={addKeyword} size="sm">
+                    {!isAddingKeyword && <Plus className="h-4 w-4" />}
+                    {isAddingKeyword && <Loader2 className="h-4 w-4 animate-spin" />}
+                  </Button>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {keywords.map((kw, i) => (
+                    <Badge key={i} className="flex items-center gap-1 bg-primary/10 text-primary hover:bg-primary/20">
+                      {kw}
+                      <button onClick={() => removeKeyword(kw)}>
+                        {removingKeywordID !== kw && <Trash2 className="h-3 w-3" />}
+                        {removingKeywordID === kw && <Loader2 className="h-3 w-3 animate-spin" />}
+                      </button>
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Message Template */}
+            <Card className="glass-effect border border-gray-200 shadow-lg">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <MessageCircle className="h-5 w-5 text-primary" /> Auto-Reply Message
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Label htmlFor="message">Message Template</Label>
+                <Textarea
+                  id="message"
+                  value={messageTemplate}
+                  onChange={(e) => setMessageTemplate(e.target.value)}
+                  rows={4}
+                  className="mt-2"
+                />
+              </CardContent>
+            </Card></>}
+
+
             {/* Automation */}
             <Card className="glass-effect border border-gray-200 shadow-lg">
               <CardHeader>
