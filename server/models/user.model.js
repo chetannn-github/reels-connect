@@ -6,6 +6,7 @@ const reelSchema = new mongoose.Schema({
     isActive: { type: Boolean, default: true },
     keywords: [{ type: String }],
     message: { type: String , default : "Hello this is an automated message from reels-connect" },
+    commentReply : {type:String, default : "Check your DM"},
     mediaURL : { type : String, default : "" },
     thumbnailURL :  { type : String, default : "" },
     timestamp : { type : String, default : "" },

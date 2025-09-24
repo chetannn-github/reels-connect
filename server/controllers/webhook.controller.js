@@ -56,7 +56,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           
           if(!matchedKeyword) return;
           await sendPrivateReply(userID,access_token,comment_id, comment_reply);
-          
+          await replyToComment(comment_id,"Check your DM 🔥", access_token);
           
           postOwner.messagesSent += 1;
           await postOwner.save();
@@ -136,5 +136,24 @@ const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,DM_MESSAGE) =>
     console.log("✅ Private reply sent:", response.data);
   } catch (error) {
     console.error("❌ Error sending private reply:", error.response?.data || error.message);
+  }
+}
+
+
+
+export async function replyToComment(commentId, message, accessToken) {
+  try {
+    const url = `https://graph.instagram.com/v23.0/${commentId}/replies`;
+
+    const response = await axios.post(url, null, {
+      params: {
+        message,
+        access_token: accessToken,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error replying to comment:", error.response?.data || error.message);
+    throw error;
   }
 }
