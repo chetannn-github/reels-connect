@@ -23,7 +23,7 @@ export const verifyWebhook = (req, res) => {
 export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
   try {
     const payload = req.body;
-    payload.entry?.forEach((entry) => {
+    payload.entry?.forEach(async (entry) => {
       const userID = entry.id;
 
       entry.changes?.forEach(async(change) => {
@@ -88,9 +88,8 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         const message = entry.messaging[0]?.message?.text;
 
         // if(message) then proceed  
-        console.log(senderID);
-        console.log(message);
-        console.log(entry.messaging)
+        const token = "IGAAP3eBpeq3JBZAE9zRHRNN1BMNmRoa003cXpSUldsU1AyWVFXdFpJWUpDXy16YXoxTVVaU1EtMm80aHUxU1p4cUpaVlpValZA6MjNaSWRpeElyWjZAuVWpJNXhJZA0pZAQnNUSmNYOUpmRGdoOVdvd3loSlFR"
+        await sendPrivateReply(userID,token,senderID,"AUTOMATED");
       }
 
     
