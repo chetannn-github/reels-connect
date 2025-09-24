@@ -85,6 +85,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
 
       if(entry.messaging) {
         console.log(userID);
+        console.log(entry.messaging)
         const senderID = entry.messaging[0]?.sender?.id;
         const message = entry.messaging[0]?.message?.text;
 
@@ -134,7 +135,7 @@ const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,DM_MESSAGE) =>
     const response = await axios.post(
       `https://graph.instagram.com/${IG_USER_ID}/messages`,
       {
-        recipient: { comment_id: COMMENT_ID },
+        recipient: { id: COMMENT_ID },
         message: { text: DM_MESSAGE },
       },
       {
