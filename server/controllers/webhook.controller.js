@@ -23,10 +23,8 @@ export const verifyWebhook = (req, res) => {
 export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
   try {
     const payload = req.body;
-    console.log(req.body);
     payload.entry?.forEach(async (entry) => {
       const userID = entry.id;
-      console.log(userID)
 
       entry.changes?.forEach(async(change) => {
         if (change.field === "comments") {
@@ -61,6 +59,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           await replyToComment(comment_id,"Check your DM 🔥", access_token);
           
           postOwner.messagesSent += 1;
+          postOwner.webhook_id = userID;
           await postOwner.save();
 
           const comment = new commentAnalytics({
@@ -84,6 +83,10 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         const message = entry.messaging[0]?.message?.text;
         console.log("sender ID -> " + senderID)
         console.log("reciever ID -> " + entry.messaging[0]?.recipient?.id);
+
+        const user = await User.findOne({webhook_id : userID});
+
+        console.log(user);
 
         if(message) {
           console.log(message) 
