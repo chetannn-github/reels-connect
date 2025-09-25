@@ -36,7 +36,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           const commentText = change?.value?.text?.toLowerCase();
           const commentorUsername = change?.value?.from?.username;
 
-          // console.log("🆔 Comment ID:", comment_id);
+          console.log("🆔 Comment ID:", comment_id);
           console.log("💬 New Comment:", commentText);
 
           let reel = await Reel.findOne({reelId : reel_id}).populate("user");
@@ -82,9 +82,8 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         const senderID = entry.messaging[0]?.sender?.id;
         if(userID === senderID) return;
         const message = entry.messaging[0]?.message?.text;
-        // console.log(userID);
-        // console.log(senderID)
-        // console.log(entry.messaging[0]?.recipient?.id);
+        console.log("sender ID -> " + senderID)
+        console.log("reciever ID -> " + entry.messaging[0]?.recipient?.id);
 
         if(message) {
           console.log(message) 
