@@ -79,56 +79,56 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         
       });
 
-      if(entry.messaging) {
-        const senderID = entry.messaging[0]?.sender?.id;
-        const recieverID = entry.messaging[0]?.recipient?.id;
-        const message = entry.messaging[0]?.message?.text;
+      // if(entry.messaging) {
+      //   const senderID = entry.messaging[0]?.sender?.id;
+      //   const recieverID = entry.messaging[0]?.recipient?.id;
+      //   const message = entry.messaging[0]?.message?.text;
 
-        if(!message) return;
+      //   if(!message) return;
 
-        const user = await User.findOne({webhook_id : userID});
-        if(!user) return;
-        const token = user.access_token;
+      //   const user = await User.findOne({webhook_id : userID});
+      //   if(!user) return;
+      //   const token = user.access_token;
 
-        let igUserId = senderID === userID ? recieverID : senderID;
-        let conversation = await Conversation.findOne({
-          igUserId,
-          userId: user._id,
-        });
-
-
-        if (!conversation) {
-          conversation = await Conversation.create({
-            igUserId,
-            userId: user._id,
-            lastMessage: message,
-          });
-        } else {
-          conversation.lastMessage = message;
-          await conversation.save();
-        }
-
-        await Chat.create({
-          conversationId: conversation._id,
-          igUserId,
-          userId: user._id,
-          message,
-          direction: senderID === userID ? "user_to_ig" : "ig_to_user",
-        });
+      //   let igUserId = senderID === userID ? recieverID : senderID;
+      //   let conversation = await Conversation.findOne({
+      //     igUserId,
+      //     userId: user._id,
+      //   });
 
 
-        if(userID === senderID) return;
+      //   if (!conversation) {
+      //     conversation = await Conversation.create({
+      //       igUserId,
+      //       userId: user._id,
+      //       lastMessage: message,
+      //     });
+      //   } else {
+      //     conversation.lastMessage = message;
+      //     await conversation.save();
+      //   }
+
+      //   await Chat.create({
+      //     conversationId: conversation._id,
+      //     igUserId,
+      //     userId: user._id,
+      //     message,
+      //     direction: senderID === userID ? "user_to_ig" : "ig_to_user",
+      //   });
+
+
+      //   if(userID === senderID) return;
         
-        console.log("sender ID -> " + senderID)
-        console.log("reciever ID -> " + recieverID);
+      //   console.log("sender ID -> " + senderID)
+      //   console.log("reciever ID -> " + recieverID);
 
-        console.log(message) 
-        await sendPrivateReply(userID,token,senderID,"Hello !!");
-        user.messagesSent += 1;
-        await user.save();
+      //   console.log(message) 
+      //   await sendPrivateReply(userID,token,senderID,"Hello !!");
+      //   user.messagesSent += 1;
+      //   await user.save();
         
         
-      }
+      // }
     });
   } catch (err) {
     console.log("⚠️ Payload parsing error:", err.message);
