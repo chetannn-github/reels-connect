@@ -1,6 +1,7 @@
 import axios from "axios";
 import { User, Reel } from "../models/user.model.js"; 
-import { getUserInfo } from "./ig.controller.js";
+import { getUserInfo } from "./ig/index.js";
+
 
 
 export const getAllReels = async (req, res) => {
