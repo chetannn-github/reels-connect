@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
         enum: ["free", "basic", "premium"], 
         default: "free" 
     },
+    webhook_id : {type : String},
 
 }, { timestamps: true });
 
