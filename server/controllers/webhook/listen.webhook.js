@@ -1,28 +1,12 @@
-import { WEBHOOK_VERIFY_TOKEN } from "../config/env.js";
-import axios from "axios";
-import { Reel, User } from "../models/user.model.js";
-import commentAnalytics from "../models/comment.analytics.model.js";
-import { FREE_USER_MESSAGES_LIMIT } from "../utils/constant.js";
-import Conversation from "../models/conversation.model.js";
-import Chat from "../models/chat.model.js";
+import Chat from "../../models/chat.model.js";
+import CommentAnalytics from "../../models/comment.analytics.model.js";
+import Conversation from "../../models/conversation.model.js";
+import { Reel, User } from "../../models/user.model.js";
 
+import { FREE_USER_MESSAGES_LIMIT } from "../../utils/constant.js";
+import { replyToComment, sendDMOnComment, sendPrivateReply } from "./utils.js";
 
-
-export const verifyWebhook = (req, res) => {
-    const VERIFY_TOKEN = WEBHOOK_VERIFY_TOKEN || "meatyhamhock";
-    
-    if (req.query["hub.mode"] === "subscribe" && req.query["hub.verify_token"] === VERIFY_TOKEN) {
-        console.log("Webhook verified successfully!");
-        return res.status(200).send(req.query["hub.challenge"]);
-    } else {
-        console.log("Verification failed");
-        return res.sendStatus(400);
-    }
-}
-
-
-
-export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
+export const listenWebhook = async(req, res) => {
   try {
     const payload = req.body;
     payload.entry?.forEach(async (entry) => {
@@ -64,7 +48,7 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
           postOwner.webhook_id = userID;
           await postOwner.save();
 
-          const comment = new commentAnalytics({
+          const comment = new CommentAnalytics({
             user: postOwner,
             reel,
             commentText,
@@ -137,95 +121,4 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
   }
   return res.sendStatus(200);
   
-}
-
-
-export const subscribeWebhook = async(req,res) => {
-  let user_id = req.user?.user_id;
-  const access_token = req.user?.access_token;
-
-  console.log(access_token)
-
-  try {
-    const response = await axios.post(
-      `https://graph.instagram.com/v23.0/${user_id}/subscribed_apps`,null,
-      {
-        params: {
-          subscribed_fields: "comments",
-          access_token
-        },
-      }
-  );
-
-  // console.log("Subscribed successfully:", response.data);
-} catch (error) {
-  console.error("❌ Error subscribing to webhook fields:", error.response?.data || error.message);
-}
-  return res.json({message : "subscribed"})
-}
-
-
-
-const sendPrivateReply = async(IG_USER_ID,ACCESS_TOKEN,RECIEVER_ID,DM_MESSAGE) => {
-  try {
-    const response = await axios.post(
-      `https://graph.instagram.com/${IG_USER_ID}/messages`,
-      {
-        recipient: { id: RECIEVER_ID },
-        message: { text: DM_MESSAGE },
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
-        },
-      }
-    );
-
-    console.log("✅ Private reply sent:", response.data);
-  } catch (error) {
-    console.error("❌ Error sending private reply:", error.response?.data || error.message);
-  }
-}
-
-
-const sendDMOnComment = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,DM_MESSAGE) => {
-  try {
-    const response = await axios.post(
-      `https://graph.instagram.com/${IG_USER_ID}/messages`,
-      {
-        recipient: { comment_id: COMMENT_ID },
-        message: { text: DM_MESSAGE },
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
-        },
-      }
-    );
-
-    console.log("✅ Private reply sent:", response.data);
-  } catch (error) {
-    console.error("❌ Error sending private reply:", error.response?.data || error.message);
-  }
-}
-
-
-
-export async function replyToComment(commentId, message, accessToken) {
-  try {
-    const url = `https://graph.instagram.com/v23.0/${commentId}/replies`;
-
-    const response = await axios.post(url, null, {
-      params: {
-        message,
-        access_token: accessToken,
-      },
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error replying to comment:", error.response?.data || error.message);
-    throw error;
-  }
 }

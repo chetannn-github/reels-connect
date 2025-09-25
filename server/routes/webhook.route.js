@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import xhub from "express-x-hub";
 import { APP_SECRET } from "../config/env.js";
-import { verifyWebhook ,listenWebhookAndDMOnKeywordMatch, subscribeWebhook} from "../controllers/webhook.controller.js";
+import { verifyWebhook ,listenWebhook, subscribeWebhook} from "../controllers/webhook/index.js";
 import { protect } from "../middlewares/auth.middleware.js";
 
 
@@ -16,7 +16,7 @@ router.use(bodyParser.json());
 
 
 router.get("/", verifyWebhook);
-router.post("/", listenWebhookAndDMOnKeywordMatch);
+router.post("/", listenWebhook);
 router.post("/subscribe",protect,subscribeWebhook)
 
 
