@@ -3,6 +3,8 @@ import axios from "axios";
 import { Reel, User } from "../models/user.model.js";
 import commentAnalytics from "../models/comment.analytics.model.js";
 import { FREE_USER_MESSAGES_LIMIT } from "../utils/constant.js";
+import Conversation from "../models/conversation.model.js";
+import Chat from "../models/chat.model.js";
 
 
 
@@ -79,19 +81,52 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
 
       if(entry.messaging) {
         const senderID = entry.messaging[0]?.sender?.id;
-        if(userID === senderID) return;
+        const recieverID = entry.messaging[0]?.recipient?.id;
         const message = entry.messaging[0]?.message?.text;
-        console.log("sender ID -> " + senderID)
-        console.log("reciever ID -> " + entry.messaging[0]?.recipient?.id);
+
+        if(!message) return;
 
         const user = await User.findOne({webhook_id : userID});
+        if(!user) return;
         const token = user.access_token;
-        
 
-        if(message) {
-          console.log(message) 
-          await sendPrivateReply(userID,token,senderID,"Hello !!");
+        let igUserId = senderID === userID ? recieverID : senderID;
+        let conversation = await Conversation.findOne({
+          igUserId,
+          userId: user._id,
+        });
+
+
+        if (!conversation) {
+          conversation = await Conversation.create({
+            igUserId,
+            userId: user._id,
+            lastMessage: message,
+          });
+        } else {
+          conversation.lastMessage = message;
+          await conversation.save();
         }
+
+        await Chat.create({
+          conversationId: conversation._id,
+          igUserId,
+          userId: user._id,
+          message,
+          direction: senderID === userID ? "user_to_ig" : "ig_to_user",
+        });
+
+
+        if(userID === senderID) return;
+        
+        console.log("sender ID -> " + senderID)
+        console.log("reciever ID -> " + recieverID);
+
+        console.log(message) 
+        await sendPrivateReply(userID,token,senderID,"Hello !!");
+        user.messagesSent += 1;
+        await user.save();
+        
         
       }
     });
