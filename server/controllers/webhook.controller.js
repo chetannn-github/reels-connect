@@ -85,13 +85,12 @@ export const listenWebhookAndDMOnKeywordMatch = async(req, res) => {
         console.log("reciever ID -> " + entry.messaging[0]?.recipient?.id);
 
         const user = await User.findOne({webhook_id : userID});
-
-        console.log(user);
+        const token = user.access_token;
+        
 
         if(message) {
           console.log(message) 
-          const token = "IGAAP3eBpeq3JBZAE9zRHRNN1BMNmRoa003cXpSUldsU1AyWVFXdFpJWUpDXy16YXoxTVVaU1EtMm80aHUxU1p4cUpaVlpValZA6MjNaSWRpeElyWjZAuVWpJNXhJZA0pZAQnNUSmNYOUpmRGdoOVdvd3loSlFR"
-          // await sendPrivateReply(userID,token,senderID,"Hello !!");
+          await sendPrivateReply(userID,token,senderID,"Hello !!");
         }
         
       }
@@ -158,7 +157,7 @@ const sendDMOnComment = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,DM_MESSAGE) => 
     const response = await axios.post(
       `https://graph.instagram.com/${IG_USER_ID}/messages`,
       {
-        recipient: { id: COMMENT_ID },
+        recipient: { comment_id: COMMENT_ID },
         message: { text: DM_MESSAGE },
       },
       {
