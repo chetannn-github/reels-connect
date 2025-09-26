@@ -1,37 +1,8 @@
-import { RAZORPAY_KEY_SECRET, FRONTEND_BASEURL } from "../config/env.js";
-import { RazorpayInstance } from "../config/razorpay.js"
-import { Payment } from "../models/payment.model.js";
-import {User } from "../models/user.model.js"
-
-import { ALLOWED_PAID_PLANS, PRICE_TO_PLAN, PRICING } from "../utils/constant.js";
+import { RAZORPAY_KEY_SECRET } from "../../config/env.js";
+import { Payment } from "../../models/payment.model.js";
+import {User } from "../../models/user.model.js"
+import { PRICE_TO_PLAN } from "../../utils/constant.js";
 import crypto from "crypto"
-
-
-export const createOrder = async(req,res) => {
-    const user = req.user;
-
-    const {plan} = req.body;
-
-    if (!ALLOWED_PAID_PLANS.includes(plan)) {
-        return res.status(400).json({ error: "Invalid plan selected" });
-    }
-
-    const amount = PRICING[plan];
-
-    const orderRes = await RazorpayInstance.orders.create({
-        amount : amount*100,
-        currency: "INR",
-        receipt: `receipt#${Date.now()} ${Math.floor(Math.random() * 10)}`,
-    })
-
-    const order_id = orderRes.id;
-    const payment = new Payment({razorpay_order_id : order_id, user, amount})
-    await payment.save();
-
-
-    return res.json(orderRes)
-
-}
 
 
 export const verifyPayment = async(req,res) => { 
