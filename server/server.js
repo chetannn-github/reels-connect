@@ -10,6 +10,8 @@ import webhookRoutes from './routes/webhook.route.js';
 import paymentRoutes from './routes/payment.route.js'
 import analyticsRoutes from './routes/analytics.route.js'
 
+import './cron/refreshToken.cron.js'
+
 const app = express();
 
 app.use(
