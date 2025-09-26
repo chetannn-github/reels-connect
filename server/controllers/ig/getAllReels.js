@@ -1,14 +1,8 @@
 import axios from "axios";
-import { User, Reel } from "../models/user.model.js"; 
-import { getUserInfo } from "./ig/index.js";
+import { User, Reel } from "../../models/user.model.js"; 
 
-
-
-export const getAllReels = async (req, res) => {
-    const access_token = req.user.access_token;
-    const userId = req.user._id;
+export const getAllReels = async (access_token, userId) => {
     const fields = ["id", "caption", "media_url", "timestamp", "thumbnail_url"].join(",");
-
     try {
         const response = await axios.get("https://graph.instagram.com/me/media", {
             params: {
@@ -17,10 +11,8 @@ export const getAllReels = async (req, res) => {
             },
         });
 
-       let reelsResponse = response.data.data;
-
-    //    console.log(reelsResponse)
-
+        let reelsResponse = response.data.data;
+        //    console.log(reelsResponse)
         const existingReels = await Reel.find({ user: userId }, "reelId");
         const existingReelIds = existingReels.map(r => r.reelId);
 
@@ -38,11 +30,8 @@ export const getAllReels = async (req, res) => {
             thumbnailURL : item.thumbnail_url || ""
         }));
 
-
         const createdReels = await Reel.insertMany(newReelsData);
-
         const allReels = [...existingReels.map(r => r._id), ...createdReels.map(r => r._id)];
-
         const updatedUser = await User.findByIdAndUpdate(
         userId,
         { reels: allReels },
@@ -51,38 +40,11 @@ export const getAllReels = async (req, res) => {
             path: "reels",
             options: { sort: { timestamp: -1 } }
         });
-        
-        let user = updatedUser;
-        await getUserInfo(user);
-        user.access_token = undefined;
-        return res.json(updatedUser);
+    
+        updatedUser.access_token = undefined;
+        return updatedUser;
     } catch (error) {
         console.error("Error fetching reels:", error.message);
-        return res.status(500).json({ error: "Something went wrong" });
-    }
-};
-
-
-export const updateReelStatus = async (req, res) => {
-    try {
-        const { reelId } = req.body;
-        const userId = req.user._id; 
-
-
-        const reel = await Reel.findOne({reelId: reelId, user: userId });
-        if (!reel) {
-            return res.status(404).json({ error: "Reel not found" });
-        }
-
-        reel.isActive = !reel.isActive;
-        await reel.save();
-
-        return res.json({
-            message: "Reel status updated successfully",
-            reel,
-        });
-    } catch (error) {
-        console.error("Error updating reel status:", error);
         return res.status(500).json({ error: "Something went wrong" });
     }
 };

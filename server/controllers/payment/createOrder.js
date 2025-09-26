@@ -1,6 +1,6 @@
 import { RazorpayInstance } from "../../config/razorpay.js"
 import { Payment } from "../../models/payment.model.js";
-import { ALLOWED_PAID_PLANS, PRICING } from "../utils/constant.js";
+import { ALLOWED_PAID_PLANS, PRICING } from "../../utils/constant.js";
 
 
 
