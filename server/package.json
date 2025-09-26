@@ -23,6 +23,7 @@
     "express-x-hub": "^1.0.4",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.18.1",
+    "node-cron": "^4.2.1",
     "qs": "^6.14.0",
     "razorpay": "^2.9.6"
   },
