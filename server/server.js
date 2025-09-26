@@ -1,16 +1,16 @@
 import express from 'express';
-import { PORT } from './config/env.js';
-import { connectToDB } from './config/db.js';
+import { PORT } from './src/config/env.js';
+import { connectToDB } from './src/config/db.js';
 import cors from "cors";
 
-import authRoutes from './routes/auth.route.js';
-import igRoutes from './routes/ig.route.js';
-import keywordRoutes from './routes/keyword.route.js';
-import webhookRoutes from './routes/webhook.route.js';
-import paymentRoutes from './routes/payment.route.js'
-import analyticsRoutes from './routes/analytics.route.js'
+import authRoutes from './src/routes/auth.route.js';
+import igRoutes from './src/routes/ig.route.js';
+import keywordRoutes from './src/routes/keyword.route.js';
+import webhookRoutes from './src/routes/webhook.route.js';
+import paymentRoutes from './src/routes/payment.route.js'
+import analyticsRoutes from './src/routes/analytics.route.js'
 
-import './cron/refreshToken.cron.js'
+import './src/cron/refreshToken.cron.js'
 
 const app = express();
 
