@@ -1,7 +1,9 @@
 import axios from "axios";
 import { User, Reel } from "../../models/user.model.js"; 
 
-export const getAllReels = async (access_token, userId) => {
+export const getAllReels = async (user) => {
+    const access_token = user.access_token;
+    const userId = user.user_id;
     const fields = ["id", "caption", "media_url", "timestamp", "thumbnail_url"].join(",");
     try {
         const response = await axios.get("https://graph.instagram.com/me/media", {
