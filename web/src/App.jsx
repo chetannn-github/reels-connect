@@ -22,7 +22,7 @@ function App() {
           const token = localStorage.getItem("jwt");
           if(!token) return;
           
-          const userData = await api.get("/reels", token);
+          const userData = await api.get("/auth/me", token);
           dispatch(setAuth({ user: userData, token }));
          
         } catch (err) {

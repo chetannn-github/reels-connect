@@ -56,7 +56,7 @@ function Dashboard() {
         const token = localStorage.getItem("jwt");
         if (!token) return navigate("/");
 
-        const userData = await api.get("/me", token);
+        const userData = await api.get("/auth/me", token);
         dispatch(setAuth({ user: userData, token }));
         setKeywords(userData?.keywords || []);
         setMessageTemplate(userData?.messageTemplate || "");
