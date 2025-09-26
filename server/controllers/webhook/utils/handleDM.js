@@ -1,10 +1,10 @@
 import Chat from "../../../models/chat.model.js";
 import Conversation from "../../../models/conversation.model.js";
 import { User } from "../../../models/user.model.js";
-import { sendPrivateReply } from "./sendPrivateReply.js";
+import { sendDM } from "./sendDM.js";
+
 
 export const handleDM = async (webhookID,senderID,recieverID,message) => {
-
     const user = await User.findOne({webhook_id : webhookID});
             if(!user) return;
             if(user.name === "pankaj gola") return;
@@ -44,7 +44,7 @@ export const handleDM = async (webhookID,senderID,recieverID,message) => {
             console.log("reciever ID -> " + recieverID);
     
             console.log(message) 
-            await sendPrivateReply(webhookID,token,senderID,"Hello !!");
+            await sendDM(webhookID,token,senderID,"Hello !!", false);
             user.messagesSent += 1;
             await user.save();
 }

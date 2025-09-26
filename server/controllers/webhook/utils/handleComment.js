@@ -1,7 +1,7 @@
 import { Reel, User } from "../../../models/user.model.js";
 import { FREE_USER_MESSAGES_LIMIT } from "../../../utils/constant.js";
 import CommentAnalytics from "../../../models/comment.analytics.model.js";
-import { sendDMOnComment } from "./sendDMOnComment.js";
+import { sendDM } from "./sendDM.js";
 import { replyToComment } from "./replyToComment.js";
 
 export const handleComment = async(webhookID, commentText, comment_id, commentorUsername, reel_id) => {
@@ -26,7 +26,7 @@ export const handleComment = async(webhookID, commentText, comment_id, commentor
 
     
     if(!matchedKeyword) return;
-    await sendDMOnComment(webhookID,access_token,comment_id, comment_reply);
+    await sendDM(webhookID,access_token,comment_id, comment_reply, true);
     await replyToComment(comment_id,"Check your DM 🔥", access_token);
     
     postOwner.messagesSent += 1;

@@ -1,17 +1,18 @@
 import axios from "axios";
 
-export const sendDMOnComment = async(IG_USER_ID,ACCESS_TOKEN,COMMENT_ID,DM_MESSAGE) => {
+export const sendDM = async(webhookID,accessToken,recieverID,message,isOnComment) => {
+  const key  = isOnComment ? "comment_id" : "id";
   try {
     const response = await axios.post(
-      `https://graph.instagram.com/${IG_USER_ID}/messages`,
+      `https://graph.instagram.com/${webhookID}/messages`,
       {
-        recipient: { comment_id: COMMENT_ID },
-        message: { text: DM_MESSAGE },
+        recipient: {[key]: recieverID },
+        message: { text: message },
       },
       {
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     );
