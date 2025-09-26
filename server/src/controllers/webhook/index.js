@@ -10,7 +10,7 @@ export const subscribeWebhook = async(req,res) => {
   let user_id = req.user?.user_id;
   const access_token = req.user?.access_token;
 
-  console.log(access_token)
+  // console.log(access_token)
 
   try {
     const response = await axios.post(

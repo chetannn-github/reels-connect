@@ -5,8 +5,7 @@ import { sendDM } from "./sendDM.js";
 import { replyToComment } from "./replyToComment.js";
 
 export const handleComment = async(webhookID, commentText, comment_id, commentorUsername, reel_id) => {
-    console.log("🆔 Comment ID:", comment_id);
-    console.log("💬 New Comment:", commentText);
+    console.log("New Comment:", commentText);
 
     let reel = await Reel.findOne({reelId : reel_id}).populate("user");
 
