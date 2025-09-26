@@ -1,5 +1,5 @@
 import axios from "axios";
-import { User, Reel } from "../../models/user.model.js"; 
+import { User, Reel } from "../../../models/user.model.js"; 
 
 export const getAllReels = async (user) => {
     const access_token = user.access_token;

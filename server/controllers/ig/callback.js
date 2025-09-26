@@ -3,7 +3,7 @@ import axios from "axios";
 import qs from "qs"
 import { User } from '../../models/user.model.js';
 import { generateToken } from '../../utils/jwt.js';
-import { getUserInfo } from './userInfo.js';
+import { getUserInfo } from './utils/userInfo.js';
 
 
 // to do if callback fails with some reason then redirect to frontend /dashboard with some error 
