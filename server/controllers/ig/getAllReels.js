@@ -45,6 +45,5 @@ export const getAllReels = async (access_token, userId) => {
         return updatedUser;
     } catch (error) {
         console.error("Error fetching reels:", error.message);
-        return res.status(500).json({ error: "Something went wrong" });
     }
 };
