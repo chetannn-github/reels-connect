@@ -23,7 +23,7 @@ export const handlePremiumComment = async (reel, webhookID, commentText, comment
     }
 
     let prompt = `You are an reel automation engine. Given the following instructions for a reel, 
-      choose the most suitable one for this comment and return ONLY JSON in this format:
+      choose the most suitable one for this comment and return ONLY JSON and nothing more not a single word because i will parse it in this format:
       { "instructionId": "<matching_instruction_id>", "action": "<comment|comment+dm|ignore>" }
       Instructions:\n
     `;
