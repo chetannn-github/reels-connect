@@ -4,6 +4,7 @@ import CommentAnalytics from "../../../models/comment.analytics.model.js";
 import OpenAI from "openai";
 import { replyToComment } from "./replyToComment.js";
 import { sendDM } from "./sendDM.js";
+import Instruction from "../../../models/instruction.model.js";
 
 const client = new OpenAI();
 
