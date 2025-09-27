@@ -33,7 +33,7 @@ export const createInstruction = async (req, res) => {
         const embedding = await generateEmbedding(refined);
         const vectorId = `${reelId}_${newInstruction._id}`;
 
-        await pineconeClient.index("instructions")
+        await pineconeClient
         .namespace(reelId.toString())
         .upsert([{
             id: vectorId,

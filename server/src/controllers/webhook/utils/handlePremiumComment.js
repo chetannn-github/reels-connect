@@ -15,7 +15,6 @@ export const handlePremiumComment = async (reel,webhookID,commentText,commentId,
     const commentEmbedding = await generateEmbedding(commentText);
 
     const queryResponse = await pineconeClient
-      .index("instructions")
       .namespace(reel._id.toString())
       .query({
         vector: commentEmbedding,
