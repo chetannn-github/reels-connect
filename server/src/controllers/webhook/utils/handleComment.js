@@ -6,19 +6,13 @@ import { replyToComment } from "./replyToComment.js";
 import { handlePremiumComment } from "./handlePremiumComment.js";
 
 export const handleComment = async(webhookID, commentText, commentId, commentorUsername, reelId) => {
-    console.log("New Comment:", commentText);
-
     let reel = await Reel.findOne({reelId}).populate("user");
-   
-
     if(!reel) return ; // if it is not in db but comment can come
-     console.log("reel found")
+     
     let postOwner = await User.findById(reel?.user._id);
-    console.log("user found")
     if(postOwner.plan === "free" && postOwner.messagesSent >= FREE_USER_MESSAGES_LIMIT) return;
-    console.log("limit exceed")
+    
     if(!reel.isActive) return;
-    console.log("inactive reel")
 
     const access_token = reel?.user?.access_token;
     const comment_reply = reel?.message || "";
