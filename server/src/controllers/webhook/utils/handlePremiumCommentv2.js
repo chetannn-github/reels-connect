@@ -37,10 +37,9 @@ export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentI
     if(!matchedInstruction) return;
 
     const {action, commentMessage, dmMessage, refinedInstruction, instruction} = matchedInstruction;
-    console.log(action,commentMessage, dmMessage, refinedInstruction, instruction);
-
+    
     const gptCheck = await client.chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4.1-mini",
       messages: [
         {
           role: "system",
