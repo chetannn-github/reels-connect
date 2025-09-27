@@ -35,6 +35,7 @@ export const storeUserInfo = async (userId, infoString) => {
           metadata: {
             userId,
             chunkIndex: i,
+            text : chunk
           },
         },
       ]);
