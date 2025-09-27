@@ -1,7 +1,6 @@
-import { generateEmbedding, openAIClient } from "../../../config/openai.js";
+import { generateEmbedding, getOpenAIResponse, openAIClient } from "../../../config/openai.js";
 import { pineconeClient } from "../../../config/pinecone.js";
 import Chat from "../../../models/chat.model.js";
-import Conversation from "../../../models/conversation.model.js";
 import { getDMPrompt } from "../../../utils/prompts.js";
 import { sendDM } from "./sendDM.js";
 
@@ -23,15 +22,8 @@ export const handlePremiumDM = async (user, senderID, message, conversation, web
     });
 
   const infoTexts = queryResponse.matches?.map(m => m.metadata?.text || "").join("\n") || "";
-
-  const response = await openAIClient.chat.completions.create({
-    model: "gpt-5",
-    messages: [
-      { role: "system", content: getDMPrompt(infoTexts,chatTexts,message) }
-    ],
-  });
-
-  const replyText = response.choices[0].message.content.trim();
+  const DMPrompt = getDMPrompt(infoTexts,chatTexts,message);
+  const replyText = await getOpenAIResponse(DMPrompt);
   await sendDM(webhookID, user.access_token, senderID, replyText, false);
 
   user.messagesSent += 1;
