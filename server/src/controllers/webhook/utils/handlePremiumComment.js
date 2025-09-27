@@ -38,6 +38,8 @@ export const handlePremiumComment = async (reel, webhookID, commentText, comment
       messages: [{ role: "user", content: prompt }]
     });
 
+    response = response.replace(/```json|```/g, "").trim();
+
     let parsed;
     try {
       parsed = JSON.parse(response.choices[0].message.content.trim());
