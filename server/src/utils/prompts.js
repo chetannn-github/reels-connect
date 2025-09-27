@@ -16,16 +16,11 @@ export const convertToJSONPrompt = (condition) => {
 
 export const enhanceInstructionPrompt = (instruction) => {
     const prompt = `
-SYSTEM: You are a semantic normalizer if you want to write in hindi prefer hinglish. Output only one short sentence/phrase suitable for generating embeddings.
-USER: Rewrite the following rule condition into a broader, generalized set of synonyms and phrasing that preserves intent in the original language. 
-- Include at least 15 words in the same language(compulsory)  me rkhna  for examples. 
-- If the instruction contains offensive words, include them in examples as-is.
-Condition:
-<<<
-${instruction}
->>>
-Example input: "comment contains offensive words"
-Example output: "comments with gaali, behenchod, madrchod, insult, rude words, abusive content, disrespectful phrases, toxic comments, harmful language, bad words"
-`;
+        User Instruction: "${instruction}"
+        Convert this into a broad, generalised rule in plain English and Hinglish Both
+        that captures the intent for semantic search.
+        Keep it concise but clear.
+        Output ONLY the normalised instruction.
+    `;
     return prompt;
 }
