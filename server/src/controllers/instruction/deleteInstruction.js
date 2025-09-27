@@ -5,27 +5,21 @@ import { pineconeClient } from "../../config/pinecone.js"; // tumhari pinecone c
 export const deleteInstruction = async (req, res) => {
   try {
     const { instructionId } = req.body;
-
     const instruction = await Instruction.findOne({
       _id: instructionId,
       user: req.user._id,
     });
 
-    if (!instruction) {
-      return res.status(404).json({ message: "Instruction not found" });
-    }
-
+    if (!instruction) return res.status(404).json({ message: "Instruction not found" });
+  
     const reelId = instruction.reel.toString();
     const vectorId = `${reelId}_${instruction._id}`;
 
-    
     await Reel.findByIdAndUpdate(reelId, {
       $pull: { instructions: instruction._id },
     });
 
-    
     await Instruction.deleteOne({ _id: instructionId });
-
     await pineconeClient
       .index("reels-connect-vector")
       .namespace(reelId)
