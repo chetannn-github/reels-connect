@@ -7,12 +7,10 @@ export const storeUserInfo = async (userId, infoString) => {
   if (!infoString || infoString.trim().length === 0) return 0;
   const namespace = `user_${userId}`;
 
-  // await pineconeClient
-  //   .index(PINECONE_INDEX)
-  //   .delete({
-  //     namespace,
-  //     deleteAll: true,
-  //   });
+  await pineconeClient
+    .index(PINECONE_INDEX)
+    .deleteNamespace(namespace)
+    
   console.log(`Existing vectors for ${namespace} deleted`);
   
   const splitter = new RecursiveCharacterTextSplitter({
