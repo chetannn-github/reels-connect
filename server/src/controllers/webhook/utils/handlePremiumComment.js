@@ -37,7 +37,7 @@ export const handlePremiumComment = async (reel, webhookID, commentText, comment
       model: "gpt-4o",
       messages: [{ role: "user", content: prompt }]
     });
-    const gptResponse = response.choices[0].message.content.trim();
+    let gptResponse = response.choices[0].message.content.trim();
     gptResponse = gptResponse.replace(/```json|```/g, "").trim();
 
     let parsed;
