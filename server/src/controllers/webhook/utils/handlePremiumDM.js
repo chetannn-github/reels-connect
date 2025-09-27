@@ -40,7 +40,6 @@ export const handlePremiumDM = async (user, senderID, message, conversation) => 
     messages: [
       { role: "system", content: gptPrompt }
     ],
-    temperature: 0,
   });
 
   const replyText = response.choices[0].message.content.trim();
