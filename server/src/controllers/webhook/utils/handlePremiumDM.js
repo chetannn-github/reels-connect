@@ -4,7 +4,7 @@ import Chat from "../../../models/chat.model.js";
 import Conversation from "../../../models/conversation.model.js";
 import { sendDM } from "./sendDM.js";
 
-export const handlePremiumDM = async (user, senderID, message, conversation) => {
+export const handlePremiumDM = async (user, senderID, message, conversation, webhookID) => {
   const chatHistory = await Chat.find({ conversationId: conversation._id })
     .sort({ createdAt: 1 })
     .limit(20);
@@ -44,7 +44,7 @@ export const handlePremiumDM = async (user, senderID, message, conversation) => 
 
   const replyText = response.choices[0].message.content.trim();
 
-  await sendDM(user.webhook_id, user.access_token, senderID, replyText, true);
+  await sendDM(webhookID, user.access_token, senderID, replyText, true);
 
   user.messagesSent += 1;
   await user.save();

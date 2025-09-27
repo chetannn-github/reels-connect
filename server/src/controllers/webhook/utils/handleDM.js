@@ -45,7 +45,7 @@ export const handleDM = async (webhookID,senderID,recieverID,message) => {
             console.log("reciever ID -> " + recieverID);
     
             console.log(message) 
-            if(user.plan === "premium") return handlePremiumDM(user,senderID,message, conversation);
+            if(user.plan === "premium") return handlePremiumDM(user,senderID,message, conversation, webhookID);
 
             await sendDM(webhookID,token,senderID,"Hello !!", false);
             user.messagesSent += 1;
