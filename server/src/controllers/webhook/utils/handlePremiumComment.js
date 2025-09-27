@@ -18,17 +18,15 @@ export const handlePremiumComment = async (reel, webhookID, commentText, comment
     // 1️⃣ Fetch all instructions for this reel
     const instructions = await Instruction.find({ reel: reel._id });
     if (!instructions.length) {
-      console.log("❌ No instructions found for this reel");
+      console.log("No instructions found for this reel");
       return;
     }
 
-    // 2️⃣ Prepare GPT prompt
     let prompt = `You are an reel automation engine. Given the following instructions for a reel, 
       choose the most suitable one for this comment and return ONLY JSON in this format:
       { "instructionId": "<matching_instruction_id>", "action": "<comment|comment+dm|ignore>" }
       Instructions:\n
     `;
-
     instructions.forEach(ins => {
       prompt += `ID: ${ins._id}\nInstruction: ${ins.instruction}\nAction: ${ins.action}\nCommentMessage: ${ins.commentMessage}\nDMMessage: ${ins.dmMessage}\n\n`;
     });
@@ -36,7 +34,7 @@ export const handlePremiumComment = async (reel, webhookID, commentText, comment
     prompt += `Incoming comment: "${commentText}"`;
 
     const response = await client.chat.completions.create({
-      model: "gpt-5",
+      model: "gpt-4o",
       messages: [{ role: "user", content: prompt }]
     });
 
