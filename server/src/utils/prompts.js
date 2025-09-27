@@ -10,3 +10,19 @@ export const enhanceInstructionPrompt = (instruction) => {
   `;
   return prompt;
 };
+
+
+export const getDMPrompt = (infoTexts, chatTexts, message) => {
+  const prompt = `
+    You are a strict assistant. Only use the information given below from the user's profile and previous chat history to reply.
+    Never answer anything outside this context. Do NOT answer general questions, code requests, weather, or unrelated topics say i dont know
+    User Info Context:
+    ${infoTexts}
+    Previous Chat History:
+    ${chatTexts}
+    New User Message: "${message}"
+    Respond max in 1 to 2 lines in friendly and only using the context.
+  `;
+    return prompt;
+
+}
