@@ -2,6 +2,7 @@ import { Reel } from "../../models/user.model.js";
 import { enhanceInstructionPrompt } from "../../utils/prompts.js";
 import { generateEmbedding, getOpenAIResponse } from "../../config/openai.js";
 import { pineconeClient } from "../../config/pinecone.js";
+import Instruction from "../../models/instruction.model.js";
 
 
 export const createInstruction = async (req, res) => {
