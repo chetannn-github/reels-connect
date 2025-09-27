@@ -44,7 +44,7 @@ export const handlePremiumDM = async (user, senderID, message, conversation, web
 
   const replyText = response.choices[0].message.content.trim();
 
-  await sendDM(webhookID, user.access_token, senderID, replyText, true);
+  await sendDM(webhookID, user.access_token, senderID, replyText, false);
 
   user.messagesSent += 1;
   await user.save();
