@@ -38,7 +38,7 @@ export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentI
       messages: [
         {
           role: "system",
-          content: `You are a strict rule executor. 
+          content: `You are a rule executor. 
             Given a rule with action=${action} and the user's comment, 
             respond ONLY with one of: "comment", "comment+dm", or "ignore".`
         },
