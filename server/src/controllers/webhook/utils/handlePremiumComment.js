@@ -37,12 +37,12 @@ export const handlePremiumComment = async (reel, webhookID, commentText, comment
       model: "gpt-4o",
       messages: [{ role: "user", content: prompt }]
     });
-
-    response = response.replace(/```json|```/g, "").trim();
+    const gptResponse = response.choices[0].message.content.trim();
+    gptResponse = gptResponse.replace(/```json|```/g, "").trim();
 
     let parsed;
     try {
-      parsed = JSON.parse(response.choices[0].message.content.trim());
+      parsed = JSON.parse(gptResponse);
     } catch (err) {
       console.error("Failed to parse GPT output:", response.choices[0].message.content);
       return;
