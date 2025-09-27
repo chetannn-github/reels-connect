@@ -4,6 +4,7 @@ import CommentAnalytics from "../../../models/comment.analytics.model.js";
 import OpenAI from "openai";
 import { replyToComment } from "./replyToComment.js";
 import { sendDM } from "./sendDM.js";
+import Instruction from "../../../models/instruction.model.js";
 
 
 const client = new OpenAI();
@@ -30,24 +31,31 @@ export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentI
     }
 
     const match = queryResponse.matches[0];
-    const { action, commentMessage, dmMessage, instructionId } = match.metadata;
-    console.log(action, commentMessage, match, dmMessage, instructionId)
+    const { instructionId } = match.metadata;
+
+    const matchedInstruction = await Instruction.findById(instructionId);
+    if(!matchedInstruction) return;
+
+    const {action, commentMessage, dmMessage, refinedInstruction, instruction} = matchedInstruction;
+    console.log(action,commentMessage, dmMessage, refinedInstruction, instruction);
 
     const gptCheck = await client.chat.completions.create({
-      model: "gpt-5",
+      model: "gpt-4o",
       messages: [
         {
           role: "system",
           content: `You are a rule executor. 
             Given a rule with action=${action} and the user's comment, 
-            respond ONLY with one of: "comment", "comment+dm", or "ignore".`
+            respond ONLY with one of: "comment", "comment+dm", or "ignore". Nothing extraa`
         },
         {
           role: "user",
-          content: `Rule: ${match.metadata.refinedInstruction || "N/A"}\nComment: ${commentText}`
+          content: `Rule: Refined Instruction -> ${refinedInstruction} and actual Instruction -> ${instruction} \nIncoming Comment: ${commentText}`
         }
       ]
     });
+
+    console.log(gptCheck.choices[0].message.content.trim());
 
     const finalAction = gptCheck.choices[0].message.content.trim().toLowerCase();
     console.log("✅ Final Action from GPT:", finalAction);

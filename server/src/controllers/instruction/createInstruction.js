@@ -68,11 +68,7 @@ export const createInstruction = async (req, res) => {
             id: vectorId,
             values: embedding,
             metadata: {
-            reelId,
-            instructionId: newInstruction._id.toString(),
-            action,
-            commentMessage,
-            dmMessage
+              instructionId: newInstruction._id.toString(),
             }
         }]);
 
