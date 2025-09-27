@@ -10,7 +10,7 @@ import Instruction from "../../../models/instruction.model.js";
 const client = new OpenAI();
 export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentId,commenterUsername) => {
   try {
-    console.log("💬 Premium Comment:", commentText);
+    console.log("Premium Comment:", commentText);
     const postOwner = reel.user;
     const access_token = postOwner.access_token;
     const commentEmbedding = await generateEmbedding(commentText);
@@ -24,9 +24,8 @@ export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentI
         includeMetadata: true,
       });
     
-
     if (!queryResponse.matches?.length) {
-      console.log("❌ No matching rule found");
+      console.log("No matching rule found");
       return;
     }
 
@@ -57,7 +56,7 @@ export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentI
     console.log(gptCheck.choices[0].message.content.trim());
 
     const finalAction = gptCheck.choices[0].message.content.trim().toLowerCase();
-    console.log("✅ Final Action from GPT:", finalAction);
+    console.log("Final Action from GPT:", finalAction);
 
     if (finalAction === "comment") {
       await replyToComment(commentId, commentMessage, access_token);
@@ -65,7 +64,7 @@ export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentI
       await replyToComment(commentId, commentMessage, access_token);
       await sendDM(webhookID, access_token, commentId, dmMessage, true);
     } else {
-      console.log("🛑 Ignored comment");
+      console.log("Ignored comment");
     }
     
     const analytics = new CommentAnalytics({
@@ -81,8 +80,8 @@ export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentI
     });
 
     await analytics.save();
-    console.log("📊 Analytics saved");
+    console.log("Analytics saved");
   } catch (err) {
-    console.error("❌ Error in handlePremiumComment:", err);
+    console.error("Error in handlePremiumComment:", err);
   }
 };
