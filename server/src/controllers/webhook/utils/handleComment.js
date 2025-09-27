@@ -4,6 +4,7 @@ import CommentAnalytics from "../../../models/comment.analytics.model.js";
 import { sendDM } from "./sendDM.js";
 import { replyToComment } from "./replyToComment.js";
 import { handlePremiumComment } from "./handlePremiumComment.js";
+import { handlePremiumCommentv2 } from "./handlePremiumCommentv2.js";
 
 export const handleComment = async(webhookID, commentText, commentId, commentorUsername, reelId) => {
     let reel = await Reel.findOne({reelId}).populate("user");
@@ -25,7 +26,7 @@ export const handleComment = async(webhookID, commentText, commentId, commentorU
     
     if(!matchedKeyword) {
       if(postOwner.plan !== "premium") return;
-      else return await handlePremiumComment(reel,webhookID,commentText,commentId,commentorUsername)
+      else return await handlePremiumCommentv2(reel,webhookID,commentText,commentId,commentorUsername)
     }
     
 

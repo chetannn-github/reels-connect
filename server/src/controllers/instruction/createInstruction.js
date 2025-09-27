@@ -5,30 +5,80 @@ import { pineconeClient } from "../../config/pinecone.js";
 import Instruction from "../../models/instruction.model.js";
 
 
+// export const createInstruction = async (req, res) => {
+//   try {
+//     const { instruction, action, commentMessage, dmMessage, reelId } = req.body;
+//     const reel = await Reel.findOne({ _id: reelId, user: req.user._id });
+//     if (!reel) return res.status(404).json({ message: "Reel not found" });
+
+//     const newInstruction = new Instruction({
+//       reel: reelId,
+//       user: req.user._id,
+//       instruction,
+//       action,
+//       commentMessage,
+//       dmMessage
+//     });
+
+//     await newInstruction.save();
+
+//     reel.instructions.push(newInstruction._id);
+//     await reel.save();
+
+//     res.json({ success: true, data: newInstruction });
+//   } catch (err) {
+//     console.error("Error creating instruction:", err);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
+
+
 export const createInstruction = async (req, res) => {
-  try {
-    const { instruction, action, commentMessage, dmMessage, reelId } = req.body;
-    const reel = await Reel.findOne({ _id: reelId, user: req.user._id });
-    if (!reel) return res.status(404).json({ message: "Reel not found" });
+    try {
+        const { instruction, action, commentMessage, dmMessage, reelId} = req.body;
 
-    const newInstruction = new Instruction({
-      reel: reelId,
-      user: req.user._id,
-      instruction,
-      action,
-      commentMessage,
-      dmMessage
-    });
+        const reel = await Reel.findOne({ _id: reelId, user: req.user._id });
+        if (!reel) return res.status(404).json({ message: "Reel not found" });
 
-    await newInstruction.save();
+        const promptToEnhanceInstruction = enhanceInstructionPrompt(instruction);
+        const refined = await getOpenAIResponse(promptToEnhanceInstruction);
 
-    reel.instructions.push(newInstruction._id);
-    await reel.save();
+        const newInstruction = new Instruction({
+            reel: reelId,
+            user: req.user._id,
+            instruction,
+            refinedInstruction: refined,
+            action,
+            commentMessage,
+            dmMessage
+        });
+        await newInstruction.save();
 
-    res.json({ success: true, data: newInstruction });
+        reel.instructions.push(newInstruction._id);
+        await reel.save();
+
+        
+        const embedding = await generateEmbedding(refined);
+        const vectorId = `${reelId}_${newInstruction._id}`;
+
+        await pineconeClient
+        .index("reels-connect-vector")
+        .namespace(reelId.toString())
+        .upsert([{
+            id: vectorId,
+            values: embedding,
+            metadata: {
+            reelId,
+            instructionId: newInstruction._id.toString(),
+            action,
+            commentMessage,
+            dmMessage
+            }
+        }]);
+
+        res.json({ success: true, data: newInstruction });
   } catch (err) {
     console.error("Error creating instruction:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
-

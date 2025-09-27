@@ -5,7 +5,7 @@ const instructionSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 
   instruction: { type: String, required: true },    
-  // refinedInstruction: { type: String, required: true },
+  refinedInstruction: { type: String},
   action: { 
     type: String, 
     enum: ["comment", "comment+dm", "ignore"], 
