@@ -10,7 +10,8 @@ const reelSchema = new mongoose.Schema({
     mediaURL : { type : String, default : "" },
     thumbnailURL :  { type : String, default : "" },
     timestamp : { type : String, default : "" },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    instructions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Instruction" }]
 }, { timestamps: true });
 
 const Reel = mongoose.model('Reel', reelSchema);
