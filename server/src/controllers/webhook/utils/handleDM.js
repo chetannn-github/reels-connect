@@ -1,6 +1,7 @@
 import Chat from "../../../models/chat.model.js";
 import Conversation from "../../../models/conversation.model.js";
 import { User } from "../../../models/user.model.js";
+import { handlePremiumDM } from "./handlePremiumDM.js";
 import { sendDM } from "./sendDM.js";
 
 
@@ -44,6 +45,8 @@ export const handleDM = async (webhookID,senderID,recieverID,message) => {
             console.log("reciever ID -> " + recieverID);
     
             console.log(message) 
+            if(user.plan === "premium") return handlePremiumDM(user,senderID,message, conversation);
+
             await sendDM(webhookID,token,senderID,"Hello !!", false);
             user.messagesSent += 1;
             await user.save();
