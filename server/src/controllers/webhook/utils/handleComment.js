@@ -11,7 +11,7 @@ export const handleComment = async(webhookID, commentText, commentId, commentorU
      
     let postOwner = await User.findById(reel?.user._id);
     if(postOwner.plan === "free" && postOwner.messagesSent >= FREE_USER_MESSAGES_LIMIT) return;
-    
+    if(commentorUsername === postOwner.username) return;
     if(!reel.isActive) return;
 
     const access_token = reel?.user?.access_token;
