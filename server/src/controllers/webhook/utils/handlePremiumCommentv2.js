@@ -31,6 +31,7 @@ export const handlePremiumCommentv2 = async (reel,webhookID,commentText,commentI
 
     const match = queryResponse.matches[0];
     const { action, commentMessage, dmMessage, instructionId } = match.metadata;
+    console.log(action, commentMessage, match, dmMessage, instructionId)
 
     const gptCheck = await client.chat.completions.create({
       model: "gpt-5",
