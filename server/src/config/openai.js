@@ -1,5 +1,5 @@
 import OpenAI from "openai";
-const openAIClient = new OpenAI();
+export const openAIClient = new OpenAI();
 
 
 export async function getOpenAIResponse(input) {

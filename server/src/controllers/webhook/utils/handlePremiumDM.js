@@ -1,4 +1,4 @@
-import { generateEmbedding } from "../../../config/openai.js";
+import { generateEmbedding, openAIClient } from "../../../config/openai.js";
 import { pineconeClient } from "../../../config/pinecone.js";
 import Chat from "../../../models/chat.model.js";
 import Conversation from "../../../models/conversation.model.js";
