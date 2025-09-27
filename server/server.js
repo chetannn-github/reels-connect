@@ -1,4 +1,6 @@
 import express from 'express';
+import morgan from 'morgan';
+import helmet from "helmet";
 import { PORT } from './src/config/env.js';
 import { connectToDB } from './src/config/db.js';
 import cors from "cors";
@@ -12,6 +14,7 @@ import analyticsRoutes from './src/routes/analytics.route.js'
 
 import './src/cron/refreshToken.cron.js'
 
+
 const app = express();
 
 app.use(
@@ -20,6 +23,8 @@ app.use(
     credentials: true,
   })
 );
+app.use(morgan("dev"));
+app.use(helmet());
 app.use('/api/webhook', webhookRoutes);
 
 app.use(express.json());
