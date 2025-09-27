@@ -6,53 +6,29 @@ import Instruction from "../../models/instruction.model.js";
 
 
 export const createInstruction = async (req, res) => {
-    try {
-        const { instruction, action, commentMessage, dmMessage, reelId} = req.body;
+  try {
+    const { instruction, action, commentMessage, dmMessage, reelId } = req.body;
+    const reel = await Reel.findOne({ _id: reelId, user: req.user._id });
+    if (!reel) return res.status(404).json({ message: "Reel not found" });
 
-        const reel = await Reel.findOne({ _id: reelId, user: req.user._id });
-        if (!reel) return res.status(404).json({ message: "Reel not found" });
+    const newInstruction = new Instruction({
+      reel: reelId,
+      user: req.user._id,
+      instruction,
+      action,
+      commentMessage,
+      dmMessage
+    });
 
-        const promptToEnhanceInstruction = enhanceInstructionPrompt(instruction);
-        const refined = await getOpenAIResponse(promptToEnhanceInstruction);
+    await newInstruction.save();
 
-        const newInstruction = new Instruction({
-            reel: reelId,
-            user: req.user._id,
-            instruction,
-            refinedInstruction: refined,
-            action,
-            commentMessage,
-            dmMessage
-        });
-        await newInstruction.save();
+    reel.instructions.push(newInstruction._id);
+    await reel.save();
 
-        reel.instructions.push(newInstruction._id);
-        await reel.save();
-
-        
-        const embedding = await generateEmbedding(refined);
-        const vectorId = `${reelId}_${newInstruction._id}`;
-
-        await pineconeClient
-        .index("reels-connect-vector")
-        .namespace(reelId.toString())
-        .upsert([{
-            id: vectorId,
-            values: embedding,
-            metadata: {
-            reelId,
-            instructionId: newInstruction._id.toString(),
-            action,
-            commentMessage,
-            dmMessage
-            }
-        }]);
-
-        res.json({ success: true, data: newInstruction });
+    res.json({ success: true, data: newInstruction });
   } catch (err) {
     console.error("Error creating instruction:", err);
     res.status(500).json({ message: "Server error" });
   }
 };
-
 

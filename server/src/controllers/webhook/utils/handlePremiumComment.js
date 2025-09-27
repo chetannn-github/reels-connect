@@ -7,73 +7,77 @@ import { sendDM } from "./sendDM.js";
 
 const client = new OpenAI();
 
-export const handlePremiumComment = async (reel,webhookID,commentText,commentId,commenterUsername) => {
+
+export const handlePremiumComment = async (reel, webhookID, commentText, commentId, commenterUsername) => {
   try {
     console.log("💬 Premium Comment:", commentText);
     const postOwner = reel.user;
     const access_token = postOwner.access_token;
-    const commentEmbedding = await generateEmbedding(commentText);
 
-    const queryResponse = await pineconeClient
-      .index("reels-connect-vector")
-      .namespace(reel._id.toString())
-      .query({
-        vector: commentEmbedding,
-        topK: 1,
-        includeMetadata: true
-      });
-
-    if (!queryResponse.matches?.length) {
-      console.log("❌ No matching rule found");
+    // 1️⃣ Fetch all instructions for this reel
+    const instructions = await Instruction.find({ reel: reel._id });
+    if (!instructions.length) {
+      console.log("❌ No instructions found for this reel");
       return;
     }
 
-    const match = queryResponse.matches[0];
-    const { action, commentMessage, dmMessage, instructionId } = match.metadata;
+    // 2️⃣ Prepare GPT prompt
+    let prompt = `You are an reel automation engine. Given the following instructions for a reel, 
+      choose the most suitable one for this comment and return ONLY JSON in this format:
+      { "instructionId": "<matching_instruction_id>", "action": "<comment|comment+dm|ignore>" }
+      Instructions:\n
+    `;
 
-    const gptCheck = await client.chat.completions.create({
-      model: "gpt-5",
-      messages: [
-        {
-          role: "system",
-          content: `You are a strict rule executor. 
-            Given a rule with action=${action} and the user's comment, 
-            respond ONLY with one of: "comment", "comment+dm", or "ignore".`
-        },
-        {
-          role: "user",
-          content: `Rule: ${match.metadata.refinedInstruction || "N/A"}\nComment: ${commentText}`
-        }
-      ]
+    instructions.forEach(ins => {
+      prompt += `ID: ${ins._id}\nInstruction: ${ins.instruction}\nAction: ${ins.action}\nCommentMessage: ${ins.commentMessage}\nDMMessage: ${ins.dmMessage}\n\n`;
     });
 
-    const finalAction = gptCheck.choices[0].message.content.trim().toLowerCase();
-    console.log("✅ Final Action from GPT:", finalAction);
+    prompt += `Incoming comment: "${commentText}"`;
 
-    if (finalAction === "comment") {
-      await replyToComment(commentId, commentMessage, access_token);
-    } else if (finalAction === "comment+dm") {
-      await replyToComment(commentId, commentMessage, access_token);
-      await sendDM(webhookID, access_token, commentId, dmMessage, true);
+    const response = await client.chat.completions.create({
+      model: "gpt-5",
+      messages: [{ role: "user", content: prompt }]
+    });
+
+    let parsed;
+    try {
+      parsed = JSON.parse(response.choices[0].message.content.trim());
+    } catch (err) {
+      console.error("Failed to parse GPT output:", response.choices[0].message.content);
+      return;
+    }
+
+    const matched = instructions.find(i => i._id.toString() === parsed.instructionId);
+    if (!matched) {
+      console.log("❌ Matched instruction not found in DB");
+      return;
+    }
+
+    // 4️⃣ Execute action
+    if (parsed.action === "comment") {
+      await replyToComment(commentId, matched.commentMessage, access_token);
+    } else if (parsed.action === "comment+dm") {
+      await replyToComment(commentId, matched.commentMessage, access_token);
+      await sendDM(webhookID, access_token, commentId, matched.dmMessage, true);
     } else {
       console.log("🛑 Ignored comment");
     }
-    
-    const analytics = new CommentAnalytics({
+
+    // 5️⃣ Save analytics
+    await CommentAnalytics.create({
       user: postOwner._id,
       reel: reel._id,
       commentText,
       commentor: commenterUsername,
-      matchedRule: instructionId,
-      dmMessage: finalAction.includes("dm") ? dmMessage : null,
-      commentMessage: finalAction.includes("comment") ? commentMessage : null,
-      dmSent: finalAction.includes("dm"),
-      commentSent: finalAction.includes("comment")
+      matchedRule: matched._id,
+      dmMessage: parsed.action.includes("dm") ? matched.dmMessage : null,
+      commentMessage: parsed.action.includes("comment") ? matched.commentMessage : null,
+      dmSent: parsed.action.includes("dm"),
+      commentSent: parsed.action.includes("comment")
     });
 
-    await analytics.save();
     console.log("📊 Analytics saved");
   } catch (err) {
-    console.error("❌ Error in handlePremiumComment:", err);
+    console.error("❌ Error in handlePremiumComment GPT-only:", err);
   }
 };
