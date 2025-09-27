@@ -26,3 +26,5 @@ export const RAZORPAY_KEY_SECRET = process.env.RAZORPAY_KEY_SECRET;
 
 export const GROQ_API_KEY = process.env.GROQ_API_KEY;
 export const PINECONE_API_KEY = process.env.PINECONE_API_KEY;
+export const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+export const PINECONE_INDEX="reels-connect-vector";
