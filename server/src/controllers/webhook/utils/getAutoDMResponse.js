@@ -13,7 +13,12 @@ export const getAutoDMResponse = async (userId, text) => {
         if (rule.cards && rule.cards.length > 0) {
           const randomCardIndex = Math.floor(Math.random() * rule.cards.length);
           const card = rule.cards[randomCardIndex];
-          const button = card.buttons && card.buttons.length > 0 ? card.buttons : [];
+
+          let button = null;
+          if (card.buttons && card.buttons.length > 0) {
+            const randomButtonIndex = Math.floor(Math.random() * card.buttons.length);
+            button = card.buttons[randomButtonIndex];
+          }
 
           return {
             type: "card",
@@ -25,6 +30,7 @@ export const getAutoDMResponse = async (userId, text) => {
             },
           };
         }
+
 
         if (rule.dmMessages && rule.dmMessages.length > 0) {
           const randomIndex = Math.floor(Math.random() * rule.dmMessages.length);
