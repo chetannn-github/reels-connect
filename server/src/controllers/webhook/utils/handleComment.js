@@ -5,47 +5,46 @@ import { sendDM } from "./sendDM.js";
 import { replyToComment } from "./replyToComment.js";
 import { handlePremiumComment } from "./handlePremiumComment.js";
 import { handlePremiumCommentv2 } from "./handlePremiumCommentv2.js";
+import { getCommentResponse } from "./getCommentResponse.js";
 
 export const handleComment = async(webhookID, commentText, commentId, commentorUsername, reelId) => {
     let reel = await Reel.findOne({reelId}).populate("user");
-    if(!reel) return ; // if it is not in db but comment can come
+    if(!reel) return ;
      
     let postOwner = await User.findById(reel?.user._id);
+    if(postOwner.webhook_id === null) {
+      postOwner.webhook_id = webhookID;
+      await postOwner.save();
+    }
     if(postOwner.plan === "free" && postOwner.messagesSent >= FREE_USER_MESSAGES_LIMIT) return;
     if(commentorUsername === postOwner.username) return;
-    if(!reel.isActive) return;
 
+    const autoResponse = await getCommentResponse(reel,commentText);
     const access_token = reel?.user?.access_token;
-    const comment_reply = reel?.message || "";
-    const keywords = reel?.keywords || [];
 
-    const matchedKeyword = keywords.find(keyword => 
-      commentText.includes(keyword.toLowerCase())
-    );
+    if (autoResponse !== null) {
+      const { type, message, commentReply, card } = autoResponse; 
 
-    
-    if(!matchedKeyword) {
-      if(postOwner.plan !== "premium") return;
-      else return await handlePremiumCommentv2(reel,webhookID,commentText,commentId,commentorUsername)
-    }
-    
+      if (type === "card" || type === "text") {
+        const dmMessage =  type === "card" ? card : message;
+        await sendDM(webhookID,access_token, commentId, dmMessage, true);
+        postOwner.messagesSent += 1;
 
-    await sendDM(webhookID,access_token,commentId, comment_reply, true);
-    await replyToComment(commentId,"Check your DM 🔥", access_token);
-    
-    postOwner.messagesSent += 1;
-    postOwner.webhook_id = webhookID;
-    await postOwner.save();
+      }
+      await replyToComment(commentId, commentReply, access_token);
+      await postOwner.save();
 
-    const comment = new CommentAnalytics({
-      user: postOwner,
-      reel,
-      commentText,
-      dmMessage : comment_reply,
-      dmSent : true,
-      commentor : commentorUsername
-    });
+      const comment = new CommentAnalytics({
+        user: postOwner,
+        reel,
+        commentText,
+        dmMessage : comment_reply,
+        dmSent : true,
+        commentor : commentorUsername
+      });
+      await comment.save();
 
-    await comment.save();
-          
+    } else {
+      if (postOwner.plan === "premium") await handlePremiumCommentv2(reel,webhookID,commentText,commentId,commentorUsername)
+    }      
 }
