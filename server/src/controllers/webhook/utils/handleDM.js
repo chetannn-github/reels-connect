@@ -43,15 +43,14 @@ export const handleDM = async (webhookID,senderID,recieverID,message) => {
     if(webhookID === senderID) return;
     console.log("Incoming msg " + message) 
 
-    const replyMessage = await getAutoDMResponse(user._id, message);
-    if(replyMessage !== null) {
-      const {type, card, message} = replyMessage;
-
-      if(type === "card") {
-        await sendDM(webhookID,token, senderID,card, false);
-      } else await sendDM(webhookID,token,senderID,message, false);
+    const autoResponse = await getAutoDMResponse(user._id, message);
+    if(autoResponse !== null) {
+      const {type, card, message} = autoResponse;
+      const replyMessage = type === "card" ? card : message;
+      await sendDM(webhookID,token,senderID,replyMessage, false);
       user.messagesSent += 1;
       await user.save();
+      
       return;
     }
     if(user.plan === "premium") return await handlePremiumDM(user,senderID,message, conversation, webhookID);
