@@ -11,7 +11,7 @@ const cardSchema = new mongoose.Schema({
   title: { type: String, required: true },
   subtitle: { type: String, default: "" },
   image_url: { type: String, default: "" },
-  buttons: { type: [buttonSchema], default: [] },
+  button: { type: buttonSchema, default: [] },
 }, { _id: false });
 
 
@@ -19,7 +19,7 @@ const dmAutomationSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   keyword: { type: String, required: true },                                    
   dmMessages: { type: [String], default: [] },
-  cards: { type: [cardSchema], default: [] }, 
+  card: { type: cardSchema, default: [] }, 
   isActive: { type: Boolean, default: true },
   triggerCount: { type: Number, default: 0 },
 }, { timestamps: true });

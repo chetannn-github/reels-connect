@@ -3,7 +3,7 @@ import DMAutomation from "../../models/dmAutomation.model.js";
 export const updateDmAutomation = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { dmAutomationId, keyword, dmMessages, cards, isActive } = req.body;
+    const { dmAutomationId, keyword, dmMessages, card, isActive } = req.body;
 
     const rule = await DMAutomation.findOne({ _id: dmAutomationId, user: userId });
     if (!rule) {
@@ -26,8 +26,8 @@ export const updateDmAutomation = async (req, res) => {
       rule.dmMessages = dmMessages;
     }
 
-    if (Array.isArray(cards)) {
-      rule.cards = cards;
+    if (card !== undefined) {
+      rule.card = card;
     }
 
     if (isActive !== undefined) {

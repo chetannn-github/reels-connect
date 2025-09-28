@@ -10,15 +10,9 @@ export const getAutoDMResponse = async (userId, text) => {
         rule.triggerCount += 1;
         await rule.save();
 
-        if (rule.cards && rule.cards.length > 0) {
-          const randomCardIndex = Math.floor(Math.random() * rule.cards.length);
-          const card = rule.cards[randomCardIndex];
-
-          let button = null;
-          if (card.buttons && card.buttons.length > 0) {
-            const randomButtonIndex = Math.floor(Math.random() * card.buttons.length);
-            button = card.buttons[randomButtonIndex];
-          }
+        if (rule.card) {
+          const card = rule.card;
+          const button = card.button;
 
           return {
             type: "card",
@@ -42,7 +36,7 @@ export const getAutoDMResponse = async (userId, text) => {
       }
     }
 
-    return null; // no matching keyword
+    return null;
   } catch (error) {
     console.error("Error in getAutoDMResponse:", error);
     return null;
