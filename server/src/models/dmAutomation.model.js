@@ -19,7 +19,7 @@ const dmAutomationSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   keyword: { type: String, required: true },                                    
   dmMessages: { type: [String], default: [] },
-  card: { type: cardSchema, default: [] }, 
+  card: { type: cardSchema, default: null }, 
   isActive: { type: Boolean, default: true },
   triggerCount: { type: Number, default: 0 },
 }, { timestamps: true });
