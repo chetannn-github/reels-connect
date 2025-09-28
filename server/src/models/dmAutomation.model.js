@@ -22,6 +22,7 @@ const dmAutomationSchema = new mongoose.Schema({
   card: { type: cardSchema, default: null }, 
   isActive: { type: Boolean, default: true },
   triggerCount: { type: Number, default: 0 },
+  type : {type : String, enum : ["text", "card"]}
 }, { timestamps: true });
 
 const DMAutomation = mongoose.model("DMAutomation", dmAutomationSchema);
