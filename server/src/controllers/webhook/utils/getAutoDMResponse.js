@@ -1,4 +1,4 @@
-import { DMAutomation } from "../../../models/dmAutomation.model.js"; 
+import  DMAutomation  from "../../../models/dmAutomation.model.js"; 
 
 export const getAutoDMResponse = async ({ userId, text }) => {
   try {
