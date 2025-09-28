@@ -53,6 +53,7 @@ const DMAutomation = () => {
   };
 
   const isButtonDisabled = () => {
+  if(!keyword.trim()) return true;
   if (automationType === 'text') {
     return !dmMessages.some(msg => msg.trim() !== '');
   } else if (automationType === 'card') {
@@ -270,7 +271,7 @@ const DMAutomation = () => {
             </CardHeader>
             <CardContent>
               <div className="space-y-4 max-h-[600px] overflow-y-auto">
-                {!existingAutomations.length === 0 ? (
+                {existingAutomations.length === 0 ? (
                   <div className="text-center py-8 text-muted-foreground">
                     <MessageSquare className="w-12 h-12 mx-auto mb-4 opacity-50" />
                     <p>No automations created yet.</p>

@@ -3,7 +3,9 @@ import DMAutomation from "../../models/dmAutomation.model.js";
 export const addDmAutomation = async (req, res) => {
   try {
     const userId = req.user._id;
+     
     const { keyword, dmMessages, card, isActive, type} = req.body;
+
 
     if (!keyword || (!Array.isArray(dmMessages) && !card)) {
       return res.status(400).json({ 
@@ -23,7 +25,7 @@ export const addDmAutomation = async (req, res) => {
       keyword,
       dmMessages: Array.isArray(dmMessages) ? dmMessages : null,
       card,
-      type,
+      type : type,
       isActive: isActive ?? true,
     });
 
