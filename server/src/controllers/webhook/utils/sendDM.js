@@ -3,12 +3,32 @@ import axios from "axios";
 export const sendDM = async(webhookID,accessToken,recieverID,message,isOnComment) => {
   const key  = isOnComment ? "comment_id" : "id";
   try {
+    const payload = {
+      recipient: { [key]: receiverID },
+      message: {
+        attachment: {
+          type: "template",
+          payload: {
+            template_type: "generic",
+            elements: [
+              {
+                title: card.title,
+                subtitle: card.subtitle || "",
+                image_url: card.image_url || "",
+                default_action: card.default_action || undefined,
+                buttons: card.buttons || [],
+              },
+            ],
+          },
+        },
+      },
+    };
+
+
+
     const response = await axios.post(
       `https://graph.instagram.com/${webhookID}/messages`,
-      {
-        recipient: {[key]: recieverID },
-        message: { text: message },
-      },
+      payload,
       {
         headers: {
           "Content-Type": "application/json",
