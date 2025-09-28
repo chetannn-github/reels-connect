@@ -31,10 +31,10 @@ async function put(path, body, token) {
   return await handleRes(res)
 }
 
-async function del(path, token) {
-  const headers = {}
+async function del(path ,body, token) {
+  const headers = { 'Content-Type': 'application/json' }
   if (token) headers['Authorization'] = 'Bearer ' + token
-  const res = await fetch(BASE + path, { method: 'DELETE', headers })
+  const res = await fetch(BASE + path, { method: 'DELETE', headers, body : JSON.stringify(body)})
   return await handleRes(res)
 }
 

@@ -52,7 +52,19 @@ const DMAutomation = () => {
     setEditingId(null);
   };
 
-  // ======= CRUD =======
+  const isButtonDisabled = () => {
+  if (automationType === 'text') {
+    return !dmMessages.some(msg => msg.trim() !== '');
+  } else if (automationType === 'card') {
+    if (!card.title.trim() || !card.subtitle.trim()) return true;
+    const btnTitle = card.button.title.trim();
+    const btnUrl = card.button.url.trim();
+    if ((btnTitle && !btnUrl) || (!btnTitle && btnUrl)) return true;
+    return false;
+  }
+  return true;
+};
+
   const saveAutomation = async () => {
     if (!keyword.trim()) return;
 
@@ -90,11 +102,10 @@ const DMAutomation = () => {
         payload.dmAutomationId = editingId;
         res = await api.put('/dm-automation', payload, token);
       }
-      if (!res.ok) throw new Error("Failed to save automation");
       resetForm();
       await fetchAutomations();
     } catch (err) {
-      console.error(err);
+      console.error(err.message);
     }
   };
 
@@ -127,10 +138,11 @@ const DMAutomation = () => {
 
   const fetchAutomations = async () => {
     try {
+      console.log("fetchingg")
       const token = localStorage.getItem("jwt");
       if (!token) return navigate("/");
       const res = await api.get("/dm-automation", token);
-      setExistingAutomations(res.rules);
+      setExistingAutomations((prev) => [...res.rules]);
     } catch (err) {
       console.error("Error fetching automations:", err);
     }
@@ -242,7 +254,7 @@ const DMAutomation = () => {
                 </TabsContent>
               </Tabs>
 
-              <Button onClick={saveAutomation} className="w-full">
+              <Button onClick={saveAutomation} className="w-full" disabled= {isButtonDisabled()}>
                 {editingId ? <><Save className="w-4 h-4 mr-2" /> Update Automation</> : 'Create Automation'}
               </Button>
             </CardContent>
