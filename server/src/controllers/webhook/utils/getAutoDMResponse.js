@@ -12,6 +12,8 @@ export const getAutoDMResponse = async ( userId, text ) => {
       if (text.toLowerCase().includes(rule.keyword.toLowerCase())) {
         if (rule.dmMessages && rule.dmMessages.length > 0) {
           const randomIndex = Math.floor(Math.random() * rule.dmMessages.length);
+          rule.triggerCount += 1;
+          await rule.save();
           return rule.dmMessages[randomIndex];
         }
       }
