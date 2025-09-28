@@ -307,6 +307,13 @@ const DMAutomation = () => {
 
                       {automation.type === 'card' && automation.card && (
                         <div className="space-y-2">
+                          {automation.card.image_url && (
+                            <img
+                              src={automation.card.image_url}
+                              alt={automation.card.title || "Card image"}
+                              className="w-1/2 h-20 object-contain rounded-md border"
+                            />
+                          )}
                           <p className="font-medium text-sm">{automation.card.title}</p>
                           <p className="text-sm text-muted-foreground">{automation.card.subtitle}</p>
                           <Badge variant="outline" className="text-xs">{automation.card.button.title}</Badge>
