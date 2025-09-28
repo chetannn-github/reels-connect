@@ -29,21 +29,20 @@ export const handleComment = async(webhookID, commentText, commentId, commentorU
         const dmMessage =  type === "card" ? card : message;
         await sendDM(webhookID,access_token, commentId, dmMessage, true);
         postOwner.messagesSent += 1;
+        await postOwner.save();
+
+        const comment = new CommentAnalytics({
+          user: postOwner,
+          reel,
+          commentText,
+          dmMessage : type === "card" ? "card" : dmMessage,
+          dmSent : true,
+          commentor : commentorUsername
+        });
+        await comment.save();
 
       }
       await replyToComment(commentId, commentReply, access_token);
-      await postOwner.save();
-
-      const comment = new CommentAnalytics({
-        user: postOwner,
-        reel,
-        commentText,
-        dmMessage : comment_reply,
-        dmSent : true,
-        commentor : commentorUsername
-      });
-      await comment.save();
-
     } else {
       if (postOwner.plan === "premium") await handlePremiumCommentv2(reel,webhookID,commentText,commentId,commentorUsername)
     }      
