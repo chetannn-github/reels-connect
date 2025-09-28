@@ -12,11 +12,11 @@ export const sendDM = async(webhookID,accessToken,receiverID,message,isOnComment
             template_type: "generic",
             elements: [
               {
-                title: card.title,
-                subtitle: card.subtitle || "",
-                image_url: card.image_url || "",
-                default_action: card.default_action || undefined,
-                buttons: card.buttons || [],
+                title: "hii",
+                subtitle: "kese ho" || "",
+                image_url: "https://www.google.com" || "",
+                default_action:  undefined,
+                buttons:  [],
               },
             ],
           },
