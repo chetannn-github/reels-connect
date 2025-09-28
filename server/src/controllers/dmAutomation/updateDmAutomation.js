@@ -34,6 +34,7 @@ export const updateDmAutomation = async (req, res) => {
       rule.isActive = isActive;
     }
 
+    rule.type = type;
     await rule.save();
 
     return res.json({ message: "DM Automation rule updated successfully", rule });
