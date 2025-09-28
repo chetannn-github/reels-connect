@@ -1,11 +1,27 @@
 import mongoose from "mongoose";
 
+const buttonSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  type: { type: String, enum: ["web_url"], default: "web_url" },
+  url: { type: String, required: true },
+}, { _id: false });
+
+
+const cardSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  subtitle: { type: String, default: "" },
+  image_url: { type: String, default: "" },
+  buttons: { type: [buttonSchema], default: [] },
+}, { _id: false });
+
+
 const dmAutomationSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }, // kis user ka hai
-  keyword: { type: String, required: true },    
-  dmMessages: { type: [String], default: [] },    
-  isActive: { type: Boolean, default: true },     
-  triggerCount: { type: Number, default: 0 }, 
+  user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  keyword: { type: String, required: true },                                    
+  dmMessages: { type: [String], default: [] },
+  cards: { type: [cardSchema], default: [] }, 
+  isActive: { type: Boolean, default: true },
+  triggerCount: { type: Number, default: 0 },
 }, { timestamps: true });
 
 const DMAutomation = mongoose.model("DMAutomation", dmAutomationSchema);
