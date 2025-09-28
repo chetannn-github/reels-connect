@@ -1,6 +1,6 @@
 import  DMAutomation  from "../../../models/dmAutomation.model.js"; 
 
-export const getAutoDMResponse = async ({ userId, text }) => {
+export const getAutoDMResponse = async ( userId, text ) => {
   try {
     const rules = await DMAutomation.find({ user: userId });
 

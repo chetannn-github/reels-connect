@@ -44,7 +44,7 @@ export const handleDM = async (webhookID,senderID,recieverID,message) => {
     console.log("Incoming msg " + message) 
 
     const replyMessage = getAutoDMResponse(user._id, message);
-    if(replyMessage) {
+    if(replyMessage !== null) {
       await sendDM(webhookID,token,senderID,replyMessage, false);
       user.messagesSent += 1;
       await user.save();
