@@ -19,7 +19,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://reel-connect.onrender.com", "http://localhost:5173", "https://instaconnector.in"],
+    origin: ["https://reel-connect.onrender.com", "http://localhost:5173", "https://instaconnector.in", "https://instaconnector.vercel.app/"],
     credentials: true,
   })
 );
