@@ -248,6 +248,20 @@ function Dashboard() {
             </Card>
           )}
 
+
+
+          
+              <Card className="glass-effect border border-gray-200 shadow-lg" onClick={() => navigate("/dm-automation")}>
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Go to DM Automation</p>
+                
+              </div>
+              <Crown className="h-8 w-8 text-yellow-600" />
+            </CardContent>
+          </Card>
+          
+
         
         </div>
 
