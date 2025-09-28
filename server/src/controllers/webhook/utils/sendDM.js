@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const sendDM = async(webhookID,accessToken,recieverID,message,isOnComment) => {
+export const sendDM = async(webhookID,accessToken,receiverID,message,isOnComment) => {
   const key  = isOnComment ? "comment_id" : "id";
   try {
     const payload = {
