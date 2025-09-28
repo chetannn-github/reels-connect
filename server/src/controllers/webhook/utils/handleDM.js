@@ -48,7 +48,7 @@ export const handleDM = async (webhookID,senderID,recieverID,message) => {
       const {type, card, message} = replyMessage;
 
       if(type === "card") {
-        await sendDM(webhookID,tokenn, senderID,card, false);
+        await sendDM(webhookID,token, senderID,card, false);
       } else await sendDM(webhookID,token,senderID,message, false);
       user.messagesSent += 1;
       await user.save();
