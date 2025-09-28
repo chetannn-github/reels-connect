@@ -11,6 +11,7 @@ import { Plus, Trash2, Upload, MessageSquare, CreditCard, Edit3, Edit, Save, X }
 import { useToast } from '../hooks/use-toast';
 import api from '../lib/api';
 import { useNavigate } from 'react-router-dom';
+import { isValidUrl } from '../lib/utils';
 
 
 const DMAutomation = () => {
@@ -53,18 +54,21 @@ const DMAutomation = () => {
   };
 
   const isButtonDisabled = () => {
-  if(!keyword.trim()) return true;
-  if (automationType === 'text') {
-    return !dmMessages.some(msg => msg.trim() !== '');
-  } else if (automationType === 'card') {
-    if (!card.title.trim() || !card.subtitle.trim()) return true;
-    const btnTitle = card.button.title.trim();
-    const btnUrl = card.button.url.trim();
-    if ((btnTitle && !btnUrl) || (!btnTitle && btnUrl)) return true;
-    return false;
-  }
-  return true;
-};
+    if(!keyword.trim()) return true;
+    
+    if (automationType === 'text') {
+      return !dmMessages.some(msg => msg.trim() !== '');
+    } else if (automationType === 'card') {
+      if (!card.title.trim() || !card.subtitle.trim()) return true;
+      const btnTitle = card.button.title.trim();
+      const btnUrl = card.button.url.trim();
+
+      if(btnUrl && !isValidUrl(btnUrl)) return true;
+      if ((btnTitle && !btnUrl) || (!btnTitle && btnUrl)) return true;
+        return false;
+      }
+    return true;
+  };
 
   const saveAutomation = async () => {
     if (!keyword.trim()) return;
