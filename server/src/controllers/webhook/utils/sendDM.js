@@ -17,7 +17,7 @@ export const sendDM = async(webhookID,accessToken,recieverID,message,isOnComment
       }
     );
 
-    console.log("Private reply sent");
+    console.log("DM Sent" + message);
   } catch (error) {
     console.error("❌ Error sending private reply:", error.response?.data || error.message);
   }
