@@ -2,15 +2,13 @@ import Chat from "../../../models/chat.model.js";
 import Conversation from "../../../models/conversation.model.js";
 import { User } from "../../../models/user.model.js";
 import { getAutoDMResponse } from "./getAutoDMResponse.js";
-import { handlePremiumDM } from "./handlePremiumDM.js";
+import { getPremiumDMResponse } from "./getPremiumDMResponse.js";
 import { sendDM } from "./sendDM.js";
 
 
 export const handleDM = async (webhookID,senderID,recieverID,message) => {
     const user = await User.findOne({webhook_id : webhookID});
-    if(!user) return;
-    if(user.name === "pankaj gola") return;
-  
+    if (!user) return;
     const token = user.access_token;
 
     let igUserId = senderID === webhookID ? recieverID : senderID;
@@ -39,19 +37,22 @@ export const handleDM = async (webhookID,senderID,recieverID,message) => {
       direction: senderID === webhookID ? "user_to_ig" : "ig_to_user",
     });
 
-
-    if(webhookID === senderID) return;
+    if (webhookID === senderID) return;
     console.log("Incoming msg " + message) 
 
     const autoResponse = await getAutoDMResponse(user._id, message);
-    if(autoResponse !== null) {
-      const {type, card, message} = autoResponse;
+
+    if (autoResponse !== null) {
+      const { type, card, message } = autoResponse;
       const replyMessage = type === "card" ? card : message;
       await sendDM(webhookID,token,senderID,replyMessage, false);
       user.messagesSent += 1;
       await user.save();
-      
-      return;
-    }
-    if(user.plan === "premium") return await handlePremiumDM(user,senderID,message, conversation, webhookID);
+
+    } else if (user.plan === "premium") {
+      const premiumResponse = await getPremiumDMResponse(user,message,conversation);
+      await sendDM(webhookID, user.access_token, senderID, premiumResponse, false);
+      user.messagesSent += 1;
+      await user.save();
+    };
 }

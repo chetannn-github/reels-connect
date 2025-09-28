@@ -1,10 +1,9 @@
-import { generateEmbedding, getOpenAIResponse, openAIClient } from "../../../config/openai.js";
+import { generateEmbedding, getOpenAIResponse } from "../../../config/openai.js";
 import { pineconeClient } from "../../../config/pinecone.js";
 import Chat from "../../../models/chat.model.js";
 import { getDMPrompt } from "../../../utils/prompts.js";
-import { sendDM } from "./sendDM.js";
 
-export const handlePremiumDM = async (user, senderID, message, conversation, webhookID) => {
+export const getPremiumDMResponse = async (user, message, conversation) => {
   const chatHistory = await Chat.find({ conversationId: conversation._id })
     .sort({ createdAt: 1 })
     .limit(20);
@@ -24,8 +23,5 @@ export const handlePremiumDM = async (user, senderID, message, conversation, web
   const infoTexts = queryResponse.matches?.map(m => m.metadata?.text || "").join("\n") || "";
   const DMPrompt = getDMPrompt(infoTexts,chatTexts,message);
   const replyText = await getOpenAIResponse(DMPrompt);
-  await sendDM(webhookID, user.access_token, senderID, replyText, false);
-
-  user.messagesSent += 1;
-  await user.save();
+  return replyText;
 };

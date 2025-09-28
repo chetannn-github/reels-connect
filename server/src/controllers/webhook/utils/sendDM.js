@@ -46,7 +46,7 @@ export const sendDM = async ( webhookID, accessToken, receiverID, content, isOnC
       }
     );
 
-    console.log("✅ DM Sent:", content);
+    console.log("DM Sent: ", typeof content === "object" ? "card" : content);
     return response.data;
   } catch (error) {
     console.error("❌ Error sending DM:", error.response?.data || error.message);
