@@ -14,7 +14,7 @@ export const sendDM = async(webhookID,accessToken,receiverID,message,isOnComment
               {
                 title: "hii",
                 subtitle: "kese ho" || "",
-                image_url: "https://www.google.com" || "",
+                image_url: "https://wallpapers.com/images/hd/summer-with-mia-khalifa-c7fb0bjzu70sic09.jpg" || "",
                 default_action:  undefined,
                 buttons:  [],
               },
