@@ -1,13 +1,13 @@
-import { storeUserInfo } from "./utils/storeUserInfo.js";
+import { saveUserInfo } from "./utils/saveUserInfo.js";
 
-export const userInfo = async (req, res) => {
+export const storeInfo = async (req, res) => {
   try {
     const { info } = req.body;
     if (!info || info.trim().length === 0) {
       return res.status(400).json({ message: "Info is required" });
     }
 
-    const chunksStored = await storeUserInfo(req.user._id.toString(), info);
+    const chunksStored = await saveUserInfo(req.user._id.toString(), info);
 
     res.json({
       success: true,

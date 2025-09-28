@@ -3,7 +3,7 @@ import { pineconeClient } from "../../../config/pinecone.js";
 import { generateEmbedding } from "../../../config/openai.js";
 import { PINECONE_INDEX } from "../../../config/env.js";
 
-export const storeUserInfo = async (userId, infoString) => {
+export const saveUserInfo = async (userId, infoString) => {
   if (!infoString || infoString.trim().length === 0) return 0;
   const namespace = `user_${userId}`;
 
