@@ -12,11 +12,13 @@ import { useToast } from '../hooks/use-toast';
 import api from '../lib/api';
 import { useNavigate } from 'react-router-dom';
 import { isValidUrl } from '../lib/utils';
+import { FullScreenLoader } from '../components/ui/FullScreenLoader';
 
 
 const DMAutomation = () => {
   const token = localStorage.getItem("jwt");
   const [isSaving, setIsSaving] = useState(false);
+  const [isFetchingAutomation, setIsFetchingAutomation] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -81,7 +83,7 @@ const DMAutomation = () => {
         isActive: true,
         type: automationType
       };
-      
+
       if (automationType === 'text') {
         const validMessages = dmMessages.map(msg => msg.trim()).filter(msg => msg);
         payload.dmMessages = validMessages;
@@ -145,13 +147,14 @@ const DMAutomation = () => {
       if (!token) return navigate("/");
       const res = await api.get("/dm-automation", token);
       setExistingAutomations((prev) => [...res.rules]);
+      setIsFetchingAutomation(false);
     } catch (err) {
       console.error("Error fetching automations:", err);
-    }
+    } 
   };
 
   useEffect(() => {fetchAutomations(); }, []);
-
+  if(isFetchingAutomation) return <FullScreenLoader variant="orbit" message="Welcome to DM Automation" isVisible={isFetchingAutomation}/>
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/50 to-primary/5">
