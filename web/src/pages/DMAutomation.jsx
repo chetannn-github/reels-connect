@@ -104,6 +104,7 @@ const DMAutomation = () => {
         payload.dmAutomationId = editingId;
         res = await api.put('/dm-automation', payload, token);
       }
+      setIsSaving(false);
       resetForm();
       await fetchAutomations();
     } catch (err) {
