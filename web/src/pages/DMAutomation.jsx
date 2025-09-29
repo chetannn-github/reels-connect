@@ -7,7 +7,7 @@ import { Label } from '../components/ui/Label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/Tabs';
 import { Badge } from '../components/ui/Badge';
 import { Separator } from '../components/ui/Separator';
-import { Plus, Trash2, Upload, MessageSquare, CreditCard, Edit3, Edit, Save, X } from 'lucide-react';
+import { Plus, Trash2, Upload, MessageSquare, CreditCard, Edit3, Edit, Save, X, Loader2 } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 import api from '../lib/api';
 import { useNavigate } from 'react-router-dom';
@@ -16,6 +16,7 @@ import { isValidUrl } from '../lib/utils';
 
 const DMAutomation = () => {
   const token = localStorage.getItem("jwt");
+  const [isSaving, setIsSaving] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
@@ -71,36 +72,30 @@ const DMAutomation = () => {
   };
 
   const saveAutomation = async () => {
-    if (!keyword.trim()) return;
-
-    let payload = {
-      keyword: keyword.trim().toLowerCase(),
-      dmMessages: [],
-      card: null,
-      isActive: true,
-      type: automationType
-    };
-
-    if (automationType === 'text') {
-      const validMessages = dmMessages.map(msg => msg.trim()).filter(msg => msg);
-      if (validMessages.length === 0) return;
-      payload.dmMessages = validMessages;
-    } else {
-      if (!card.title.trim() || !card.subtitle.trim()) return;
-      if (!card.button.title.trim() || !card.button.url.trim()) return;
-
-      payload.card = {
-        title: card.title.trim(),
-        subtitle: card.subtitle.trim(),
-        image_url: card.image_url || '',
-        button: {
-          title: card.button.title.trim(),
-          url: card.button.url.trim()
-        }
-      };
-    }
-
     try {
+      setIsSaving(true);
+      let payload = {
+        keyword: keyword.trim().toLowerCase(),
+        dmMessages: [],
+        card: null,
+        isActive: true,
+        type: automationType
+      };
+      
+      if (automationType === 'text') {
+        const validMessages = dmMessages.map(msg => msg.trim()).filter(msg => msg);
+        payload.dmMessages = validMessages;
+      } else {
+        payload.card = {
+          title: card.title.trim(),
+          subtitle: card.subtitle.trim(),
+          image_url: card.image_url || '',
+          button: {
+            title: card.button.title.trim(),
+            url: card.button.url.trim()
+          }
+        };
+      }
       let res;
       if(editingId ===null ) res = await api.post('/dm-automation', payload, token);
       else {
@@ -111,6 +106,8 @@ const DMAutomation = () => {
       await fetchAutomations();
     } catch (err) {
       console.error(err.message);
+    } finally {
+      setIsSaving(false);
     }
   };
 
@@ -260,7 +257,11 @@ const DMAutomation = () => {
               </Tabs>
 
               <Button onClick={saveAutomation} className="w-full" disabled= {isButtonDisabled()}>
-                {editingId ? <><Save className="w-4 h-4 mr-2" /> Update Automation</> : 'Create Automation'}
+                {editingId ? 
+                  ( !isSaving ? <><Save className="w-4 h-4 mr-2" /> Update Automation</> :
+                    <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Updating Automation...</>) 
+                  :(!isSaving ? 'Create Automation' : <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Creating Automation...</>)}
+                
               </Button>
             </CardContent>
           </Card>
