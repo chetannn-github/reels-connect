@@ -18,6 +18,7 @@ import { FullScreenLoader } from '../components/ui/FullScreenLoader';
 const DMAutomation = () => {
   const token = localStorage.getItem("jwt");
   const [isSaving, setIsSaving] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(null);
   const [isFetchingAutomation, setIsFetchingAutomation] = useState(true);
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -34,7 +35,6 @@ const DMAutomation = () => {
   const [editingId, setEditingId] = useState(null);
   const [existingAutomations, setExistingAutomations] = useState([]);
 
-  // ======= Form Handlers =======
   const addTextMessage = () => setDmMessages([...dmMessages, '']);
   const removeTextMessage = (index) => setDmMessages(dmMessages.filter((_, i) => i !== index));
   const updateTextMessage = (index, value) =>
@@ -131,14 +131,16 @@ const DMAutomation = () => {
 
   const deleteAutomation = async (id) => {
     try {
+      setIsDeleting(id)
       await api.del("/dm-automation",{ dmAutomationId : id },token);
       setExistingAutomations(existingAutomations.filter(auto => auto._id !== id));
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsDeleting(null);
     }
     
     if (editingId === id) resetForm();
-    toast({ title: "Deleted", description: "Automation deleted successfully", variant: "default" });
   };
 
   const fetchAutomations = async () => {
@@ -297,7 +299,8 @@ const DMAutomation = () => {
                         </div>
                         <div className="flex items-center gap-1">
                           <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); editAutomation(automation); }} className="text-primary hover:text-primary"><Edit className="w-4 h-4" /></Button>
-                          <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); deleteAutomation(automation._id); }} className="text-destructive hover:text-destructive"><Trash2 className="w-4 h-4" /></Button>
+                          {isDeleting !== automation._id && <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); deleteAutomation(automation._id); }} className="text-destructive hover:text-destructive"><Trash2 className="w-4 h-4" /></Button>}
+                          {isDeleting === automation._id &&  <Loader2 className="w-4 h-4 animate-spin text-primary" />}
                         </div>
                       </div>
 
