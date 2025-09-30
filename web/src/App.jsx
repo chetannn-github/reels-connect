@@ -12,6 +12,7 @@ import Plans from "./pages/Plans";
 import AIAssistantSetup from "./pages/AISetup";
 import DashboardV2 from "./pages/DashboardV2";
 import DMAutomation from "./pages/DMAutomation/DMAutomation";
+import DashboardV3 from "./pages/DashboardV3";
 
 
 
@@ -44,12 +45,12 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/ig-success" element={<IGSuccess />} />
         <Route path="/plans" element={<Plans />} />
         <Route path="/dm-automation" element={<DMAutomation/>}/>
         <Route path="/ai-setup" element = {<AIAssistantSetup/>}/>
-        <Route path="/dashboardv2" element = {<DashboardV2/>}/>
+        <Route path="/dashboardv" element = {<DashboardV3/>}/>
+
 
 
       </Routes>

@@ -13,7 +13,7 @@ import { Textarea } from "../components/ui/Textarea";
 import { Switch } from "../components/ui/Switch";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/Tabs";
 
-import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Clock, Loader2, Video, Crown, BarChart3 } from "lucide-react";
+import { Play, Plus, Trash2, MessageCircle, Users, Target, Zap, Loader2, Video, Crown, BarChart3 } from "lucide-react";
 import { useToast } from "../hooks/use-toast";
 import { PLAN_TO_LABEL, sleep } from "../lib/constant";
 import Fireworks from "../components/ui/Firework";
