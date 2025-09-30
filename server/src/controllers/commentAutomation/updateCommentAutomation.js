@@ -3,7 +3,7 @@ import CommentAutomation from "../../models/commentAutomation.model.js";
 export const updateCommentAutomation = async (req, res) => {
   try {
     const userId = req.user._id;
-    const {reelId, automationId, keyword, commentReplies, dmMessages, dmCard, isActive } = req.body;
+    const {reelId, automationId, keyword, commentReplies, dmMessages, dmCard, isActive , type} = req.body;
 
     if (!automationId) {
       return res.status(400).json({ error: "Automation ID is required" });
@@ -19,6 +19,7 @@ export const updateCommentAutomation = async (req, res) => {
     if (Array.isArray(dmMessages)) automation.dmMessages = dmMessages;
     if (dmCard !== undefined) automation.dmCard = dmCard;
     if (isActive !== undefined) automation.isActive = isActive;
+    automation.type = type;
 
     await automation.save();
 
