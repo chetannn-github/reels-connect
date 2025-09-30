@@ -23,7 +23,8 @@ const commentAutomationSchema = new mongoose.Schema({
   dmMessages: { type: [String], default: [] }, 
   dmCard: { type: cardSchema, default: null },     
   isActive: { type: Boolean, default: true },
-  triggerCount: { type: Number, default: 0 }
+  triggerCount: { type: Number, default: 0 },
+  type : {type : String, enum : ["text", "card"]}
 }, { timestamps: true });
 
 const CommentAutomation = mongoose.model("CommentAutomation", commentAutomationSchema);

@@ -1,3 +1,4 @@
+import cloudinary from "../../config/cloudinary.js";
 import CommentAutomation from "../../models/commentAutomation.model.js";
 import { Reel } from "../../models/user.model.js";
 
@@ -5,7 +6,7 @@ import { Reel } from "../../models/user.model.js";
 export const addCommentAutomation = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { reelId, keyword, commentReplies, dmMessages, dmCard, isActive } = req.body;
+    const { reelId, keyword, commentReplies, dmMessages, dmCard, isActive , type} = req.body;
 
     if (!reelId || !keyword) {
       return res.status(400).json({ error: "Reel ID and keyword are required" });
@@ -21,14 +22,25 @@ export const addCommentAutomation = async (req, res) => {
       return res.status(400).json({ error: "Keyword already exists for this reel" });
     }
 
+    let finalCard = dmCard;
+        if (dmCard?.image_url && dmCard.image_url.startsWith("data:image")) {
+          const uploadRes = await cloudinary.uploader.upload(dmCard.image_url, {
+            folder: "reel_automations",
+          });
+          finalCard = {...dmCard,
+            image_url: uploadRes.secure_url,
+          };
+        }
+
     const automation = new CommentAutomation({
       reel: reelId,
       keyword,
       commentReplies: Array.isArray(commentReplies) ? commentReplies : [],
       dmMessages: Array.isArray(dmMessages) ? dmMessages : [],
-      dmCard: dmCard || null,
+      dmCard: finalCard || null,
       isActive: isActive ?? true,
-      user: userId
+      user: userId, 
+      type
     });
 
     await automation.save();

@@ -3,7 +3,7 @@ import CommentAutomation from "../../models/commentAutomation.model.js";
 export const getCommentAutomation = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { reelId } = req.body;
+    const { reelId } = req.params;
     const automations = await CommentAutomation.find( { reel : reelId, user: userId})
       .populate("reel", "reelId reelTitle mediaURL thumbnailURL")
       .sort({ createdAt: -1 });
