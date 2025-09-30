@@ -9,7 +9,7 @@ const router = express.Router();
 router.use(protect);
 
 router.post("/", addCommentAutomation);
-router.get("/", getCommentAutomation);
+router.get("/:reelId", getCommentAutomation);
 router.put("/", updateCommentAutomation);
 router.delete("/", deleteCommentAutomation);
 
