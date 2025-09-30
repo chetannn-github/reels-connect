@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const buttonSchema = new mongoose.Schema({
-  title: { type: String, required: true },
+  title: { type: String },
   type: { type: String, enum: ["web_url"], default: "web_url" },
-  url: { type: String, required: true },
+  url: { type: String},
 }, { _id: false });
 
 
