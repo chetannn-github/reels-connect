@@ -9,8 +9,10 @@ import api from "./lib/api"
 import { setAuth } from "./store/authSlice";
 import { FullScreenLoader } from "./components/ui/FullScreenLoader";
 import Plans from "./pages/Plans";
-import DmAutomation from "./pages/DMAutomation";
 import AIAssistantSetup from "./pages/AISetup";
+import DashboardV2 from "./pages/DashboardV2";
+import DMAutomation from "./pages/DMAutomation/DMAutomation";
+
 
 
 function App() {
@@ -45,8 +47,9 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/ig-success" element={<IGSuccess />} />
         <Route path="/plans" element={<Plans />} />
-        <Route path="/dm-automation" element={<DmAutomation/>}/>
+        <Route path="/dm-automation" element={<DMAutomation/>}/>
         <Route path="/ai-setup" element = {<AIAssistantSetup/>}/>
+        <Route path="/dashboardv2" element = {<DashboardV2/>}/>
 
 
       </Routes>
