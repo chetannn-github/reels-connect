@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home/Home";
-import Dashboard from "./pages/Dashboard";
+
 import { IGSuccess } from "./pages/IGSuccess";
 import { useDispatch, useSelector } from "react-redux";
 import api from "./lib/api"
@@ -10,7 +10,6 @@ import { setAuth } from "./store/authSlice";
 import { FullScreenLoader } from "./components/ui/FullScreenLoader";
 import Plans from "./pages/Plans";
 import AIAssistantSetup from "./pages/AISetup";
-import DashboardV2 from "./pages/DashboardV2";
 import DMAutomation from "./pages/DMAutomation/DMAutomation";
 import DashboardV3 from "./pages/DashboardV3";
 
@@ -49,7 +48,7 @@ function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/dm-automation" element={<DMAutomation/>}/>
         <Route path="/ai-setup" element = {<AIAssistantSetup/>}/>
-        <Route path="/dashboardv" element = {<DashboardV3/>}/>
+        <Route path="/dashboard" element = {<DashboardV3/>}/>
 
 
 
