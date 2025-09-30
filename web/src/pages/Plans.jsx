@@ -1,5 +1,5 @@
 import React from 'react'
-import PricingSection from '../components/PricingSection'
+import PricingSection from '../pages/Home/components/PricingSection'
 
 function Plans() {
   return (

@@ -1,11 +1,10 @@
-import { Button } from "./ui/Button";
+import { Button } from "../../../components/ui/Button";
 import { Instagram, Zap, TrendingUp, Loader2 } from "lucide-react";
-import heroImage from "../assets/hero-bg.jpeg";
-import api from "../lib/api"
+import api from "../../../lib/api"
 import { useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { sleep } from "../lib/constant";
+import { sleep } from "../../../lib/constant";
 
 
 const HeroSection = () => {
@@ -46,11 +45,6 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 z-0">
-        <img 
-          src={heroImage} 
-          alt="Instagram Automation Background" 
-          className="w-full h-full object-cover opacity-20"
-        />
         <div className="absolute inset-0 bg-gradient-to-br from-background via-background/95 to-background/80" />
       </div>
       

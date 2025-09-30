@@ -5,15 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui
 import { Label } from '../../../components/ui/Label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/Tabs';
 import { Plus, Trash2, Upload, MessageSquare, CreditCard, Edit3, Save, X, Loader2 } from 'lucide-react';
+import useDMAutomationStore from '../hooks/useDMAutomation';
 
 
 
-function CreateAutomation(
-    {saveAutomation,cancelEdit,isButtonDisabled,
+function CreateAutomation() {
+  const {saveAutomation,cancelEdit,isButtonDisabled,
     addTextMessage,removeTextMessage, updateTextMessage,handleImageUpload, 
     isSaving,setKeyword,keyword,automationType, setAutomationType,
-    dmMessages,card,setCard, editingId}
-) {
+    dmMessages,card,setCard, editingId} = useDMAutomationStore();
   return (
     <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
             <CardHeader>

@@ -3,10 +3,12 @@ import { Badge } from '../../../components/ui/Badge';
 
 import NoAutomation from './NoAutomation';
 import ExistingAutomationCard from './ExistingAutomationCard';
+import useDMAutomationStore from '../hooks/useDMAutomation';
 
 
 
-function ExistingAutomations({existingAutomations,editingId, isDeleting, editAutomation,deleteAutomation}) {
+function ExistingAutomations() {
+  const {existingAutomations} = useDMAutomationStore();
   return (
     <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
             <CardHeader>
@@ -20,8 +22,7 @@ function ExistingAutomations({existingAutomations,editingId, isDeleting, editAut
                 {existingAutomations.length === 0 ? (<NoAutomation/>
                 ) : existingAutomations.map((automation) => (
                  <ExistingAutomationCard
-                 automation = {automation} editingId = {editingId} key={automation._id} isDeleting={isDeleting}
-                 editAutomation= {editAutomation} deleteAutomation={deleteAutomation}
+                 automation = {automation} key={automation._id} 
                  />
                 ))}
               </div>

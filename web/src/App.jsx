@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
 import "./App.css";
-import Home from "./pages/Home";
+import Home from "./pages/Home/Home";
 import Dashboard from "./pages/Dashboard";
 import { IGSuccess } from "./pages/IGSuccess";
 import { useDispatch, useSelector } from "react-redux";
