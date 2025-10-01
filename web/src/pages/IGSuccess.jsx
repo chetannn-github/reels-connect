@@ -8,14 +8,20 @@ export const IGSuccess = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const fetchUserAndSetToken = async(token) => {
+    const userData = await api.get("/auth/me", token);
+      dispatch(setAuth({ user: userData, token }));
+      navigate("/dashboard");
+  }
+
+  useEffect(async () => {
     const params = new URLSearchParams(search);
     const token = params.get("token");
     localStorage.setItem("firework", "true");
+
     if (token) {
       localStorage.setItem("jwt", token);
-      dispatch(setAuth({ user : null , token }));
-      navigate("/dashboard");
+      await fetchUserAndSetToken(token);
     }
   }, [search, dispatch, navigate]);
 
