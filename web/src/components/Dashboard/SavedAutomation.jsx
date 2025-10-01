@@ -14,8 +14,8 @@ function SavedAutomation() {
         = useDashboardStore();
     return (
         <>
-            {(
-                <Card className="glass-effect card-shadow lg:max-h-[810px] overflow-scroll">
+            {selectedReel && (
+                <Card className="glass-effect card-shadow lg:max-h-[815px] overflow-scroll">
                     <CardHeader>
                         <CardTitle className="flex items-center justify-between sticky">
                             <span className="flex items-center gap-2">
@@ -81,7 +81,7 @@ function SavedAutomation() {
                                     </div>
                                 </div>
                                 
-                                <div className="mb-3">
+                                <div className="mb-3 flex items-baseline gap-4">
                                     <p className="text-sm font-medium mb-2">Active Keyword:</p>
                                     <Badge variant="outline" className="font-mono">
                                         {automation.keyword}
@@ -89,35 +89,35 @@ function SavedAutomation() {
                                 </div>
 
                                 {automation.type === 'card' && automation.dmCard && (
-                                     <div className="w-64  border rounded-lg shadow-sm overflow-hidden">
-                        {automation.dmCard.image_url && (
-                            <img
-                            src={automation.dmCard.image_url}
-                            alt={automation.dmCard.title || "Card image"}
-                            className="w-full h-45 object-cover aspect-auto"
-                            />
-                        )}
-                        <div className="p-3 space-y-1">
-                            <p className="font-semibold text-sm text-[#f5f5f5] text-left">{automation.dmCard.title}</p>
-                            <p className="text-xs text-[#a8a8a8] text-left">{automation.dmCard.subtitle}</p>
-                            {automation.dmCard.button?.title && (
-                            <span className="inline-block mt-2 px-3 py-1 text-xs  text-[#708dff] font-bold rounded-full">
-                                {automation.dmCard.button.title}
-                            </span>
-                        )}
-                        </div>
-                    </div>
+                                    <div className="w-64  border rounded-lg shadow-sm overflow-hidden">
+                                        {automation.dmCard.image_url && (
+                                            <img
+                                            src={automation.dmCard.image_url}
+                                            alt={automation.dmCard.title || "Card image"}
+                                            className="w-full h-45 object-cover aspect-auto"
+                                            />
+                                        )}
+                                        <div className="p-3 space-y-1">
+                                            <p className="font-semibold text-sm text-[#f5f5f5] text-left">{automation.dmCard.title}</p>
+                                            <p className="text-xs text-[#a8a8a8] text-left">{automation.dmCard.subtitle}</p>
+                                            {automation.dmCard.button?.title && (
+                                            <span className="inline-block mt-2 px-3 py-1 text-xs  text-[#708dff] font-bold rounded-full">
+                                                {automation.dmCard.button.title}
+                                            </span>
+                                        )}
+                                        </div>
+                                    </div>
                                 )}
 
                                 {automation.type === 'text' && automation.dmMessages && (
                                     <div className="text-sm text-muted-foreground">
-                                        {automation.dmMessages.length} text message(s) configured
+                                        {automation.dmMessages.length} text message{automation.dmMessages.length > 1 ? "s" : ""} configured
                                     </div>
                                 )}
 
                                 {automation.commentReplies && (
                                     <div className="text-sm text-muted-foreground mt-2">
-                                        {automation.commentReplies.length} auto-reply message(s) configured
+                                        {automation.commentReplies.length} auto-reply message{automation.commentReplies.length > 1 ? "s" : ""} configured
                                     </div>
                                 )}
 
@@ -128,8 +128,8 @@ function SavedAutomation() {
 
                     {isGettingAutomation && <div className='h-[200px] w-full flex items-center justify-center'>
                         <Loader2 className="w-10 h-10 mr-2 animate-spin" />
-                        getting your automations...
-                        </div>}
+                
+                    </div>}
                 </Card>
             )}
         </>

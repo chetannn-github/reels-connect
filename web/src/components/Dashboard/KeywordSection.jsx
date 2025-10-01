@@ -15,7 +15,7 @@ function KeywordSection() {
     const {selectedReel, keyword, setKeyword, editingId, cancelEdit} = useDashboardStore()
     return (<>
         {selectedReel ? (
-            <Card className={`glass-effect card-shadow lg:max-h-[810px] overflow-scroll`}>
+            <Card className={`glass-effect card-shadow lg:max-h-[815px] overflow-scroll`}>
                 <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-base justify-between">
                         <span className="flex items-center gap-2">
