@@ -93,7 +93,18 @@ function CreateAutomation() {
                         </Button>
                       {!isUploadingImage && <>
                         <input id="cardImage" type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                        {card.image_url && <img src={card.image_url} alt="Preview" className="w-16 h-16 object-cover rounded-lg border" />}
+                        
+                        {card.image_url && <div className='relative'>
+                          <img src={card.image_url} alt="Preview" className="w-16 h-16 object-cover rounded-lg border" />
+                          <Button
+                            variant="destructive"
+                            size="sm"
+                            className="absolute top-1 right-1 h-5 w-5"
+                            onClick={() => setCard({...card, image_url : null})}
+                          >
+                            <X className="w-4 h-4" />
+                          </Button>
+                        </div>}
                         </>
                       }
 
