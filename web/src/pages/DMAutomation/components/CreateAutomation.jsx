@@ -1,6 +1,5 @@
 import { Button } from '../../../components/ui/Button';
 import { Input } from '../../../components/ui/Input';
-import { Textarea } from '../../../components/ui/Textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/Card';
 import { Label } from '../../../components/ui/Label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../components/ui/Tabs';
@@ -56,11 +55,11 @@ function CreateAutomation() {
                       <div key={index} className="flex gap-2">
                         <div className="flex-1 space-y-2">
                           <Label>Message {index + 1}</Label>
-                          <Textarea
+                          <Input
                             placeholder="Enter your automated response..."
                             value={msg}
                             onChange={(e) => updateTextMessage(index, e.target.value)}
-                            className="min-h-[80px]"
+                            className="min-h-[40px]"
                           />
                         </div>
                         {dmMessages.length > 1 && (
