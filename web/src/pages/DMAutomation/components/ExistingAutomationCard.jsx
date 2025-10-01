@@ -34,18 +34,24 @@ function ExistingAutomationCard({automation}) {
                 )}
 
                 {automation.type === 'card' && automation.card && (
-                <div className="space-y-2">
-                    {automation.card.image_url && (
-                    <img
-                        src={automation.card.image_url}
-                        alt={automation.card.title || "Card image"}
-                        className="w-1/2 h-20 object-contain rounded-md border"
-                    />
-                    )}
-                    <p className="font-medium text-sm">{automation.card.title}</p>
-                    <p className="text-sm text-muted-foreground">{automation.card.subtitle}</p>
-                    <Badge variant="outline" className="text-xs">{automation.card.button.title}</Badge>
-                </div>
+                    <div className="w-64  border rounded-lg shadow-sm overflow-hidden">
+                        {automation.card.image_url && (
+                            <img
+                            src={automation.card.image_url}
+                            alt={automation.card.title || "Card image"}
+                            className="w-full h-45 object-cover aspect-auto"
+                            />
+                        )}
+                        <div className="p-3 space-y-1">
+                            <p className="font-semibold text-sm text-[#f5f5f5] text-left">{automation.card.title}</p>
+                            <p className="text-xs text-[#a8a8a8] text-left">{automation.card.subtitle}</p>
+                            {automation.card.button?.title && (
+                            <span className="inline-block mt-2 px-3 py-1 text-xs  text-[#708dff] font-bold rounded-full">
+                                {automation.card.button.title}
+                            </span>
+                        )}
+                        </div>
+                    </div>
                 )}
 
                 <Separator className="my-3" />
