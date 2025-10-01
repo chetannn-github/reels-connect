@@ -16,14 +16,21 @@ export const IGSuccess = () => {
       navigate("/dashboard");
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     const params = new URLSearchParams(search);
     const token = params.get("token");
     localStorage.setItem("firework", "true");
 
     if (token) {
       localStorage.setItem("jwt", token);
-      await fetchUserAndSetToken(token);
+      const fetchData = async () => {
+      try {
+        await fetchUserAndSetToken(token);
+      } catch (err) {
+        console.error("Error fetching user:", err);
+      }
+    };
+    fetchData();
     }
   }, [search, dispatch, navigate]);
 
