@@ -1,8 +1,11 @@
+import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore';
 import { Card, CardContent} from '../ui/Card';
 import {  Play } from 'lucide-react';
 
 
-function ReelCard({reel,selectedReel, handleReelSelection}) {
+function ReelCard({reel}) {
+    const token = localStorage.getItem('jwt');
+    const {selectedReel, handleReelSelection} = useDashboardStore()
   return (
     <Card 
         key={reel._id} 
@@ -11,7 +14,7 @@ function ReelCard({reel,selectedReel, handleReelSelection}) {
             ? 'ring-2 ring-primary shadow-2xl shadow-primary/20 bg-gradient-to-br from-primary/5 to-primary/10' 
             : 'hover:ring-1 hover:ring-primary/50'
         }`}
-        onClick={() => handleReelSelection(reel._id)}
+        onClick={() => handleReelSelection(reel._id, token)}
         >
         <CardContent className="p-0">
             <div className="relative overflow-hidden">

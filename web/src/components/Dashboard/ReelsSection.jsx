@@ -4,7 +4,7 @@ import { Video } from "lucide-react";
 import ReelCard from "./ReelCard";
 
 
-function ReelsSection({selectedReel,handleReelSelection}) {
+function ReelsSection() {
     const reels = useSelector((state) => state.auth.user.reels);
 
   return (
@@ -19,8 +19,7 @@ function ReelsSection({selectedReel,handleReelSelection}) {
             <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
             {reels.map((reel) => (
                 <ReelCard
-                handleReelSelection={handleReelSelection} 
-                reel={reel} key={reel._id} selectedReel={selectedReel} 
+                reel={reel} key={reel._id}
                 />
             ))}
             </div>

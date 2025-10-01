@@ -4,9 +4,11 @@ import { Input } from '../ui/Input'
 import { useSelector } from 'react-redux'
 import { Label } from '../ui/Label';
 import { Switch } from '../ui/Switch';
+import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore';
 
-function KeywordSection({selectedReel, keyword, setKeyword, isActive,setIsActive}) {
-const reels = useSelector((state) => state.auth.user.reels);
+function KeywordSection() {
+    const reels = useSelector((state) => state.auth.user.reels);
+    const {selectedReel, keyword, setKeyword, isActive,setIsActive} = useDashboardStore()
     return (<>
         {selectedReel ? (
             <Card className="glass-effect card-shadow">

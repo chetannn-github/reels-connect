@@ -3,9 +3,15 @@ import { Badge } from '../ui/Badge';
 import { CreditCard, Edit, Loader2, MessageSquare, Sparkles, Trash2 } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useSelector } from 'react-redux';
+import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore';
 
-function SavedAutomation({selectedReelAutomation,editAutomation,deleteAutomation,editingId,selectedReel,isDeletingAutomation}) {
+function SavedAutomation() {
+    const token = localStorage.getItem("jwt");
     const reels = useSelector((state) => state.auth.user.reels);
+    const {
+        selectedReelAutomation,editAutomation,deleteAutomation,
+        editingId,selectedReel,isDeletingAutomation,isGettingAutomation} 
+        = useDashboardStore();
     return (
         <>
             {(
@@ -19,7 +25,7 @@ function SavedAutomation({selectedReelAutomation,editAutomation,deleteAutomation
                             <Badge variant="secondary">{selectedReelAutomation.length}</Badge>
                         </CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    {!isGettingAutomation && <CardContent className="space-y-4">
                         {selectedReelAutomation.map((automation) => (
                             <Card 
                             key={automation._id} 
@@ -65,7 +71,7 @@ function SavedAutomation({selectedReelAutomation,editAutomation,deleteAutomation
                                     size="sm"
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        deleteAutomation(automation._id,selectedReel);
+                                        deleteAutomation(automation._id,selectedReel, token);
                                     }}
                                     className="text-destructive hover:text-destructive"
                                     >
@@ -105,7 +111,12 @@ function SavedAutomation({selectedReelAutomation,editAutomation,deleteAutomation
                             </CardContent>
                             </Card>
                         ))}
-                    </CardContent>
+                    </CardContent>}
+
+                    {isGettingAutomation && <div className='h-[200px] w-full flex items-center justify-center'>
+                        <Loader2 className="w-10 h-10 mr-2 animate-spin" />
+                        getting your automations...
+                        </div>}
                 </Card>
             )}
         </>

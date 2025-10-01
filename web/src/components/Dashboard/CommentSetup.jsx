@@ -3,12 +3,13 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
 import { Switch } from '../ui/Switch'
 import { Button } from '../ui/Button'
 import { Input } from '../ui/Input'
+import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore'
 
-function CommentSetup({
-    selectedReel,commentsActive,setCommentsActive,
+function CommentSetup() {
+  const {selectedReel,commentsActive,setCommentsActive,
     commentReplies,updateCommentReply,removeCommentReply,
-    addCommentReply
-}) {
+    addCommentReply} = useDashboardStore();
+    
     return (
         <>
         {selectedReel && (

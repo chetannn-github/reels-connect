@@ -1,20 +1,19 @@
 import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
-import { Plus, Settings, Trash2, Upload, X } from 'lucide-react'
+import { Loader2, Plus, Settings, Trash2, Upload, X } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/Tabs'
 import { Label } from '../ui/Label'
 import { Input } from '../ui/Input'
 import { Textarea } from '../ui/Textarea'
+import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore'
 
 
-function AutomationSetup({
-    selectedReel,automationType,setAutomationType,title,
-     setTitle,subtitle,
-    setSubTitle,buttonTitle,setButtonTitle,setButtonUrl,buttonUrl,
+function AutomationSetup() {
+    const { selectedReel,automationType,setAutomationType,title,
     textMessages,addTextMessage,removeTextMessage,updateTextMessage,
-    handleImageUpload,cardImage,setCardImage,editingId,cancelEdit
-}) {
+    handleImageUpload,editingId,cancelEdit, card , setCard, isUploadingImage} = useDashboardStore();
+    
   return (<>
     {selectedReel && (
         <Card className="glass-effect card-shadow">
@@ -45,8 +44,8 @@ function AutomationSetup({
                         <Label>Card Title</Label>
                         <Input
                         placeholder="Amazing Deal!"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
+                        value={card.title}
+                        onChange={(e) => setCard({...card , title : e.target.value})}
                         />
                     </div>
                     
@@ -54,8 +53,8 @@ function AutomationSetup({
                         <Label>Card Subtitle</Label>
                         <Input
                         placeholder="Get 50% off on all products"
-                        value={subtitle}
-                        onChange={(e) => setSubTitle(e.target.value)}
+                        value={card.subtitle}
+                        onChange={(e) => setCard({...card, subtitle : e.target.value})}
                         />
                     </div>
 
@@ -63,8 +62,8 @@ function AutomationSetup({
                         <Label>Button Title</Label>
                         <Input
                         placeholder="Shop Now"
-                        value={buttonTitle}
-                        onChange={(e) => setButtonTitle(e.target.value)}
+                        value={card.button.title}
+                        onChange={(e) => setCard({...card, button : {...card.button , title : e.target.value}} )}
                         />
                     </div>
 
@@ -72,8 +71,8 @@ function AutomationSetup({
                         <Label>Button URL</Label>
                         <Input
                         placeholder="https://your-store.com"
-                        value={buttonUrl}
-                        onChange={(e) => setButtonUrl(e.target.value)}
+                        value={card.button.url}
+                        onChange={(e) => setCard({...card, button : {...card.button , url : e.target.value} }) }
                         />
                     </div>
                     </div>
@@ -81,11 +80,11 @@ function AutomationSetup({
                     <div className="space-y-4">
                     <div className="space-y-2">
                         <Label>Upload Image</Label>
-                        {cardImage ? (
+                        {card.cardImage ? (
                         <div className="space-y-3">
                             <div className="relative">
                                 <img 
-                                    src={cardImage} 
+                                    src={card.cardImage} 
                                     alt="Card preview" 
                                     className="w-full h-48 object-cover rounded-lg border"
                                 />
@@ -93,7 +92,7 @@ function AutomationSetup({
                                     variant="destructive"
                                     size="sm"
                                     className="absolute top-2 right-2"
-                                    onClick={() => setCardImage(null)}
+                                    onClick={() => setCard({...card, cardImage : null})}
                                 >
                                     <X className="w-4 h-4" />
                                 </Button>
@@ -102,19 +101,28 @@ function AutomationSetup({
                         </div>
                         ) : (
                         <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
-                            <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            className="hidden"
-                            id="card-image"
-                            />
-                            <label htmlFor="card-image" className="cursor-pointer">
-                            <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                            <p className="text-sm text-muted-foreground">
-                                Click to upload image
-                            </p>
-                            </label>
+                            {!isUploadingImage && <><input
+                                type="file"
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                                className="hidden"
+                                id="card-image"
+                                />
+                                <label htmlFor="card-image" className="cursor-pointer">
+                                <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+                                <p className="text-sm text-muted-foreground">
+                                    Click to upload image
+                                </p>
+                                </label></>
+                            }
+
+                            {isUploadingImage && <>
+                                <Loader2 className="w-8 h-8 text-muted-foreground mx-auto mb-2 animate-spin" />
+                                <p className="text-sm text-muted-foreground">
+                                    Uploading Image...
+                                </p>
+                            </>
+                            }
                         </div>
                         )}
                     </div>
