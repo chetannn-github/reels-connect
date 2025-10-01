@@ -86,8 +86,8 @@ function Header() {
             </CardContent>
           </Card>
 
-          {((user.plan === "free" && (user?.messagesSent || 0) >= 10) ||
-            (user.plan === "basic" && (user?.activeReelsCount || 0) >= 30)) && (
+          {((user?.plan === "free" && (user?.messagesSent || 0) >= 10) ||
+            (user?.plan === "basic" && (user?.activeReelsCount || 0) >= 30)) && (
               <Card
                 onClick={() => navigate("/plans")}
                 className="cursor-pointer bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-xl hover:scale-105 transition-transform"
