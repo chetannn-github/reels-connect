@@ -22,41 +22,41 @@ function AutomationSetup() {
             <TabsContent value="card" className="space-y-4 mt-6">
                 <div className="grid md:grid-cols-2 gap-4 p-4 border rounded-lg">
                     <div className="space-y-4">
-                    <div className="space-y-2">
-                        <Label>Card Title</Label>
-                        <Input
-                        placeholder="Amazing Deal!"
-                        value={card.title}
-                        onChange={(e) => setCard({...card , title : e.target.value})}
-                        />
-                    </div>
-                    
-                    <div className="space-y-2">
-                        <Label>Card Subtitle</Label>
-                        <Input
-                        placeholder="Get 50% off on all products"
-                        value={card.subtitle}
-                        onChange={(e) => setCard({...card, subtitle : e.target.value})}
-                        />
-                    </div>
+                        <div className="space-y-2">
+                            <Label>Card Title</Label>
+                            <Input
+                            placeholder="Amazing Deal!"
+                            value={card.title}
+                            onChange={(e) => setCard({...card , title : e.target.value})}
+                            />
+                        </div>
+                        
+                        <div className="space-y-2">
+                            <Label>Card Subtitle</Label>
+                            <Input
+                            placeholder="Get 50% off"
+                            value={card.subtitle}
+                            onChange={(e) => setCard({...card, subtitle : e.target.value})}
+                            />
+                        </div>
 
-                    <div className="space-y-2">
-                        <Label>Button Title</Label>
-                        <Input
-                        placeholder="Shop Now"
-                        value={card.button.title}
-                        onChange={(e) => setCard({...card, button : {...card.button , title : e.target.value}} )}
-                        />
-                    </div>
+                        <div className="space-y-2">
+                            <Label>Button Title</Label>
+                            <Input
+                            placeholder="Shop Now"
+                            value={card.button.title}
+                            onChange={(e) => setCard({...card, button : {...card.button , title : e.target.value}} )}
+                            />
+                        </div>
 
-                    <div className="space-y-2">
-                        <Label>Button URL</Label>
-                        <Input
-                        placeholder="https://your-store.com"
-                        value={card.button.url}
-                        onChange={(e) => setCard({...card, button : {...card.button , url : e.target.value} }) }
-                        />
-                    </div>
+                        <div className="space-y-2">
+                            <Label>Button URL</Label>
+                            <Input
+                            placeholder="https://your-store.com"
+                            value={card.button.url}
+                            onChange={(e) => setCard({...card, button : {...card.button , url : e.target.value} }) }
+                            />
+                        </div>
                     </div>
 
                     <div className="space-y-4">

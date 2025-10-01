@@ -27,8 +27,8 @@ function CommentSetup() {
                   value={reply}
                   onChange={(e) => updateCommentReply(index, e.target.value)}
                 />
-                <div className="flex flex-col gap-2">
-                  <Button
+
+                <Button
                     variant="outline"
                     size="icon"
                     onClick={addCommentReply}
@@ -46,7 +46,7 @@ function CommentSetup() {
                       <Trash2 className="w-4 h-4" />
                     </Button>
                   )}
-                </div>
+                
               </div>
             ))}
           </div>

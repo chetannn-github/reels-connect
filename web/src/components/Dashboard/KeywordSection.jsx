@@ -15,7 +15,7 @@ function KeywordSection() {
     const {selectedReel, keyword, setKeyword, editingId, cancelEdit} = useDashboardStore()
     return (<>
         {selectedReel ? (
-            <Card className={`glass-effect card-shadow `}>
+            <Card className={`glass-effect card-shadow lg:max-h-[810px] overflow-scroll`}>
                 <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-base justify-between">
                         <span className="flex items-center gap-2">
@@ -36,7 +36,7 @@ function KeywordSection() {
                         <div className="space-y-1.5">
                             <Label className="text-sm">Trigger Keyword</Label>
                             <Input
-                                placeholder="e.g. price, buy, discount..."
+                                placeholder="e.g. price, discount..."
                                 value={keyword}
                                 onChange={(e) => setKeyword(e.target.value)}
                                 className="h-9"

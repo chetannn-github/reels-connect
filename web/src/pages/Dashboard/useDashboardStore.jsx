@@ -106,6 +106,7 @@ export const useDashboardStore = create((set, get) => ({
   },
 
   editAutomation: (automation) => {
+    get().resetReelForm()
     set({
       selectedReel: automation.reel._id,
       keyword: automation.keyword || '',
@@ -135,7 +136,6 @@ export const useDashboardStore = create((set, get) => ({
       });
     }
 
-    window.scrollTo({ top: 40, behavior: 'smooth' });
   },
 
   deleteAutomation: async (automationId, reelId, token) => {

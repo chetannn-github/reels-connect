@@ -15,12 +15,12 @@ function SavedAutomation() {
     return (
         <>
             {(
-                <Card className="glass-effect card-shadow">
+                <Card className="glass-effect card-shadow lg:max-h-[810px] overflow-scroll">
                     <CardHeader>
-                        <CardTitle className="flex items-center justify-between">
+                        <CardTitle className="flex items-center justify-between sticky">
                             <span className="flex items-center gap-2">
                                 <Sparkles className="w-5 h-5 text-primary" />
-                                Active Keywords for "{reels.find(r => r._id === selectedReel)?.reelTitle}"
+                                Active Keywords
                             </span>
                             <Badge variant="secondary">{selectedReelAutomation.length}</Badge>
                         </CardTitle>
@@ -89,10 +89,24 @@ function SavedAutomation() {
                                 </div>
 
                                 {automation.type === 'card' && automation.dmCard && (
-                                    <div className="text-sm text-muted-foreground">
-                                        Card: "{automation.dmCard.title}" → {automation.dmCard.button.title}
-                                        {automation?.dmCard?.image_url && <img className="w-30 h-20 object-cover rounded-lg border" src={automation.dmCard.image_url}></img>}
-                                    </div>
+                                     <div className="w-64  border rounded-lg shadow-sm overflow-hidden">
+                        {automation.dmCard.image_url && (
+                            <img
+                            src={automation.dmCard.image_url}
+                            alt={automation.dmCard.title || "Card image"}
+                            className="w-full h-45 object-cover aspect-auto"
+                            />
+                        )}
+                        <div className="p-3 space-y-1">
+                            <p className="font-semibold text-sm text-[#f5f5f5] text-left">{automation.dmCard.title}</p>
+                            <p className="text-xs text-[#a8a8a8] text-left">{automation.dmCard.subtitle}</p>
+                            {automation.dmCard.button?.title && (
+                            <span className="inline-block mt-2 px-3 py-1 text-xs  text-[#708dff] font-bold rounded-full">
+                                {automation.dmCard.button.title}
+                            </span>
+                        )}
+                        </div>
+                    </div>
                                 )}
 
                                 {automation.type === 'text' && automation.dmMessages && (
