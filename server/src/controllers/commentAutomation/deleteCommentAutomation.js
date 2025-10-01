@@ -26,6 +26,12 @@ export const deleteCommentAutomation = async (req, res) => {
       await reel.save();
     }
 
+    if(reel.commentAutomations.length === 0) {
+      const user = req.user;
+      user.activeReelsCount -= 1;
+      await user.save();
+    }
+
     return res.status(200).json({ message: "Comment automation deleted successfully" });
   } catch (error) {
     console.error("Error deleting comment automation:", error);

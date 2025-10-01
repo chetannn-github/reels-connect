@@ -44,6 +44,12 @@ export const addCommentAutomation = async (req, res) => {
 
     await automation.save();
     reel.commentAutomations.push(automation._id);
+
+    if(reel.commentAutomations.length === 1) {
+      const user = req.user;
+      user.activeReelsCount += 1;
+      await user.save();
+    }
     await reel.save();
 
     return res.status(201).json({ message: "Comment automation added successfully", automation });
