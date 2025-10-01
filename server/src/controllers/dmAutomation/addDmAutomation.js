@@ -1,4 +1,3 @@
-import cloudinary from "../../config/cloudinary.js";
 import DMAutomation from "../../models/dmAutomation.model.js";
 
 export const addDmAutomation = async (req, res) => {
@@ -21,14 +20,14 @@ export const addDmAutomation = async (req, res) => {
     }
 
     let finalCard = card;
-    if (card?.image_url && card.image_url.startsWith("data:image")) {
-      const uploadRes = await cloudinary.uploader.upload(card.image_url, {
-        folder: "dm_automations",
-      });
-      finalCard = {...card,
-        image_url: uploadRes.secure_url,
-      };
-    }
+    // if (card?.image_url && card.image_url.startsWith("data:image")) {
+    //   const uploadRes = await cloudinary.uploader.upload(card.image_url, {
+    //     folder: "dm_automations",
+    //   });
+    //   finalCard = {...card,
+    //     image_url: uploadRes.secure_url,
+    //   };
+    // }
 
     const rule = new DMAutomation({
       user: userId,

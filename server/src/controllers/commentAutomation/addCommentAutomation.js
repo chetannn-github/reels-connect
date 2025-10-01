@@ -1,4 +1,3 @@
-import cloudinary from "../../config/cloudinary.js";
 import CommentAutomation from "../../models/commentAutomation.model.js";
 import { Reel } from "../../models/user.model.js";
 
@@ -23,14 +22,14 @@ export const addCommentAutomation = async (req, res) => {
     }
 
     let finalCard = dmCard;
-        if (dmCard?.image_url && dmCard.image_url.startsWith("data:image")) {
-          const uploadRes = await cloudinary.uploader.upload(dmCard.image_url, {
-            folder: "reel_automations",
-          });
-          finalCard = {...dmCard,
-            image_url: uploadRes.secure_url,
-          };
-        }
+        // if (dmCard?.image_url && dmCard.image_url.startsWith("data:image")) {
+        //   const uploadRes = await cloudinary.uploader.upload(dmCard.image_url, {
+        //     folder: "reel_automations",
+        //   });
+        //   finalCard = {...dmCard,
+        //     image_url: uploadRes.secure_url,
+        //   };
+        // }
 
     const automation = new CommentAutomation({
       reel: reelId,
