@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import "./App.css";
 import Home from "./pages/Home/Home";
 
@@ -46,9 +46,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/ig-success" element={<IGSuccess />} />
         <Route path="/plans" element={<Plans />} />
-        <Route path="/dm-automation" element={<DMAutomation/>}/>
-        <Route path="/ai-setup" element = {<AIAssistantSetup/>}/>
-        <Route path="/dashboard" element = {<Dashboard/>}/>
+        <Route path="/dm-automation" element={<ProtectedRoute user={user}><DMAutomation/></ProtectedRoute>} />
+        <Route path="/ai-setup" element={<ProtectedRoute user={user}><AIAssistantSetup/></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute user={user}><Dashboard/></ProtectedRoute>} />
 
 
 
@@ -58,3 +58,9 @@ function App() {
 }
 
 export default App;
+
+
+
+function ProtectedRoute({ user, children }) {
+  return user ? children : <Navigate to="/" />;
+}
