@@ -1,5 +1,5 @@
 import CommentAutomation from "../../models/commentAutomation.model.js";
-import { Reel } from "../../models/user.model.js";
+import { Reel, User } from "../../models/user.model.js";
 
 export const deleteCommentAutomation = async (req, res) => {
   try {
@@ -25,9 +25,10 @@ export const deleteCommentAutomation = async (req, res) => {
       );
       await reel.save();
     }
+    
 
     if(reel.commentAutomations.length === 0) {
-      const user = req.user;
+      const user = await User.findById(req.user._id);
       user.activeReelsCount -= 1;
       await user.save();
     }

@@ -1,5 +1,5 @@
 import CommentAutomation from "../../models/commentAutomation.model.js";
-import { Reel } from "../../models/user.model.js";
+import { Reel, User } from "../../models/user.model.js";
 
 
 export const addCommentAutomation = async (req, res) => {
@@ -46,10 +46,12 @@ export const addCommentAutomation = async (req, res) => {
     reel.commentAutomations.push(automation._id);
 
     if(reel.commentAutomations.length === 1) {
-      const user = req.user;
+      const user = await User.findById(req.user._id);
       user.activeReelsCount += 1;
       await user.save();
     }
+
+    
     await reel.save();
 
     return res.status(201).json({ message: "Comment automation added successfully", automation });
