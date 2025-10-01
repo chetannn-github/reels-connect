@@ -19,7 +19,7 @@ function App() {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
   const [isLoading, setIsLoading] = useState(true);
-
+  const token = localStorage.getItem("jwt");
   useEffect(() => {
       const fetchUser = async () => {
         try {
@@ -46,9 +46,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/ig-success" element={<IGSuccess />} />
         <Route path="/plans" element={<Plans />} />
-        <Route path="/dm-automation" element={<ProtectedRoute user={user}><DMAutomation/></ProtectedRoute>} />
-        <Route path="/ai-setup" element={<ProtectedRoute user={user}><AIAssistantSetup/></ProtectedRoute>} />
-        <Route path="/dashboard" element={<ProtectedRoute user={user}><Dashboard/></ProtectedRoute>} />
+        <Route path="/dm-automation" element={<ProtectedRoute token={token}><DMAutomation/></ProtectedRoute>} />
+        <Route path="/ai-setup" element={<ProtectedRoute token={token}><AIAssistantSetup/></ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute token={token}><Dashboard/></ProtectedRoute>} />
 
 
 
@@ -61,6 +61,6 @@ export default App;
 
 
 
-function ProtectedRoute({ user, children }) {
-  return user ? children : <Navigate to="/" />;
+function ProtectedRoute({ token, children }) {
+  return token ? children : <Navigate to="/" />;
 }
