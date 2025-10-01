@@ -12,11 +12,11 @@ export const handleComment = async(webhookID, commentText, commentId, commentorU
     if(!reel) return ;
      
     let postOwner = await User.findById(reel?.user._id);
-    console.log(postOwner.webhook_id);
     
+    if(!postOwner.webhook_id) {
       postOwner.webhook_id = webhookID;
       await postOwner.save();
-    
+    }
     if(postOwner.plan === "free" && postOwner.messagesSent >= FREE_USER_MESSAGES_LIMIT) return;
     if(commentorUsername === postOwner.username) return;
 
