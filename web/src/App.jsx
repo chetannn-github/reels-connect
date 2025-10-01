@@ -62,6 +62,6 @@ export default App;
 
 
 function ProtectedRoute({  children }) {
-  const token = localStorage.getItem(token)
+  const token = localStorage.getItem("jwt")
   return token ? children : <Navigate to="/" />;
 }
