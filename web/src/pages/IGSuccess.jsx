@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAuth } from "../store/authSlice";
+import api from "../lib/api";
+import { FullScreenLoader } from "../components/ui/FullScreenLoader";
 
 export const IGSuccess = () => {
   const { search } = useLocation();
@@ -25,5 +27,5 @@ export const IGSuccess = () => {
     }
   }, [search, dispatch, navigate]);
 
-  return <div>Instagram connected!</div>;
+  return <FullScreenLoader variant="orbit" message="Welcome to Reels Connect" isVisible={true}/>
 };
