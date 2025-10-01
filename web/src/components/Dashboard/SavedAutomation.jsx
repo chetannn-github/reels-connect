@@ -7,7 +7,7 @@ import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore';
 
 function SavedAutomation() {
     const token = localStorage.getItem("jwt");
-    const reels = useSelector((state) => state.auth.user.reels);
+    const reels = useSelector((state) => state?.auth?.user?.reels);
     const {
         selectedReelAutomation,editAutomation,deleteAutomation,
         editingId,selectedReel,isDeletingAutomation,isGettingAutomation} 

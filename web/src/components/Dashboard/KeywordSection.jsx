@@ -11,7 +11,7 @@ import CommentSetup from './CommentSetup';
 import SaveConfiguration from './SaveConfiguration';
 
 function KeywordSection() {
-    const reels = useSelector((state) => state.auth.user.reels);
+    const reels = useSelector((state) => state?.auth?.user.reels);
     const {selectedReel, keyword, setKeyword, isActive,setIsActive, editingId, cancelEdit} = useDashboardStore()
     return (<>
         {selectedReel ? (

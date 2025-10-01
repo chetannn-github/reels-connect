@@ -5,7 +5,7 @@ import ReelCard from "./ReelCard";
 
 
 function ReelsSection() {
-    const reels = useSelector((state) => state.auth.user.reels);
+    const reels = useSelector((state) => state?.auth?.user?.reels);
 
   return (
     <Card className="glass-effect card-shadow">
