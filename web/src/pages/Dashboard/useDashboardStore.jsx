@@ -92,7 +92,7 @@ export const useDashboardStore = create((set, get) => ({
   resetReelForm: () => {
     set({
       keyword: '',
-      automationType: null,
+      automationType: 'text',
       card: {
         title: '',
         subtitle: '',
