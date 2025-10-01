@@ -12,10 +12,10 @@ import SaveConfiguration from './SaveConfiguration';
 
 function KeywordSection() {
     const reels = useSelector((state) => state?.auth?.user.reels);
-    const {selectedReel, keyword, setKeyword, isActive,setIsActive, editingId, cancelEdit} = useDashboardStore()
+    const {selectedReel, keyword, setKeyword, editingId, cancelEdit} = useDashboardStore()
     return (<>
         {selectedReel ? (
-            <Card className={`glass-effect card-shadow 'lg:col-span-2'`}>
+            <Card className={`glass-effect card-shadow `}>
                 <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-base justify-between">
                         <span className="flex items-center gap-2">
@@ -31,30 +31,16 @@ function KeywordSection() {
                 </CardHeader>
 
                 <CardContent className="space-y-3">
-                    <div className="grid md:grid-cols-2 gap-3">
+                    <div className="gap-3">
 
                         <div className="space-y-1.5">
-                        <Label className="text-sm">Trigger Keyword</Label>
-                        <Input
-                            placeholder="e.g. price, buy, discount..."
-                            value={keyword}
-                            onChange={(e) => setKeyword(e.target.value)}
-                            className="h-9"
-                        />
-                        <p className="text-xs text-muted-foreground">
-                            Enter a single keyword that will trigger automation when users comment
-                        </p>
-                        </div>
-
-                        {/* Automation Status Toggle */}
-                        <div className="flex items-end">
-                            <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg w-full">
-                                <div>
-                                <h3 className="font-medium text-sm">Active</h3>
-                                <p className="text-xs text-muted-foreground">Enable automation</p>
-                                </div>
-                                <Switch checked={isActive} onCheckedChange={setIsActive} />
-                            </div>
+                            <Label className="text-sm">Trigger Keyword</Label>
+                            <Input
+                                placeholder="e.g. price, buy, discount..."
+                                value={keyword}
+                                onChange={(e) => setKeyword(e.target.value)}
+                                className="h-9"
+                            />
                         </div>
                     </div>
 

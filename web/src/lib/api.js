@@ -1,6 +1,6 @@
 // const BASE =  "https://reels-connect.onrender.com/api";
-// export const BASE = "http://localhost:4000/api"
-export const BASE = "https://instagram-connector.chickenkiller.com/api"
+export const BASE = "http://localhost:4000/api"
+// export const BASE = "https://instagram-connector.chickenkiller.com/api"
 
 async function handleRes(res) {
  

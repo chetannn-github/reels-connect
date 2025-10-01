@@ -6,7 +6,6 @@ export const useDashboardStore = create((set, get) => ({
   keyword: '',
   selectedReel: null,
   editingId: null,
-  isActive: false,
   selectedReelAutomation: [],
   automationType: 'text',
   trigger: false,
@@ -33,7 +32,7 @@ export const useDashboardStore = create((set, get) => ({
   setKeyword: (keyword) => set({ keyword }),
   setSelectedReel: (selectedReel) => set({ selectedReel }),
   setEditingId: (editingId) => set({ editingId }),
-  setIsActive: (isActive) => set({ isActive }),
+  
   setSelectedReelAutomation: (selectedReelAutomation) => set({ selectedReelAutomation }),
   setAutomationType: (automationType) => set({ automationType }),
   setTrigger: (trigger) => set({ trigger }),
@@ -94,7 +93,6 @@ export const useDashboardStore = create((set, get) => ({
     set({
       keyword: '',
       automationType: null,
-      isActive: false,
       card: {
         title: '',
         subtitle: '',
@@ -112,7 +110,6 @@ export const useDashboardStore = create((set, get) => ({
       selectedReel: automation.reel._id,
       keyword: automation.keyword || '',
       automationType: automation.type,
-      isActive: automation.isActive || false,
       editingId: automation._id,
     });
 
@@ -170,7 +167,6 @@ export const useDashboardStore = create((set, get) => ({
       selectedReel,
       keyword,
       automationType,
-      isActive,
       editingId,
       textMessages,
       commentReplies,
@@ -192,7 +188,6 @@ export const useDashboardStore = create((set, get) => ({
         button: { title: card.button.title, url: card.button.url },
       } : null,
       type: automationType,
-      isActive,
     };
 
     try {

@@ -87,7 +87,6 @@ const useDMAutomationStore = create((set, get) => ({
         keyword: keyword.trim().toLowerCase(),
         dmMessages: [],
         card: null,
-        isActive: true,
         type: automationType,
       };
 
