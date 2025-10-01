@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import api from "../../../lib/api";
 import { isValidUrl } from "../../../lib/utils";
+import { compressImageAndUpload } from "../../../lib/helper";
 
 const useDMAutomationStore = create((set, get) => ({
   isSaving: false,
@@ -31,13 +32,11 @@ const useDMAutomationStore = create((set, get) => ({
       editingId: null,
     }),
 
-  handleImageUpload: (e) => {
+  handleImageUpload: async (e) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) =>
-        set((state) => ({ card: { ...state.card, image_url: e.target.result } }));
-      reader.readAsDataURL(file);
+      const url = await compressImageAndUpload(file);
+      set((state) => ({ card: { ...state.card, image_url: url} }));
     }
   },
 

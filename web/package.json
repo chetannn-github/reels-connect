@@ -19,6 +19,8 @@
     "@radix-ui/react-toast": "^1.2.15",
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.13",
+    "axios": "^1.12.2",
+    "browser-image-compression": "^2.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.544.0",

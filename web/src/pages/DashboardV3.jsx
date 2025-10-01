@@ -8,6 +8,8 @@ import CommentSetup from '../components/Dashboard/CommentSetup';
 import SaveConfiguration from '../components/Dashboard/SaveConfiguration';
 import api from '../lib/api';
 import SavedAutomation from '../components/Dashboard/SavedAutomation';
+import { compressImageAndUpload } from "../lib/helper"
+
 
 const DashboardV3 = () => {
     const user = useSelector((state) => state.auth.user);
@@ -27,6 +29,16 @@ const DashboardV3 = () => {
     const [buttonTitle, setButtonTitle] = useState('');
     const [buttonUrl, setButtonUrl] = useState('');
 
+    const [card, setCard] = useState({
+      title : "",
+      subtitle : "",
+      cardImage : null,
+      button : {
+        title : "",
+        url : ""
+      }
+    });
+
     const [textMessages, setTextMessages] = useState(['']);
     const [commentReplies, setCommentReplies] = useState(['']);
     const [commentsActive, setCommentsActive] = useState(false);
@@ -43,16 +55,16 @@ const DashboardV3 = () => {
       setTextMessages(updated);
     };
 
-    const handleImageUpload = (e) => {
+    const handleImageUpload = async (e) => {
       const file = e.target.files?.[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) =>
-          setCardImage(e.target.result);
-        reader.readAsDataURL(file);
+      if (!file) return;
+      try {
+        const url = await compressImageAndUpload(file);
+        setCardImage(url);
+      } catch (err) {
+        console.log(err);
       }
-    }
-  
+    };
 
     const addCommentReply = () => setCommentReplies([...commentReplies, '']);
     const removeCommentReply = (index) => commentReplies.length > 1 && setCommentReplies(commentReplies.filter((_, i) => i !== index));
