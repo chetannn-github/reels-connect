@@ -11,7 +11,7 @@ import { FullScreenLoader } from "./components/ui/FullScreenLoader";
 import Plans from "./pages/Plans";
 import AIAssistantSetup from "./pages/AISetup";
 import DMAutomation from "./pages/DMAutomation/DMAutomation";
-import DashboardV3 from "./pages/DashboardV3";
+import Dashboard from "./pages/Dashboard";
 
 
 
@@ -48,7 +48,7 @@ function App() {
         <Route path="/plans" element={<Plans />} />
         <Route path="/dm-automation" element={<DMAutomation/>}/>
         <Route path="/ai-setup" element = {<AIAssistantSetup/>}/>
-        <Route path="/dashboard" element = {<DashboardV3/>}/>
+        <Route path="/dashboard" element = {<Dashboard/>}/>
 
 
 

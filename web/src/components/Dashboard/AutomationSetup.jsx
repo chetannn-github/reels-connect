@@ -2,11 +2,11 @@ import React from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
 import { Plus, Settings, Trash2, Upload, X } from 'lucide-react'
 import { Button } from '../ui/Button'
-import { TabsContent, TabsList, TabsTrigger } from '../ui/Tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/Tabs'
 import { Label } from '../ui/Label'
 import { Input } from '../ui/Input'
 import { Textarea } from '../ui/Textarea'
-import { Tabs } from '@radix-ui/react-tabs'
+
 
 function AutomationSetup({
     selectedReel,automationType,setAutomationType,title,
