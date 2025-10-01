@@ -1,7 +1,6 @@
 import { Button } from '../../../components/ui/Button';
 import { Card, CardContent} from '../../../components/ui/Card';
 import { Badge } from '../../../components/ui/Badge';
-import { Separator } from '../../../components/ui/Separator';
 import { Trash2, MessageSquare, CreditCard,Edit, Loader2 } from 'lucide-react';
 import useDMAutomationStore from '../hooks/useDMAutomation';
 
@@ -53,12 +52,6 @@ function ExistingAutomationCard({automation}) {
                         </div>
                     </div>
                 )}
-
-                <Separator className="my-3" />
-                <div className="flex items-center justify-between">
-                <p className="text-xs text-muted-foreground">Created: {new Date(automation.createdAt).toLocaleDateString()}</p>
-                <p className="text-xs text-primary">Click to edit</p>
-                </div>
             </CardContent>
         </Card>
     )
