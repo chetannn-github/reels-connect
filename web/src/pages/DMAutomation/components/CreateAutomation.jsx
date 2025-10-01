@@ -84,7 +84,7 @@ function CreateAutomation() {
                   </div>
                   <div className="space-y-2">
                     <Label>Card Subtitle</Label>
-                    <Textarea value={card.subtitle} onChange={(e) => setCard({ ...card, subtitle: e.target.value })} className="min-h-[60px]" />
+                    <Input value={card.subtitle} onChange={(e) => setCard({ ...card, subtitle: e.target.value })} className="min-h-[20px]" />
                   </div>
                   <div className="space-y-2">
                     <Label>Card Image (Optional)</Label>
