@@ -9,7 +9,9 @@ function ReelCard({reel}) {
   return (
     <Card 
         key={reel._id} 
-        className={`group cursor-pointer transition-all duration-300 hover-scale hover:shadow-xl border-0 bg-gradient-to-br from-background to-muted/30 backdrop-blur-sm overflow-hidden flex-shrink-0 w-72 ${
+        className={`group cursor-pointer transition-all duration-300 
+            hover-scale hover:shadow-xl border-0 bg-gradient-to-br 
+            from-background to-muted/30 backdrop-blur-sm overflow-hidden flex-shrink-0 w-40 gap-4 ${
             selectedReel === reel._id 
             ? 'ring-2 ring-primary shadow-2xl shadow-primary/20 bg-gradient-to-br from-primary/5 to-primary/10' 
             : 'hover:ring-1 hover:ring-primary/50'

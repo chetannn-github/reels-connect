@@ -15,12 +15,12 @@ function Header() {
             <Sparkles className="w-5 h-5 text-primary-foreground" />
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-foreground">Reel Automation Dashboard</h1>
-            <p className="text-muted-foreground text-sm">Set up keyword-based automation for your Instagram reels</p>
+            <h1 className="text-2xl font-bold text-foreground text-left">Reel Automation Dashboard</h1>
+            <p className="text-muted-foreground text-sm text-left">Set up keyword-based automation for your Instagram reels</p>
           </div>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+        <div className="grid gap-6 sm:grid-cols-2  lg:grid-cols-4 mb-8">
           <Card className="glass-effect border border-gray-200 shadow-lg">
             <CardContent className="p-6 flex items-center justify-between">
               <div>
