@@ -5,7 +5,7 @@ import { Reel } from "../../models/user.model.js";
 export const addCommentAutomation = async (req, res) => {
   try {
     const userId = req.user._id;
-    const { reelId, keyword, commentReplies, dmMessages, dmCard, isActive , type} = req.body;
+    const { reelId, keyword, commentReplies, dmMessages, dmCard, type} = req.body;
 
     if (!reelId || !keyword) {
       return res.status(400).json({ error: "Reel ID and keyword are required" });
@@ -37,7 +37,7 @@ export const addCommentAutomation = async (req, res) => {
       commentReplies: Array.isArray(commentReplies) ? commentReplies : [],
       dmMessages: Array.isArray(dmMessages) ? dmMessages : [],
       dmCard: finalCard || null,
-      isActive: isActive ?? true,
+      isActive: true,
       user: userId, 
       type
     });
