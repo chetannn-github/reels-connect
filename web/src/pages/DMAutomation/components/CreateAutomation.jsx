@@ -12,7 +12,7 @@ function CreateAutomation() {
   const {saveAutomation,cancelEdit,isButtonDisabled,
     addTextMessage,removeTextMessage, updateTextMessage,handleImageUpload, 
     isSaving,setKeyword,keyword,automationType, setAutomationType,
-    dmMessages,card,setCard, editingId} = useDMAutomationStore();
+    dmMessages,card,setCard, editingId, isUploadingImage} = useDMAutomationStore();
   return (
     <Card className="shadow-xl border-0 bg-card/80 backdrop-blur-sm">
             <CardHeader>
@@ -89,10 +89,22 @@ function CreateAutomation() {
                     <Label>Card Image (Optional)</Label>
                     <div className="flex items-center gap-4">
                       <Button variant="outline" onClick={() => document.getElementById('cardImage')?.click()} className="flex items-center gap-2">
-                        <Upload className="w-4 h-4" /> Upload Image
-                      </Button>
-                      <input id="cardImage" type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
-                      {card.image_url && <img src={card.image_url} alt="Preview" className="w-16 h-16 object-cover rounded-lg border" />}
+                          <Upload className="w-4 h-4" /> Upload Image
+                        </Button>
+                      {!isUploadingImage && <>
+                        <input id="cardImage" type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                        {card.image_url && <img src={card.image_url} alt="Preview" className="w-16 h-16 object-cover rounded-lg border" />}
+                        </>
+                      }
+
+                      {isUploadingImage && <>
+                          <div className="w-16 h-16 object-cover rounded-lg border flex items-center justify-center">
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                          </div>   
+                        </>
+                      }
+
+                      
                     </div>
                   </div>
                   <div className="grid grid-cols-2 gap-2">

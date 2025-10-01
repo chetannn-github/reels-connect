@@ -18,11 +18,13 @@ const useDMAutomationStore = create((set, get) => ({
   },
   editingId: null,
   existingAutomations: [],
+  isImageUploading : false,
 
   
   setKeyword: (keyword) => set({ keyword }),
   setAutomationType: (automationType) => set({ automationType }),
   setCard: (card) => set({ card }),
+  setIsUploadingImage: (isUploadingImage) => set({ isUploadingImage }),
 
   resetForm: () =>
     set({
@@ -34,15 +36,24 @@ const useDMAutomationStore = create((set, get) => ({
 
   handleImageUpload: async (e) => {
     const file = e.target.files?.[0];
-    if (file) {
-      const url = await compressImageAndUpload(file);
-      set((state) => ({ card: { ...state.card, image_url: url} }));
+    try {
+      if (file) {
+        set({ isUploadingImage: true });
+        const url = await compressImageAndUpload(file);
+        set((state) => ({ card: { ...state.card, image_url: url} }));
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      set({ isUploadingImage: false });
     }
+    
   },
 
   isButtonDisabled: () => {
-    const { keyword, automationType, dmMessages, card } = get();
+    const { keyword, automationType, dmMessages, card, isUploadingImage } = get();
     if (!keyword.trim()) return true;
+    if(isUploadingImage) return true;
 
     if (automationType === "text") {
       return !dmMessages.some((msg) => msg.trim() !== "");
