@@ -11,7 +11,7 @@ import { useDashboardStore } from './Dashboard/useDashboardStore';
 
 
 const Dashboard = () => {
-  const {trigger} = useDashboardStore();
+  const {trigger, setTrigger} = useDashboardStore();
   useEffect(() => {
     if (localStorage.getItem("firework") === "true") {
       setTrigger(true);
@@ -25,12 +25,9 @@ const Dashboard = () => {
         <Header/>
         <div className="max-w-7xl mx-auto px-6 py-8 space-y-8"> 
           <ReelsSection />
+
           <KeywordSection />
-          <AutomationSetup/>
-          <CommentSetup/>
-          <SaveConfiguration/>
-          <SavedAutomation/>
-          
+          <SavedAutomation/>      
         </div>
 
     </div>
