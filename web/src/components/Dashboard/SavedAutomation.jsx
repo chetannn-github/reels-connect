@@ -36,76 +36,75 @@ function SavedAutomation() {
                             >
                             <CardContent className="p-4">
                                 <div className="flex items-start justify-between mb-3">
-                                <div className="flex items-center gap-3">
-                                    <Badge variant={automation.type === 'text' ? 'default' : 'secondary'}>
-                                    {automation.type === 'card' ? (
-                                        <><CreditCard className="w-3 h-3 mr-1" />Card</>
-                                    ) : (
-                                        <><MessageSquare className="w-3 h-3 mr-1" />Text</>
-                                    )}
-                                    </Badge>
-                                    <Badge variant={automation.isActive ? 'default' : 'secondary'}>
-                                        {automation.isActive ? 'Active' : 'Inactive'}
-                                    </Badge>
-                                    {automation.commentReplies && (
-                                        <Badge variant="outline">
-                                            <MessageSquare className="w-3 h-3 mr-1" />
-                                            Comments
+                                    <div className="flex items-center gap-3">
+                                        <Badge variant={automation.type === 'text' ? 'default' : 'secondary'}>
+                                        {automation.type === 'card' ? (
+                                            <><CreditCard className="w-3 h-3 mr-1" />Card</>
+                                        ) : (
+                                            <><MessageSquare className="w-3 h-3 mr-1" />Text</>
+                                        )}
                                         </Badge>
-                                    )}
-                                </div>
-                                <div className="flex items-center gap-1">
-                                    <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        editAutomation(automation);
-                                    }}
-                                    className="text-primary hover:text-primary"
-                                    >
-                                        <Edit className="w-4 h-4" />
-                                    </Button>
-                                    <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        deleteAutomation(automation._id,selectedReel, token);
-                                    }}
-                                    className="text-destructive hover:text-destructive"
-                                    >
-                                        {isDeletingAutomation === automation._id && <Loader2 className="w-4 h-4 animate-spin" />}
-                                        {isDeletingAutomation !== automation._id && <Trash2 className="w-4 h-4" />}
-                                    </Button>
-                                </div>
+                                        <Badge variant={automation.isActive ? 'default' : 'secondary'}>
+                                            {automation.isActive ? 'Active' : 'Inactive'}
+                                        </Badge>
+                                        {automation.commentReplies && (
+                                            <Badge variant="outline">
+                                                <MessageSquare className="w-3 h-3 mr-1" />
+                                                Comments
+                                            </Badge>
+                                        )}
+                                    </div>
+                                    <div className="flex items-center gap-1">
+                                        <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            editAutomation(automation);
+                                        }}
+                                        className="text-primary hover:text-primary"
+                                        >
+                                            <Edit className="w-4 h-4" />
+                                        </Button>
+                                        <Button
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            deleteAutomation(automation._id,selectedReel, token);
+                                        }}
+                                        className="text-destructive hover:text-destructive"
+                                        >
+                                            {isDeletingAutomation === automation._id && <Loader2 className="w-4 h-4 animate-spin" />}
+                                            {isDeletingAutomation !== automation._id && <Trash2 className="w-4 h-4" />}
+                                        </Button>
+                                    </div>
                                 </div>
                                 
                                 <div className="mb-3">
-                                <p className="text-sm font-medium mb-2">Active Keyword:</p>
+                                    <p className="text-sm font-medium mb-2">Active Keyword:</p>
                                     <Badge variant="outline" className="font-mono">
-                                    {automation.keyword}
+                                        {automation.keyword}
                                     </Badge>
-
                                 </div>
 
                                 {automation.type === 'card' && automation.dmCard && (
-                                <div className="text-sm text-muted-foreground">
-                                    Card: "{automation.dmCard.title}" → {automation.dmCard.button.title}
-                                    {automation?.dmCard?.image_url && <img className="w-30 h-20 object-cover rounded-lg border" src={automation.dmCard.image_url}></img>}
-                                </div>
+                                    <div className="text-sm text-muted-foreground">
+                                        Card: "{automation.dmCard.title}" → {automation.dmCard.button.title}
+                                        {automation?.dmCard?.image_url && <img className="w-30 h-20 object-cover rounded-lg border" src={automation.dmCard.image_url}></img>}
+                                    </div>
                                 )}
 
                                 {automation.type === 'text' && automation.dmMessages && (
-                                <div className="text-sm text-muted-foreground">
-                                    {automation.dmMessages.length} text message(s) configured
-                                </div>
+                                    <div className="text-sm text-muted-foreground">
+                                        {automation.dmMessages.length} text message(s) configured
+                                    </div>
                                 )}
 
                                 {automation.commentReplies && (
-                                <div className="text-sm text-muted-foreground mt-2">
-                                    {automation.commentReplies.length} auto-reply message(s) configured
-                                </div>
+                                    <div className="text-sm text-muted-foreground mt-2">
+                                        {automation.commentReplies.length} auto-reply message(s) configured
+                                    </div>
                                 )}
 
                             </CardContent>

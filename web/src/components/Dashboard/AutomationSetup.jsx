@@ -1,43 +1,25 @@
-import React from 'react'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
-import { Loader2, Plus, Settings, Trash2, Upload, X } from 'lucide-react'
+import { Loader2, Plus,Trash2, Upload, X } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/Tabs'
 import { Label } from '../ui/Label'
 import { Input } from '../ui/Input'
-import { Textarea } from '../ui/Textarea'
 import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore'
 
 
 function AutomationSetup() {
-    const { selectedReel,automationType,setAutomationType,title,
+    const { automationType,setAutomationType,title,
     textMessages,addTextMessage,removeTextMessage,updateTextMessage,
-    handleImageUpload,editingId,cancelEdit, card , setCard, isUploadingImage} = useDashboardStore();
+    handleImageUpload, card , setCard, isUploadingImage} = useDashboardStore();
     
   return (<>
-    {selectedReel && (
-        <Card className="glass-effect card-shadow">
-            <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-                <span className="flex items-center gap-2">
-                <Settings className="w-5 h-5 text-primary" />
-                {editingId ? 'Edit Automation Setup' : 'Automation Setup'}
-                </span>
-                {editingId && (
-                <Button variant="ghost" size="sm" onClick={cancelEdit}>
-                    <X className="w-4 h-4" />
-                </Button>
-                )}
-            </CardTitle>
-            </CardHeader>
-            <CardContent>
-            <Tabs value={automationType || 'card'} onValueChange={(value) => setAutomationType(value)} className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="card">Card Automation</TabsTrigger>
+        <Tabs value={automationType || 'card'} onValueChange={(value) => setAutomationType(value)} className="w-full">
+            <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="text">Text Automation</TabsTrigger>
-                </TabsList>
+                <TabsTrigger value="card">Card Automation</TabsTrigger>
+                
+            </TabsList>
 
-                <TabsContent value="card" className="space-y-4 mt-6">
+            <TabsContent value="card" className="space-y-4 mt-6">
                 <div className="grid md:grid-cols-2 gap-4 p-4 border rounded-lg">
                     <div className="space-y-4">
                     <div className="space-y-2">
@@ -128,14 +110,9 @@ function AutomationSetup() {
                     </div>
                     </div>
                 </div>
-                </TabsContent>
+            </TabsContent>
 
-                <TabsContent value="text" className="space-y-4 mt-6">
-                <div className="mb-4 p-3 bg-blue-300 border border-blue-200 rounded-lg">
-                    <p className="text-sm text-blue-700">
-                    💡 <strong>Random Selection:</strong> When users trigger this automation, a random message will be selected from the list below and sent automatically.
-                    </p>
-                </div>
+            <TabsContent value="text" className="space-y-4 mt-6">
                 <div className="space-y-4 p-4 border rounded-lg">
                     {textMessages.map((message, index) => (
                     <div key={index} className="space-y-3">
@@ -162,20 +139,17 @@ function AutomationSetup() {
                             )}
                         </div>
                         </div>
-                        <Textarea
+                        <Input
                         placeholder={`Enter your automated message ${index + 1}...`}
                         value={message}
                         onChange={(e) => updateTextMessage(index, e.target.value)}
-                        className="min-h-[60px] resize-none"
+                        className="resize-none"
                         />
                     </div>
                     ))}
                 </div>
-                </TabsContent>
-            </Tabs>
-            </CardContent>
-        </Card>
-    )}
+            </TabsContent>
+        </Tabs>
     </>)
 }
 

@@ -23,7 +23,6 @@ export const useDashboardStore = create((set, get) => ({
 
   textMessages: [''],
   commentReplies: [''],
-  commentsActive: false,
 
   isDeletingAutomation: null,
   isSavingAutomation: false,
@@ -41,7 +40,6 @@ export const useDashboardStore = create((set, get) => ({
   setCard: (card) => set({ card }),
   setTextMessages: (textMessages) => set({ textMessages }),
   setCommentReplies: (commentReplies) => set({ commentReplies }),
-  setCommentsActive: (commentsActive) => set({ commentsActive }),
 
   setIsDeletingAutomation: (isDeletingAutomation) => set({ isDeletingAutomation }),
   setIsSavingAutomation: (isSavingAutomation) => set({ isSavingAutomation }),
@@ -105,7 +103,6 @@ export const useDashboardStore = create((set, get) => ({
       },
       textMessages: [''],
       commentReplies: [''],
-      commentsActive: false,
       editingId: null,
     });
   },
@@ -138,7 +135,6 @@ export const useDashboardStore = create((set, get) => ({
     if (automation.commentReplies) {
       set({
         commentReplies: automation.commentReplies.length ? automation.commentReplies : [''],
-        commentsActive: true,
       });
     }
 
@@ -178,7 +174,7 @@ export const useDashboardStore = create((set, get) => ({
       editingId,
       textMessages,
       commentReplies,
-      commentsActive,
+      
       card,
     } = get();
 
@@ -187,7 +183,7 @@ export const useDashboardStore = create((set, get) => ({
     const payload = {
       reelId: selectedReel,
       keyword: keyword.trim(),
-      commentReplies: commentsActive ? commentReplies.filter(r => r.trim()) : null,
+      commentReplies: commentReplies.filter(r => r.trim()),
       dmMessages: automationType === 'text' ? textMessages.filter(m => m.trim()) : null,
       dmCard: automationType === 'card' ? {
         title: card.title,

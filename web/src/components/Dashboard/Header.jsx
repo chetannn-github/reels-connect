@@ -80,7 +80,7 @@ function Header() {
             <CardContent className="p-6 flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Current Plan</p>
-                <p className="text-2xl font-bold">{PLAN_TO_LABEL[user.plan] || "Free"}</p>
+                <p className="text-2xl font-bold">{PLAN_TO_LABEL[user?.plan] || "Free"}</p>
               </div>
               <Crown className="h-8 w-8 text-yellow-600" />
             </CardContent>

@@ -24,17 +24,6 @@ function ReelCard({reel}) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             
-            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
-                <div className="w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-white/30">
-                <Play className="w-6 h-6 text-white ml-1" fill="white" />
-                </div>
-            </div>
-            
-            <div className="absolute bottom-3 right-3 bg-black/70 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-medium border border-white/20">
-                <Play className="w-3 h-3 inline mr-1" fill="white" />
-                {reel.views}
-            </div>
-            
             {selectedReel === reel._id && (
                 <div className="absolute top-3 left-3 w-6 h-6 bg-primary rounded-full flex items-center justify-center animate-scale-in">
                 <div className="w-2 h-2 bg-white rounded-full" />
