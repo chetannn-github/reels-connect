@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 import Header from '../components/Dashboard/Header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ReelsSection from '../components/Dashboard/ReelsSection';
 import KeywordSection from '../components/Dashboard/KeywordSection';
 import AutomationSetup from '../components/Dashboard/AutomationSetup';
@@ -9,6 +9,7 @@ import SaveConfiguration from '../components/Dashboard/SaveConfiguration';
 import api from '../lib/api';
 import SavedAutomation from '../components/Dashboard/SavedAutomation';
 import { compressImageAndUpload } from "../lib/helper"
+import Fireworks from "../components/ui/Firework";
 
 
 const DashboardV3 = () => {
@@ -28,6 +29,8 @@ const DashboardV3 = () => {
     const [cardImage, setCardImage] = useState(null);
     const [buttonTitle, setButtonTitle] = useState('');
     const [buttonUrl, setButtonUrl] = useState('');
+
+    const [trigger, setTrigger] = useState(false);
 
     const [card, setCard] = useState({
       title : "",
@@ -179,10 +182,18 @@ const DashboardV3 = () => {
       }
     }
     const cancelEdit = () => resetReelForm();
+
+    useEffect(() => {
+      if (localStorage.getItem("firework") === "true") {
+        setTrigger(true);
+        localStorage.removeItem("firework");
+      }
+    }, []);
     
 
   return (
     <div className="min-h-screen bg-background">
+        <Fireworks trigger= {trigger}/>
         <Header/>
         <div className="max-w-7xl mx-auto px-6 py-8 space-y-8"> 
           <ReelsSection 
