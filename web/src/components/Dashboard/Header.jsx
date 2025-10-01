@@ -25,7 +25,7 @@ function Header() {
             <CardContent className="p-6 flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Username</p>
-                <p className="text-2xl font-bold">@{user.username}</p>
+                <p className="text-2xl font-bold">@{user?.username}</p>
               </div>
               <Users className="h-8 w-8 text-purple-600" />
             </CardContent>
@@ -36,7 +36,7 @@ function Header() {
             <CardContent className="p-6 flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Followers</p>
-                <p className="text-2xl font-bold">{user.followers}</p>
+                <p className="text-2xl font-bold">{user?.followers}</p>
               </div>
               <Users className="h-8 w-8 text-blue-600" />
             </CardContent>
@@ -47,7 +47,7 @@ function Header() {
             <CardContent className="p-6 flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Posts</p>
-                <p className="text-2xl font-bold">{user.postCount}</p>
+                <p className="text-2xl font-bold">{user?.postCount}</p>
               </div>
               <Target className="h-8 w-8 text-green-600" />
             </CardContent>
@@ -58,7 +58,7 @@ function Header() {
             <CardContent className="p-6 flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Total Messages Sent</p>
-                <p className="text-2xl font-bold">{user.messagesSent || 0}</p>
+                <p className="text-2xl font-bold">{user?.messagesSent || 0}</p>
               </div>
               <MessageCircle className="h-8 w-8 text-orange-600" />
             </CardContent>
@@ -69,7 +69,7 @@ function Header() {
             <CardContent className="p-6 flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Active Reels</p>
-                <p className="text-2xl font-bold">{user.activeReelsCount || 0}</p>
+                <p className="text-2xl font-bold">{user?.activeReelsCount || 0}</p>
               </div>
               <Video className="h-8 w-8 text-red-600" /> 
             </CardContent>
