@@ -16,6 +16,7 @@ import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Label } from "../components/ui/Label";
 import { Textarea } from "../components/ui/Textarea";
+import { BASE } from "../lib/api";
 
 export default function AIAssistantSetup() {
   const navigate = useNavigate();
@@ -76,7 +77,7 @@ export default function AIAssistantSetup() {
       data.append("files", file);
     });
 
-    const res = await fetch("http://localhost:4000/api/auth/store-info", {
+    const res = await fetch(BASE+"/api/auth/store-info", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
