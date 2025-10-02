@@ -1,13 +1,11 @@
-import { saveUserInfo } from "./utils/saveUserInfo.js";
+import { processAndSaveUserInfo } from "./utils/processAndSaveUserInfo.js";
 
 export const storeInfo = async (req, res) => {
   try {
-    const { info } = req.body;
-    if (!info || info.trim().length === 0) {
-      return res.status(400).json({ message: "Info is required" });
-    }
+    const { formData } = req.body;
+    const uploadedFiles = req.files || [];
 
-    const chunksStored = await saveUserInfo(req.user._id.toString(), info);
+    const chunksStored = await processAndSaveUserInfo(req.user._id.toString(),JSON.parse(formData), uploadedFiles);
 
     res.json({
       success: true,

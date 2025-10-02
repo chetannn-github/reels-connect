@@ -3,16 +3,18 @@ import { pineconeClient } from "../../../config/pinecone.js";
 import { generateEmbedding } from "../../../config/openai.js";
 import { PINECONE_INDEX } from "../../../config/env.js";
 
-export const saveUserInfo = async (userId, infoString) => {
+export const createEmbeddingAndSaveToDB = async (userId, infoString) => {
   if (!infoString || infoString.trim().length === 0) return 0;
   const namespace = `user_${userId}`;
-
-  await pineconeClient
+  try {
+    await pineconeClient
     .index(PINECONE_INDEX)
-    .deleteNamespace(namespace)
-    
-  console.log(`Existing vectors for ${namespace} deleted`);
+    .deleteNamespace(namespace);
+    console.log(`Existing vectors for ${namespace} deleted`);
   
+  } catch (error) {
+    console.log("first info bro")
+  }
   const splitter = new RecursiveCharacterTextSplitter({
     chunkSize: 500,
     chunkOverlap: 50,

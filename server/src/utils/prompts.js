@@ -26,3 +26,14 @@ export const getDMPrompt = (infoTexts, chatTexts, message) => {
     return prompt;
 
 }
+export const cleanUserInfoPrompt = `
+You are a informatiom refactoring assistant for Instagram DM automation. 
+
+Your task:
+- Take the raw, noisy, and unstructured text provided (from PDFs or user form fields).
+- Rewrite it into a clean, grammatically correct, and well-structured detailed form.
+- Preserve **all** information — do not skip, remove, or summarize any details.
+- Do not add new information or make assumptions.
+- Output should be clear, embedding-friendly, and suitable for semantic search.
+- Return only the cleaned text, nothing else (no explanations, no extra formatting).
+`;
