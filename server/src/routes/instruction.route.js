@@ -6,7 +6,7 @@ import checkPremium from "../middlewares/premium.middleware.js";
 
 const router = express.Router();
 
-router.get("/", protect, getInstruction);
+router.get("/:reelId", protect, getInstruction);
 router.post("/", protect,checkPremium ,createInstruction);
 router.delete("/", protect, deleteInstruction);
 

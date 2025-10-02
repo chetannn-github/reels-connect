@@ -2,7 +2,7 @@ import Instruction from "../../models/instruction.model.js";
 
 export const getInstruction = async (req, res) => {
   try {
-    const { reelId } = req.body;
+    const  { reelId } = req.params;
     const instructions = await Instruction.find({
       reel: reelId,
       user: req.user._id
