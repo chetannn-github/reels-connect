@@ -8,7 +8,7 @@ const Footer = () => {
           {/* Brand */}
           <div className="md:col-span-2">
             <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              ReelAutomate
+              InstaConnector
             </h3>
             <p className="text-muted-foreground mb-6 max-w-md">
               The ultimate Instagram automation platform for creators who want to scale their content without the hassle.
