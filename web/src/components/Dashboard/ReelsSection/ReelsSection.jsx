@@ -16,7 +16,7 @@ function ReelsSection() {
             </CardTitle>
         </CardHeader>
         <CardContent>
-            <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide ">
+            <div className="flex gap-4 overflow-x-auto pb-4 pt-4 scrollbar-hide ">
             {reels.map((reel) => (
                 <ReelCard
                 reel={reel} key={reel._id}
