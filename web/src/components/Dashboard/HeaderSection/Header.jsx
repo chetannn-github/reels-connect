@@ -1,4 +1,4 @@
-import { Crown, MessageCircle, Sparkles, Target, Users, Video } from "lucide-react"
+import { Bot, Brain, Crown, MessageCircle, Sparkles, Target, Users, Video } from "lucide-react"
 import { useSelector } from "react-redux";
 import { Card, CardContent } from "../../ui/Card";
 import { PLAN_TO_LABEL } from "../../../lib/constant";
@@ -27,7 +27,7 @@ function Header() {
 
         <div className="grid gap-3 md:gap-6 grid-cols-2  lg:grid-cols-4 mb-8">
           <Card className="glass-effect border border-gray-200 shadow-lg">
-            <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
+            <CardContent className="min-h-[88px] md:p-6 px-2 py-6 flex items-center justify-between">
               <div>
                 <p className="text-xs md:text-sm text-muted-foreground">Username</p>
                 <p className="text-sm md:text-2xl font-bold">@{user?.username}</p>
@@ -38,7 +38,7 @@ function Header() {
 
           {/* Followers */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
-            <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
+            <CardContent className="min-h-[88px] md:p-6 px-2 py-6 flex items-center justify-between">
               <div>
                 <p className="text-xs md:text-sm text-muted-foreground">Followers</p>
                 <p className="text-sm md:text-2xl font-bold">{user?.followers}</p>
@@ -49,7 +49,7 @@ function Header() {
 
           {/* Posts */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
-            <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
+            <CardContent className="min-h-[88px] md:p-6 px-2 py-6 flex items-center justify-between">
               <div>
                 <p className="text-xs md:text-sm text-muted-foreground">Posts</p>
                 <p className="text-sm md:text-2xl font-bold">{user?.postCount}</p>
@@ -60,7 +60,7 @@ function Header() {
 
           {/* Total Messages Sent */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
-            <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
+            <CardContent className="min-h-[88px] md:p-6 px-2 py-6 flex items-center justify-between">
               <div>
                 <p className="text-xs md:text-sm text-muted-foreground">Total Messages Sent</p>
                 <p className="text-sm md:text-2xl font-bold">{user?.messagesSent || 0}</p>
@@ -71,7 +71,7 @@ function Header() {
 
           {/* Active Reels Count */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
-            <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
+            <CardContent className="min-h-[88px] md:p-6 px-2 py-6 flex items-center justify-between">
               <div>
                 <p className="text-xs md:text-sm text-muted-foreground">Active Reels</p>
                 <p className="text-sm md:text-2xl font-bold">{user?.activeReelsCount || 0}</p>
@@ -82,7 +82,7 @@ function Header() {
 
           {/* Current Plan */}
           <Card className="glass-effect border border-gray-200 shadow-lg">
-            <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
+            <CardContent className="min-h-[88px] md:p-6 px-2 py-6 flex items-center justify-between">
               <div>
                 <p className="text-xs md:text-sm text-muted-foreground">Current Plan</p>
                 <p className="text-sm md:text-2xl font-bold">{PLAN_TO_LABEL[user?.plan] || "Free"}</p>
@@ -96,7 +96,7 @@ function Header() {
                 onClick={() => navigate("/plans")}
                 className="cursor-pointer bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-xl hover:scale-105 transition-transform"
               >
-                <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
+                <CardContent className="min-h-[88px] md:p-6 px-2 py-6 flex items-center justify-between">
                   <div>
                     <p className="text-sm opacity-90">Limit Reached 🚀</p>
                     <p className="text-sm md:text-2xl font-bold">Upgrade Your Plan</p>
@@ -106,25 +106,36 @@ function Header() {
             </Card>
           )}
 
-          <Card className="glass-effect border border-gray-200 shadow-lg" onClick={() => navigate("/dm-automation")}>
-            <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
-              <div>
-                <p className="text-xs md:text-sm text-muted-foreground">Go to DM Automation</p>
-                
-              </div>
-              <Crown className="h-5 w-5 md:h-8 md:w-8 text-yellow-600" />
-            </CardContent>
-          </Card>
+<Card 
+  className="rounded-2xl border shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform backdrop-blur-sm cursor-pointer" 
+  onClick={() => navigate("/dm-automation")}
+>
+  <CardContent className="min-h-[80px] sm:min-h-[88px] md:p-6 p-2 flex items-center justify-between">
+    <div>
+      <p className="text-xs sm:text-sm text-muted-foreground">Access</p>
+      <p className="text-sm sm:text-lg md:text-xl font-semibold">Automation Hub</p>
+    </div>
+    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center ring-2 shadow">
+      <Bot className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
+    </div>
+  </CardContent>
+</Card>
 
-          <Card className="glass-effect border border-gray-200 shadow-lg" onClick={() => navigate("/ai-setup")}>
-            <CardContent className="min-h-[88px] md:p-6 px-3 py-6 flex items-center justify-between">
-              <div>
-                <p className="text-xs md:text-sm text-muted-foreground">Go to Smart AI Setup</p>
-                
-              </div>
-              <Crown className="h-5 w-5 md:h-8 md:w-8 text-yellow-600" />
-            </CardContent>
-          </Card>
+<Card 
+  className="rounded-2xl border shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform backdrop-blur-sm cursor-pointer" 
+  onClick={() => navigate("/ai-setup")}
+>
+  <CardContent className="min-h-[80px] sm:min-h-[88px] md:p-6 p-2 flex items-center justify-between">
+    <div>
+      <p className="text-xs sm:text-sm text-muted-foreground">Setup</p>
+      <p className="text-sm sm:text-lg md:text-xl font-semibold">AI Assistant</p>
+    </div>
+    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-pink-500 to-red-500 flex items-center justify-center ring-2 shadow">
+      <Brain className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
+    </div>
+  </CardContent>
+</Card>
+
           
         </div>
       </div>
