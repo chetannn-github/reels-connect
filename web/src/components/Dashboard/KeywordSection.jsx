@@ -14,7 +14,6 @@ function KeywordSection() {
     const reels = useSelector((state) => state?.auth?.user.reels);
     const {selectedReel, keyword, setKeyword, editingId, cancelEdit} = useDashboardStore()
     return (<>
-        {selectedReel ? (
             <Card className={`glass-effect card-shadow lg:max-h-[815px] overflow-scroll`}>
                 <CardHeader className="pb-3">
                     <CardTitle className="flex items-center gap-2 text-base justify-between">
@@ -51,17 +50,7 @@ function KeywordSection() {
 
                 </CardContent>
             </Card>
-            ) : (
-            <Card className="glass-effect card-shadow">
-                <CardContent className="text-center py-12">
-                    <Video className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="text-xl font-semibold mb-2">Select a Reel to Automate</h3>
-                    <p className="text-muted-foreground">
-                        Choose a reel from above to set up keyword-based automation
-                    </p>
-                </CardContent>
-            </Card>
-        )}
+        
 </>)
 }
 
