@@ -25,7 +25,7 @@ const Dashboard = () => {
   }, []);
   
   const user = useSelector((state) => state.auth.user);
-  const hasAIPro = user.plan === "premium";
+  const hasAIPro = user?.plan === "premium";
   return (
     <div className="min-h-screen bg-background">
         <Fireworks trigger= {trigger}/>
