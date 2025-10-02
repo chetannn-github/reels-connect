@@ -69,7 +69,7 @@ function Plan({plan, index}) {
                 variant={plan.buttonVariant} 
                 size="lg" 
                 className="w-full"
-                disabled={planIndex >= index || plan.disabled}
+                disabled={planIndex >= index}
 
                 >
                     {isLoading === plan.type && <><Loader2 className="h-4 w-4 animate-spin" /> {plan.buttonLoadingText} </>}
@@ -82,7 +82,6 @@ function Plan({plan, index}) {
                 variant={plan.buttonVariant} 
                 size="lg" 
                 className="w-full"
-                disabled={plan.disabled}
                 >
                     {isLoading === plan.type && <><Loader2 className="h-4 w-4 animate-spin" /> {plan.buttonLoadingText} </>}
                     {isLoading !== plan.type && plan.buttonText}

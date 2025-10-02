@@ -58,7 +58,6 @@ export const plans = [
     buttonVariant: "hero",
     buttonLoadingText: "Processing...",
     popular: true,
-    disabled: false,
   },
   {
     type: "premium",
@@ -66,7 +65,7 @@ export const plans = [
     icon: Crown,
     price: "₹2500",
     period: "per month",
-    description: "AI-powered automation (Coming Soon)",
+    description: "AI-powered automation ",
     features: [
       "Unlimited reel automation",
       "AI-powered content creation",
@@ -76,11 +75,10 @@ export const plans = [
       "Priority support",
       "Advanced analytics",
     ],
-    buttonText: "Coming Soon",
+    buttonText: "Get AI Pro",
     buttonVariant: "outline",
-    buttonLoadingText: "Launching Soon...",
+    buttonLoadingText: "Processing....",
     popular: false,
-    disabled: true,
   },
 ];
 
