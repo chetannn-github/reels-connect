@@ -28,7 +28,7 @@ function AutomationSetup() {
                             placeholder="Amazing Deal!"
                             value={card.title}
                             onChange={(e) => setCard({...card , title : e.target.value})}
-                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
+                            className="h-9 placeholder:text-xs md:placeholder:text-sm  text-xs md:text-sm"
                             />
                         </div>
                         
@@ -38,7 +38,7 @@ function AutomationSetup() {
                             placeholder="Get 50% off"
                             value={card.subtitle}
                             onChange={(e) => setCard({...card, subtitle : e.target.value})}
-                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
+                            className="h-9 placeholder:text-xs md:placeholder:text-sm  text-xs md:text-sm"
                             />
                         </div>
 
@@ -48,7 +48,7 @@ function AutomationSetup() {
                             placeholder="Shop Now"
                             value={card.button.title}
                             onChange={(e) => setCard({...card, button : {...card.button , title : e.target.value}} )}
-                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
+                            className="h-9 placeholder:text-xs md:placeholder:text-sm  text-xs md:text-sm"
                             />
                         </div>
 
@@ -58,7 +58,7 @@ function AutomationSetup() {
                             placeholder="https://your-store.com"
                             value={card.button.url}
                             onChange={(e) => setCard({...card, button : {...card.button , url : e.target.value} }) }
-                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-xs md:text-md"
+                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                             />
                         </div>
                     </div>
@@ -147,7 +147,7 @@ function AutomationSetup() {
                         placeholder={`Enter your automated message ${index + 1}...`}
                         value={message}
                         onChange={(e) => updateTextMessage(index, e.target.value)}
-                        className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
+                        className="h-9 placeholder:text-xs md:placeholder:text-sm  text-xs md:text-sm"
                         
                         />
                     </div>

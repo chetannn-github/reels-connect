@@ -24,7 +24,7 @@ function CommentSetup() {
                   placeholder={`Auto reply ${index + 1}...`}
                   value={reply}
                   onChange={(e) => updateCommentReply(index, e.target.value)}
-                  className="h-9 placeholder:text-xs md:placeholder:text-sm  md:text-md text text-xs md:text-md"
+                  className="h-9 placeholder:text-xs md:placeholder:text-sm  text-xs md:text-sm"
                 />
 
                 <Button

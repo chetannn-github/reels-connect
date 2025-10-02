@@ -32,7 +32,7 @@ function CreateAutomation() {
                   placeholder="e.g., hello, pricing, support"
                   value={keyword}
                   onChange={(e) => setKeyword(e.target.value)}
-                  className="h-9 placeholder:text-xs md:placeholder:text-sm  md:text-md text text-xs md:text-md"
+                  className="h-9 placeholder:text-xs md:placeholder:text-sm  text-xs md:text-sm"
                 />
               </div>
 
@@ -58,7 +58,7 @@ function CreateAutomation() {
                             placeholder="Enter your automated response..."
                             value={msg}
                             onChange={(e) => updateTextMessage(index, e.target.value)}
-                            className="min-h-[40px] placeholder:text-xs md:placeholder:text-sm  md:text-md text text-xs md:text-md"
+                            className="min-h-[40px] placeholder:text-xs md:placeholder:text-sm  text text-xs md:text-sm"
                           />
                         </div>
                         {dmMessages.length > 1 && (
@@ -119,11 +119,11 @@ function CreateAutomation() {
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <Input 
-                    className="placeholder:text-xs md:placeholder:text-sm  md:text-md text text-xs md:text-md" 
+                    className="placeholder:text-xs md:placeholder:text-sm   text text-xs md:text-sm" 
                     placeholder="Button title" value={card.button.title} 
                     onChange={(e) => setCard({ ...card, button: { ...card.button, title: e.target.value } })} />
                     <Input 
-                    className="placeholder:text-xs md:placeholder:text-sm  md:text-md text text-xs md:text-md"
+                    className="placeholder:text-xs md:placeholder:text-sm   text text-xs md:text-sm"
                     placeholder="Button URL" value={card.button.url} 
                     onChange={(e) => setCard({ ...card, button: { ...card.button, url: e.target.value } })} />
                   </div>

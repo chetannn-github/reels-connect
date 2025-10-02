@@ -12,7 +12,7 @@ function KeywordInput() {
                 placeholder="e.g. price, discount..."
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
-                className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
+                className="h-9 placeholder:text-xs md:placeholder:text-sm  text-xs md:text-sm"
             />
         </div>
     </div>
