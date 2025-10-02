@@ -9,6 +9,7 @@ import {
   MessageCircle,
   ArrowLeft,
   Check,
+  Loader2,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../components/ui/Card";
 import { Button } from "../components/ui/Button";
@@ -32,6 +33,8 @@ export default function AIAssistantSetup() {
     communication_style: "",
     faq_topics: "",
   });
+
+  const [isLoading,SetIsLoading] = useState(false);
 
   const [uploadedFiles, setUploadedFiles] = useState([]);
 
@@ -66,6 +69,7 @@ export default function AIAssistantSetup() {
   // }
 
   try {
+    SetIsLoading(true)
     const data = new FormData();
     data.append("formData", JSON.stringify(formData));
     uploadedFiles.forEach((file) => {
@@ -88,6 +92,8 @@ export default function AIAssistantSetup() {
     }
   } catch (err) {
     console.error("Server error:", err);
+  } finally {
+    SetIsLoading(false)
   }
 };
 
@@ -113,14 +119,23 @@ export default function AIAssistantSetup() {
               AI Assistant Setup
             </span>
           </div>
-          <Button
+         {!isLoading && <Button
             onClick={handleSave}
             size="sm"
             className="bg-gradient-instagram shadow-instagram hover:opacity-90 transition"
           >
-            <Check className="w-4 h-4 mr-2" />
+            <Check className="w-4 h-4 mr-2 " />
             Save Profile
-          </Button>
+          </Button>}
+
+
+          {isLoading && <Button
+            size="sm"
+            className="bg-gradient-instagram shadow-instagram hover:opacity-90 transition"
+          >
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            Saving Profile...
+          </Button>}
         </div>
       </div>
 
