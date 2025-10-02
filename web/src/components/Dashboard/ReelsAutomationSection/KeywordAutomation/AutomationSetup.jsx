@@ -14,8 +14,8 @@ function AutomationSetup() {
   return (<>
         <Tabs value={automationType || 'card'} onValueChange={(value) => setAutomationType(value)} className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="text">Text Automation</TabsTrigger>
-                <TabsTrigger value="card">Card Automation</TabsTrigger>
+                <TabsTrigger className="text-xs md:text-sm" value="text">Text Automation</TabsTrigger>
+                <TabsTrigger className="text-xs md:text-sm" value="card">Card Automation</TabsTrigger>
                 
             </TabsList>
 
@@ -28,6 +28,7 @@ function AutomationSetup() {
                             placeholder="Amazing Deal!"
                             value={card.title}
                             onChange={(e) => setCard({...card , title : e.target.value})}
+                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
                             />
                         </div>
                         
@@ -37,6 +38,7 @@ function AutomationSetup() {
                             placeholder="Get 50% off"
                             value={card.subtitle}
                             onChange={(e) => setCard({...card, subtitle : e.target.value})}
+                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
                             />
                         </div>
 
@@ -46,6 +48,7 @@ function AutomationSetup() {
                             placeholder="Shop Now"
                             value={card.button.title}
                             onChange={(e) => setCard({...card, button : {...card.button , title : e.target.value}} )}
+                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
                             />
                         </div>
 
@@ -55,6 +58,7 @@ function AutomationSetup() {
                             placeholder="https://your-store.com"
                             value={card.button.url}
                             onChange={(e) => setCard({...card, button : {...card.button , url : e.target.value} }) }
+                            className="h-9 placeholder:text-xs md:placeholder:text-sm text-xs md:text-md"
                             />
                         </div>
                     </div>
@@ -113,10 +117,10 @@ function AutomationSetup() {
             </TabsContent>
 
             <TabsContent value="text" className="space-y-4 mt-6">
-                <div className="space-y-4 p-4 border rounded-lg">
+                <div className="space-y-4 p-3 md:p-4 border rounded-lg">
                     {textMessages.map((message, index) => (
                     <div key={index} className="space-y-3">
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 justify-between">
                         <Label className="text-sm font-medium">Message {index + 1}</Label>
                         <div className="flex gap-1">
                             <Button
@@ -143,7 +147,8 @@ function AutomationSetup() {
                         placeholder={`Enter your automated message ${index + 1}...`}
                         value={message}
                         onChange={(e) => updateTextMessage(index, e.target.value)}
-                        className="resize-none"
+                        className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
+                        
                         />
                     </div>
                     ))}

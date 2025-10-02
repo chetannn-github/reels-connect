@@ -17,7 +17,7 @@ function KeywordAutomation() {
     <>
         <Card className={`glass-effect card-shadow lg:max-h-[815px] overflow-scroll`}>
             <CardHeader className="pb-3">
-                <CardTitle className="flex items-center gap-2 text-base justify-between">
+                <CardTitle className="flex items-center gap-2 text-base justify-between pb-0">
                     <span className="flex items-center gap-2">
                         <Hash className="w-4 h-4 text-accent" />
                         Keyword Setup for {reels.find(r => r._id === selectedReel)?.reelTitle}

@@ -17,11 +17,11 @@ function ReelsAutomationSection() {
                 {hasAIPro ? (
                     <Tabs defaultValue="keyword" className="w-full">
                     <TabsList className="grid w-full grid-cols-2 h-10 mb-4">
-                        <TabsTrigger value="keyword" className="text-sm">
+                        <TabsTrigger value="keyword" className="text-xs md:text-sm">
                             <Hash className="w-4 h-4 mr-2" />
                             Keyword Automation
                         </TabsTrigger>
-                        <TabsTrigger value="ai" className="text-sm">
+                        <TabsTrigger value="ai" className="text-xs md:text-sm">
                             <Sparkles className="w-4 h-4 mr-2" />
                             AI Automation
                         </TabsTrigger>

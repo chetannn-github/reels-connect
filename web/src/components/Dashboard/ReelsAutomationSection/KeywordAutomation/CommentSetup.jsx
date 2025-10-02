@@ -10,20 +10,21 @@ function CommentSetup() {
     
     return (
       <>  
-        <div className="flex items-center justify-between p-4 bg-muted/30 rounded-lg">
+        <div className="flex items-center justify-between p-2 md:p-4 bg-muted/30 rounded-lg">
           <div>
             <h3 className="font-medium">Auto Comment Replies</h3>
           </div>
         </div>
 
         {(
-          <div className="space-y-4 p-4 border rounded-lg">
+          <div className="space-y-2 p-3 md:p-4 border rounded-lg">
             {commentReplies.map((reply, index) => (
               <div key={index} className="flex gap-2">
                 <Input
                   placeholder={`Auto reply ${index + 1}...`}
                   value={reply}
                   onChange={(e) => updateCommentReply(index, e.target.value)}
+                  className="h-9 placeholder:text-xs md:placeholder:text-sm text-sm md:text-md text text-xs md:text-md"
                 />
 
                 <Button
@@ -32,7 +33,7 @@ function CommentSetup() {
                     onClick={addCommentReply}
                     className="shrink-0"
                   >
-                    <Plus className="w-4 h-4" />
+                    <Plus className="sm:w-3 sm:h-3 md:w-4 md:h-4" />
                   </Button>
                   {commentReplies.length > 1 && (
                     <Button
@@ -41,7 +42,7 @@ function CommentSetup() {
                       onClick={() => removeCommentReply(index)}
                       className="shrink-0"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="sm:w-3 sm:h-3 md:w-4 md:h-4" />
                     </Button>
                   )}
                 

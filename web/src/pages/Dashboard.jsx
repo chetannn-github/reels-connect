@@ -29,7 +29,7 @@ const Dashboard = () => {
     <div className="min-h-screen bg-background">
         <Fireworks trigger= {trigger}/>
         <Header/>
-        <div className="max-w-7xl mx-auto px-6 py-8 space-y-8"> 
+        <div className="max-w-7xl mx-auto md:px-6 py-8 space-y-8"> 
           <ReelsSection />
           <ReelsAutomationSection/>
         </div>

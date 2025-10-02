@@ -11,9 +11,9 @@ function SavedKeywordAutomation() {
         editingId,selectedReel,isDeletingAutomation,isGettingAutomation} 
         = useDashboardStore();
     return (
-        <Card className="glass-effect card-shadow lg:max-h-[815px] overflow-scroll">
+        <Card className="glass-effect card-shadow lg:max-h-[815px] overflow-scroll p-0">
             <CardHeader>
-                <CardTitle className="flex items-center justify-between sticky">
+                <CardTitle className="flex items-center justify-between sticky text-sm md:text-xl">
                     <span className="flex items-center gap-2">
                         <Sparkles className="w-5 h-5 text-primary" />
                         Active Keywords
@@ -43,116 +43,117 @@ function SavedKeywordAutomation() {
                             }`}
                             onClick={() => editAutomation(automation)}
                         >
-                            <CardContent className="p-4">
+                            <CardContent className="p-3 md:p-4">
                             {/* Header badges + actions */}
-                            <div className="flex items-start justify-between mb-3">
-                                <div className="flex items-center gap-3">
-                                <Badge
-                                    variant={
-                                    automation.type === "text" ? "default" : "secondary"
-                                    }
-                                >
-                                    {automation.type === "card" ? (
-                                    <>
-                                        <CreditCard className="w-3 h-3 mr-1" /> Card
-                                    </>
-                                    ) : (
-                                    <>
-                                        <MessageSquare className="w-3 h-3 mr-1" /> Text
-                                    </>
-                                    )}
-                                </Badge>
-                                <Badge
-                                    variant={automation.isActive ? "default" : "secondary"}
-                                >
-                                    {automation.isActive ? "Active" : "Inactive"}
-                                </Badge>
-                                {automation.commentReplies && (
-                                    <Badge variant="outline">
-                                    <MessageSquare className="w-3 h-3 mr-1" />
-                                    Comments
+                                <div className="flex justify-between mb-3 ">
+                                    <div className="flex items-center gap-3 ">
+                                    <Badge
+                                        variant={
+                                        automation.type === "text" ? "default" : "secondary"
+                                        }
+                                    >
+                                        {automation.type === "card" ? (
+                                        <>
+                                            <CreditCard className="w-3 h-3 mr-1 text-xs" /> Card
+                                        </>
+                                        ) : (
+                                        <>
+                                            <MessageSquare className="w-3 h-3 mr-1 text-xs" /> Text
+                                        </>
+                                        )}
                                     </Badge>
-                                )}
-                                </div>
-
-                                <div className="flex items-center gap-1">
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={(e) => {
-                                    e.stopPropagation();
-                                    editAutomation(automation);
-                                    }}
-                                    className="text-primary hover:text-primary"
-                                >
-                                    <Edit className="w-4 h-4" />
-                                </Button>
-                                <Button
-                                    variant="ghost"
-                                    size="sm"
-                                    onClick={(e) => {
-                                    e.stopPropagation();
-                                    deleteAutomation(automation._id, selectedReel, token);
-                                    }}
-                                    className="text-destructive hover:text-destructive"
-                                >
-                                    {isDeletingAutomation === automation._id ? (
-                                    <Loader2 className="w-4 h-4 animate-spin" />
-                                    ) : (
-                                    <Trash2 className="w-4 h-4" />
+                                    <Badge
+                                    className ="hidden md:block"
+                                        variant={automation.isActive ? "default" : "secondary"}
+                                    >
+                                        {automation.isActive ? "Active" : "Inactive"}
+                                    </Badge>
+                                    {automation.commentReplies && (
+                                        <Badge variant="outline">
+                                        <MessageSquare className="w-3 h-3 mr-1 text-xs" />
+                                        Comments
+                                        </Badge>
                                     )}
-                                </Button>
+                                    </div>
+
+                                    <div className="flex items-center gap-1 ">
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={(e) => {
+                                            e.stopPropagation();
+                                            editAutomation(automation);
+                                            }}
+                                            className="text-primary hover:text-primary"
+                                        >
+                                            <Edit className="w-4 h-4" />
+                                        </Button>
+                                        <Button
+                                            variant="ghost"
+                                            size="sm"
+                                            onClick={(e) => {
+                                            e.stopPropagation();
+                                            deleteAutomation(automation._id, selectedReel, token);
+                                            }}
+                                            className="text-destructive hover:text-destructive"
+                                        >
+                                            {isDeletingAutomation === automation._id ? (
+                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                            ) : (
+                                            <Trash2 className="w-4 h-4" />
+                                            )}
+                                        </Button>
+                                    </div>
                                 </div>
-                            </div>
 
-                            {/* Active keyword */}
-                            <div className="mb-3 flex items-baseline gap-4">
-                                <p className="text-sm font-medium mb-2">Active Keyword:</p>
-                                <Badge variant="outline" className="font-mono">
-                                {automation.keyword}
-                                </Badge>
-                            </div>
+                                {/* Active keyword */}
+                                <div className="mb-3 flex items-baseline gap-4 ">
+                                    <p className="text-sm font-medium mb-2">Active Keyword:</p>
+                                    <Badge variant="outline" className="font-mono">
+                                    {automation.keyword}
+                                    </Badge>
+                                </div>
 
-                            {/* Card type automation */}
-                            {automation.type === "card" && automation.dmCard && (
-                                <div className="w-64 border rounded-lg shadow-sm overflow-hidden">
-                                {automation.dmCard.image_url && (
-                                    <img
-                                    src={automation.dmCard.image_url}
-                                    alt={automation.dmCard.title || "Card image"}
-                                    className="w-full h-45 object-cover aspect-auto"
-                                    />
-                                )}
-                                <div className="p-3 space-y-1">
-                                    <p className="font-semibold text-sm text-[#f5f5f5] text-left">
-                                    {automation.dmCard.title}
-                                    </p>
-                                    <p className="text-xs text-[#a8a8a8] text-left">
-                                    {automation.dmCard.subtitle}
-                                    </p>
-                                    {automation.dmCard.button?.title && (
-                                    <span className="inline-block mt-2 px-3 py-1 text-xs text-[#708dff] font-bold rounded-full">
-                                        {automation.dmCard.button.title}
-                                    </span>
+                                {/* Card type automation */}
+                                {automation.type === "card" && automation.dmCard && (
+                                    <div className="w-64 border rounded-lg shadow-sm overflow-hidden">
+                                    {automation.dmCard.image_url && (
+                                        <img
+                                        src={automation.dmCard.image_url}
+                                        alt={automation.dmCard.title || "Card image"}
+                                        className="w-full h-45 object-cover aspect-auto"
+                                        />
                                     )}
-                                </div>
-                                </div>
-                            )}
+                                    <div className="p-3 space-y-1">
+                                        <p className="font-semibold text-sm text-[#f5f5f5] text-left">
+                                        {automation.dmCard.title}
+                                        </p>
+                                        <p className="text-xs text-[#a8a8a8] text-left">
+                                        {automation.dmCard.subtitle}
+                                        </p>
+                                        {automation.dmCard.button?.title && (
+                                        <span className="inline-block mt-2 px-3 py-1 text-xs text-[#708dff] font-bold rounded-full">
+                                            {automation.dmCard.button.title}
+                                        </span>
+                                        )}
+                                    </div>
+                                    </div>
+                                )}
 
                             {/* Text type automation */}
-                            {automation.type === "text" && automation.dmMessages && (
-                                <div className="text-sm text-muted-foreground">
-                                {automation.dmMessages.length} text message
-                                {automation.dmMessages.length > 1 ? "s" : ""} configured
-                                </div>
-                            )}
+                                {automation.type === "text" && automation.dmMessages && (
+                                    <div className="text-sm text-muted-foreground">
+                                    {automation.dmMessages.length} text message
+                                    {automation.dmMessages.length > 1 ? "s" : ""} configured
+                                    </div>
+                                )}
 
-                            {/* Comment replies */}
-                            {automation.commentReplies && (
-                                <div className="text-sm text-muted-foreground mt-2">
-                                {automation.commentReplies.length} auto-reply message
-                                {automation.commentReplies.length > 1 ? "s" : ""} configured
-                                </div>
+                                {/* Comment replies */}
+                                {automation.commentReplies && (
+                                    <div className="text-sm text-muted-foreground mt-2">
+                                    {automation.commentReplies.length} auto-reply message
+                                    {automation.commentReplies.length > 1 ? "s" : ""} configured
+                                    </div>
                             )}
                             </CardContent>
                         </Card>
