@@ -1,9 +1,9 @@
 import { Loader2, Plus,Trash2, Upload, X } from 'lucide-react'
-import { Button } from '../ui/Button'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/Tabs'
-import { Label } from '../ui/Label'
-import { Input } from '../ui/Input'
-import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore'
+import { Button } from '../../../ui/Button'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../../ui/Tabs'
+import { Label } from '../../../ui/Label'
+import { Input } from '../../../ui/Input'
+import { useDashboardStore } from '../../../../pages/Dashboard/useDashboardStore'
 
 
 function AutomationSetup() {
@@ -60,54 +60,54 @@ function AutomationSetup() {
                     </div>
 
                     <div className="space-y-4">
-                    <div className="space-y-2">
-                        <Label>Upload Image</Label>
-                        {card.cardImage ? (
-                        <div className="space-y-3">
-                            <div className="relative">
-                                <img 
-                                    src={card.cardImage} 
-                                    alt="Card preview" 
-                                    className="w-full h-48 object-cover rounded-lg border"
-                                />
-                                <Button
-                                    variant="destructive"
-                                    size="sm"
-                                    className="absolute top-2 right-2"
-                                    onClick={() => setCard({...card, cardImage : null})}
-                                >
-                                    <X className="w-4 h-4" />
-                                </Button>
+                        <div className="space-y-2">
+                            <Label>Upload Image</Label>
+                            {card.cardImage ? (
+                            <div className="space-y-3">
+                                <div className="relative">
+                                    <img 
+                                        src={card.cardImage} 
+                                        alt="Card preview" 
+                                        className="w-full h-48 object-cover rounded-lg border"
+                                    />
+                                    <Button
+                                        variant="destructive"
+                                        size="sm"
+                                        className="absolute top-2 right-2"
+                                        onClick={() => setCard({...card, cardImage : null})}
+                                    >
+                                        <X className="w-4 h-4" />
+                                    </Button>
+                                </div>
+                                <p className="text-sm text-muted-foreground text-center">{title}</p>
                             </div>
-                            <p className="text-sm text-muted-foreground text-center">{title}</p>
-                        </div>
-                        ) : (
-                        <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
-                            {!isUploadingImage && <><input
-                                type="file"
-                                accept="image/*"
-                                onChange={handleImageUpload}
-                                className="hidden"
-                                id="card-image"
-                                />
-                                <label htmlFor="card-image" className="cursor-pointer">
-                                <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                                <p className="text-sm text-muted-foreground">
-                                    Click to upload image
-                                </p>
-                                </label></>
-                            }
+                            ) : (
+                            <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+                                {!isUploadingImage && <><input
+                                    type="file"
+                                    accept="image/*"
+                                    onChange={handleImageUpload}
+                                    className="hidden"
+                                    id="card-image"
+                                    />
+                                    <label htmlFor="card-image" className="cursor-pointer">
+                                    <Upload className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
+                                    <p className="text-sm text-muted-foreground">
+                                        Click to upload image
+                                    </p>
+                                    </label></>
+                                }
 
-                            {isUploadingImage && <>
-                                <Loader2 className="w-8 h-8 text-muted-foreground mx-auto mb-2 animate-spin" />
-                                <p className="text-sm text-muted-foreground">
-                                    Uploading Image...
-                                </p>
-                            </>
-                            }
+                                {isUploadingImage && <>
+                                    <Loader2 className="w-8 h-8 text-muted-foreground mx-auto mb-2 animate-spin" />
+                                    <p className="text-sm text-muted-foreground">
+                                        Uploading Image...
+                                    </p>
+                                </>
+                                }
+                            </div>
+                            )}
                         </div>
-                        )}
-                    </div>
                     </div>
                 </div>
             </TabsContent>

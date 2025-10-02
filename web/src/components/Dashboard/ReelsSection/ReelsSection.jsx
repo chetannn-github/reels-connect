@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/Card"
+import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card"
 import { Video } from "lucide-react";
 import ReelCard from "./ReelCard";
 

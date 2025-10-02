@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '../../components/ui/Card';
-import { Label } from '../../components/ui/Label';
-import { Button } from '../../components/ui/Button';
-import { Textarea } from '../../components/ui/Textarea';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../components/ui/Select';
-import { Badge } from '../../components/ui/Badge';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/Card';
+import { Label } from '../../../components/ui/Label';
+import { Button } from '../../../components/ui/Button';
+import { Textarea } from '../../../components/ui/Textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../../components/ui/Select';
+import { Badge } from '../../../components/ui/Badge';
 import { Sparkles, Trash2, Plus, Bot, Loader2 } from 'lucide-react';
-import api from '../../lib/api';
+import api from '../../../lib/api';
 
 const aiAutomationApi = {
     token : localStorage.getItem("jwt"),

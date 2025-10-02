@@ -1,9 +1,7 @@
-import { MessageCircle, Plus, Trash2 } from 'lucide-react'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
-import { Switch } from '../ui/Switch'
-import { Button } from '../ui/Button'
-import { Input } from '../ui/Input'
-import { useDashboardStore } from '../../pages/Dashboard/useDashboardStore'
+import { Plus, Trash2 } from 'lucide-react'
+import { Button } from '../../../ui/Button'
+import { Input } from '../../../ui/Input'
+import { useDashboardStore } from '../../../../pages/Dashboard/useDashboardStore'
 
 function CommentSetup() {
   const { commentReplies,updateCommentReply,

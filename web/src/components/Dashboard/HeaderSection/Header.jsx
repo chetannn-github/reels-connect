@@ -1,7 +1,7 @@
 import { Crown, MessageCircle, Sparkles, Target, Users, Video } from "lucide-react"
 import { useSelector } from "react-redux";
-import { Card, CardContent } from "../ui/Card";
-import { PLAN_TO_LABEL } from "../../lib/constant";
+import { Card, CardContent } from "../../ui/Card";
+import { PLAN_TO_LABEL } from "../../../lib/constant";
 import { useNavigate } from "react-router-dom";
 
 function Header() {

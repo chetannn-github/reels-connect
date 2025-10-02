@@ -1,6 +1,6 @@
 import { Loader2, Save, Sparkles } from "lucide-react"
-import { Button } from "../ui/Button"
-import { useDashboardStore } from "../../pages/Dashboard/useDashboardStore"
+import { Button } from "../../../ui/Button"
+import { useDashboardStore } from "../../../../pages/Dashboard/useDashboardStore"
 
 function SaveConfiguration() {
     const token = localStorage.getItem("jwt");
