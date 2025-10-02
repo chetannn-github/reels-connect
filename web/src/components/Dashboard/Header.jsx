@@ -111,6 +111,16 @@ function Header() {
               <Crown className="h-8 w-8 text-yellow-600" />
             </CardContent>
           </Card>
+
+          <Card className="glass-effect border border-gray-200 shadow-lg" onClick={() => navigate("/ai-setup")}>
+            <CardContent className="p-6 flex items-center justify-between">
+              <div>
+                <p className="text-sm text-muted-foreground">Go to Smart AI Setup</p>
+                
+              </div>
+              <Crown className="h-8 w-8 text-yellow-600" />
+            </CardContent>
+          </Card>
           
         </div>
       </div>
