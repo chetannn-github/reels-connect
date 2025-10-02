@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Upload,
@@ -15,11 +15,10 @@ import { Button } from "../components/ui/Button";
 import { Input } from "../components/ui/Input";
 import { Label } from "../components/ui/Label";
 import { Textarea } from "../components/ui/Textarea";
-import { useToast } from "../hooks/use-toast";
 
 export default function AIAssistantSetup() {
   const navigate = useNavigate();
-  const { toast } = useToast();
+  const fileInputRef = useRef();
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -50,45 +49,47 @@ export default function AIAssistantSetup() {
         (file) => file.type === "application/pdf"
       );
       if (pdfFiles.length !== files.length) {
-        toast({
-          title: "Invalid File Type",
-          description: "Only PDF files are allowed.",
-          variant: "destructive",
-        });
+        console.log("Only pdfs are allowed")
       }
       setUploadedFiles((prev) => [...prev, ...pdfFiles]);
-      toast({
-        title: "Files Uploaded",
-        description: `${pdfFiles.length} PDF file(s) added successfully.`,
-      });
     }
   };
 
   const removeFile = (index) => {
     setUploadedFiles((prev) => prev.filter((_, i) => i !== index));
-    toast({
-      title: "File Removed",
-      description: "File has been removed from your profile.",
-    });
   };
 
-  const handleSave = () => {
-    if (!formData.fullName || !formData.profession || !formData.personalBio) {
-      toast({
-        title: "Missing Required Fields",
-        description:
-          "Please fill in at least your name, profession, and personal bio.",
-        variant: "destructive",
-      });
-      return;
+  const handleSave = async () => {
+  // if (!formData.fullName || !formData.profession || !formData.personalBio) {
+  //   console.log("Required fields missing");
+  //   return;
+  // }
+
+  try {
+    const data = new FormData();
+    data.append("formData", JSON.stringify(formData));
+    uploadedFiles.forEach((file) => {
+      data.append("files", file);
+    });
+
+    const res = await fetch("http://localhost:4000/api/auth/store-info", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+      },
+      body: data,
+    });
+
+    const result = await res.json();
+    if (res.ok) {
+      console.log("✅ Info saved:", result);
+    } else {
+      console.error("❌ Error:", result.message);
     }
-
-    toast({
-      title: "Profile Saved Successfully!",
-      description:
-        "Your AI assistant context has been updated. It will now provide personalized responses based on your information.",
-    });
-  };
+  } catch (err) {
+    console.error("Server error:", err);
+  }
+};
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -307,12 +308,13 @@ export default function AIAssistantSetup() {
                   id="fileUpload"
                   type="file"
                   multiple
+                  ref={fileInputRef}
                   accept=".pdf"
                   onChange={handleFileUpload}
                   className="hidden"
                 />
               </Label>
-              <Button variant="outline" className="mt-2">
+              <Button variant="outline" className="mt-2"  onClick={() => fileInputRef.current.click()}>
                 Choose Files
               </Button>
             </div>
@@ -346,25 +348,6 @@ export default function AIAssistantSetup() {
           </CardContent>
         </Card>
 
-        {/* Help Section */}
-        <Card className="bg-blue-50 border-blue-200 shadow-card">
-          <CardContent className="p-4">
-            <div className="flex items-start gap-3">
-              <div className="h-5 w-5 rounded-full bg-blue-500 flex items-center justify-center flex-shrink-0 mt-0.5">
-                <span className="text-xs text-white font-bold">?</span>
-              </div>
-              <div className="text-sm text-blue-700">
-                <p className="font-medium mb-1">Tips for better AI responses:</p>
-                <ul className="list-disc list-inside space-y-1 text-xs">
-                  <li>Be specific about your expertise and services</li>
-                  <li>Include common questions you receive</li>
-                  <li>Mention your communication style</li>
-                  <li>Upload documents that showcase your work</li>
-                </ul>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </main>
     </div>
   );
