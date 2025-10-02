@@ -66,7 +66,7 @@ const HeroSection = () => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 text-center max-w-6xl mx-auto px-6">
+      <div className="relative z-10 text-center max-w-6xl mx-auto md:px-6">
         <div className="animate-fade-in-up">
           <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
             Automate Your

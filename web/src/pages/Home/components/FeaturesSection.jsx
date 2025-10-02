@@ -3,7 +3,7 @@ import { features } from "../../../lib/utils";
 
 const FeaturesSection = () => {
   return (
-    <section className="py-24 px-6 bg-gradient-to-b from-background to-muted/20">
+    <section className="py-24 md:px-6 bg-gradient-to-b from-background to-muted/20">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <h2 className="text-5xl md:text-6xl font-bold mb-6">
