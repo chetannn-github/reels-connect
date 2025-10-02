@@ -49,7 +49,7 @@ const HeroSection = () => {
       </div>
       
       {/* Floating Elements */}
-      <div className="absolute top-20 left-10 animate-float">
+      <div className="absolute top-14 md:top-20 left-10 animate-float">
         <div className="glass-effect p-4 rounded-xl">
           <Instagram className="w-8 h-8 text-primary" />
         </div>
