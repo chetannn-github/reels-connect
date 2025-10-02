@@ -6,8 +6,8 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid md:grid-cols-4 gap-8">
           {/* Brand */}
-          <div className="md:col-span-2">
-            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          <div className="md:col-span-2 max-w-200px  flex flex-col justify-center items-center">
+            <h3 className="text-2xl font-bold mb-4 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent ">
               InstaConnector
             </h3>
             <p className="text-muted-foreground mb-6 max-w-md">
