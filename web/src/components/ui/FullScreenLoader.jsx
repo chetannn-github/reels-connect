@@ -13,7 +13,7 @@ const FullScreenLoader = ({
     <div
       className={cn(
         "fixed inset-0 z-50 flex flex-col items-center justify-center",
-        "bg-gray-900/90 backdrop-blur-md",
+        "bg-background backdrop-blur-md",
         className
       )}
     >
