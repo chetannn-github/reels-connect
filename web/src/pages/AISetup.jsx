@@ -95,7 +95,11 @@ export default function AIAssistantSetup() {
   } finally {
     SetIsLoading(false)
   }
-};
+  };
+
+  const isButtonDisabled = () => {
+    return false;
+  }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
@@ -119,28 +123,29 @@ export default function AIAssistantSetup() {
               AI Assistant Setup
             </span>
           </div>
-         {!isLoading && <Button
-            onClick={handleSave}
-            size="sm"
-            className="bg-gradient-instagram shadow-instagram hover:opacity-90 transition"
-          >
-            <Check className="w-4 h-4 mr-2 " />
-            Save Profile
-          </Button>}
-
-
-          {isLoading && <Button
-            size="sm"
-            className="bg-gradient-instagram shadow-instagram hover:opacity-90 transition"
-          >
-            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-            Saving Profile...
-          </Button>}
+        <Button
+          onClick={handleSave}
+          size="sm"
+          className="bg-gradient-instagram shadow-instagram hover:opacity-90 transition"
+          disabled={isLoading || isButtonDisabled()}
+        >
+          {!isLoading ? (
+            <>
+              <Check className="w-4 h-4 mr-2" />
+              Save Profile
+            </>
+          ) : (
+            <>
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              Saving Profile...
+            </>
+          )}
+        </Button>
         </div>
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 container py-8 space-y-6 max-w-4xl mx-auto">
+      <main className="flex-1 container py-8 space-y-6 max-w-6xl mx-auto">
         {/* Intro */}
         <Card className="bg-gradient-card border-border shadow-card">
           <CardContent className="p-6 flex gap-4">
