@@ -91,7 +91,7 @@ function Header() {
             </CardContent>
           </Card>
 
-          {!isLimitReached && (
+          {isLimitReached && (
             <Card
               onClick={() => navigate("/plans")}
               className="rounded-2xl cursor-pointer border shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform backdrop-blur-sm"
