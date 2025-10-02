@@ -2,10 +2,18 @@ import { useSelector } from "react-redux";
 import { Card, CardContent, CardHeader, CardTitle } from "../../ui/Card"
 import { Video } from "lucide-react";
 import ReelCard from "./ReelCard";
+import { useEffect } from "react";
+import { useDashboardStore } from "../../../pages/Dashboard/useDashboardStore";
 
 
 function ReelsSection() {
     const reels = useSelector((state) => state?.auth?.user?.reels) || [];
+    const {handleReelSelection} = useDashboardStore();
+    const token = localStorage.getItem("jwt");
+        
+    useEffect(()=>{
+        if(reels.length > 0 && token) handleReelSelection(reels[0]._id, token)
+    },[]);
 
   return (
     <Card className="glass-effect card-shadow">
