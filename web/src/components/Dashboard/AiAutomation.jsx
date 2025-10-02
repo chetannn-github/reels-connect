@@ -96,7 +96,7 @@ const AIAutomation = ({ reelId }) => {
   const handleDeleteRule = async (ruleId) => {
     try {
       setLoading(true);
-      setIsDeleting(reelId)
+      setIsDeleting(ruleId)
       await aiAutomationApi.delete(ruleId);
       await loadRules();
     } catch (error) {
