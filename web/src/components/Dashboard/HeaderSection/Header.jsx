@@ -91,50 +91,50 @@ function Header() {
             </CardContent>
           </Card>
 
-          {isLimitReached && (
-              <Card
-                onClick={() => navigate("/plans")}
-                className="cursor-pointer bg-gradient-to-r from-pink-500 to-purple-600 text-white shadow-xl hover:scale-105 transition-transform"
-              >
-                <CardContent className="min-h-[88px] md:p-6 px-2 py-6 flex items-center justify-between">
-                  <div>
-                    <p className="text-sm opacity-90">Limit Reached 🚀</p>
-                    <p className="text-sm md:text-2xl font-bold">Upgrade Your Plan</p>
-                  </div>
-                  <Crown className="h-10 w-10 text-yellow-300" />
-                </CardContent>
+          {!isLimitReached && (
+            <Card
+              onClick={() => navigate("/plans")}
+              className="rounded-2xl cursor-pointer border shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform backdrop-blur-sm"
+            >
+              <CardContent className="min-h-[80px] sm:min-h-[88px] md:p-6 p-2 flex items-center justify-between">
+                <div>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Limit Reached</p>
+                  <p className="text-sm sm:text-lg md:text-xl font-semibold">Upgrade Your Plan</p>
+                </div>
+                <Crown className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-yellow-500" />
+              </CardContent>
             </Card>
           )}
 
-<Card 
-  className="rounded-2xl border shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform backdrop-blur-sm cursor-pointer" 
-  onClick={() => navigate("/dm-automation")}
->
-  <CardContent className="min-h-[80px] sm:min-h-[88px] md:p-6 p-2 flex items-center justify-between">
-    <div>
-      <p className="text-xs sm:text-sm text-muted-foreground">Access</p>
-      <p className="text-sm sm:text-lg md:text-xl font-semibold">Automation Hub</p>
-    </div>
-    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center ring-2 shadow">
-      <Bot className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
-    </div>
-  </CardContent>
-</Card>
+          <Card 
+            className="rounded-2xl border shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform backdrop-blur-sm cursor-pointer" 
+            onClick={() => navigate("/dm-automation")}
+          >
+            <CardContent className="min-h-[80px] sm:min-h-[88px] md:p-6 p-2 flex items-center justify-between">
+              <div>
+                <p className="text-xs sm:text-sm text-muted-foreground">Access</p>
+                <p className="text-sm sm:text-lg md:text-xl font-semibold">Automation Hub</p>
+              </div>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center ring-2 shadow">
+                <Bot className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
+              </div>
+            </CardContent>
+          </Card>
 
-<Card 
-  className="rounded-2xl border shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform backdrop-blur-sm cursor-pointer" 
-  onClick={() => navigate("/ai-setup")}
->
-  <CardContent className="min-h-[80px] sm:min-h-[88px] md:p-6 p-2 flex items-center justify-between">
-    <div>
-      <p className="text-xs sm:text-sm text-muted-foreground">Setup</p>
-      <p className="text-sm sm:text-lg md:text-xl font-semibold">AI Assistant</p>
-    </div>
-    <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-pink-500 to-red-500 flex items-center justify-center ring-2 shadow">
-      <Brain className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
-    </div>
-  </CardContent>
-</Card>
+          <Card 
+            className="rounded-2xl border shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform backdrop-blur-sm cursor-pointer" 
+            onClick={() => navigate("/ai-setup")}
+          >
+            <CardContent className="min-h-[80px] sm:min-h-[88px] md:p-6 p-2 flex items-center justify-between">
+              <div>
+                <p className="text-xs sm:text-sm text-muted-foreground">Setup</p>
+                <p className="text-sm sm:text-lg md:text-xl font-semibold">AI Assistant</p>
+              </div>
+              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-pink-500 to-red-500 flex items-center justify-center ring-2 shadow">
+                <Brain className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
+              </div>
+            </CardContent>
+          </Card>
 
           
         </div>
