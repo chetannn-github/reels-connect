@@ -39,7 +39,7 @@ function App() {
       fetchUser();
   }, [dispatch]);
 
-  if(isLoading) return <FullScreenLoader variant="orbit" message="Welcome to Reels Connect" isVisible={isLoading}/>
+  if(isLoading) return <FullScreenLoader variant="orbit" message="Welcome to InstaConnector" isVisible={isLoading}/>
   return (
     <Router>
       <Routes>

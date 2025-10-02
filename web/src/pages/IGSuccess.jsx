@@ -34,5 +34,5 @@ export const IGSuccess = () => {
     }
   }, [search, dispatch, navigate]);
 
-  return <FullScreenLoader variant="orbit" message="Welcome to Reels Connect" isVisible={true}/>
+  return <FullScreenLoader variant="orbit" message="Welcome to InstaConnector" isVisible={true}/>
 };

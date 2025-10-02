@@ -23,7 +23,7 @@ const Dashboard = () => {
   }, []);
 
   const user = useSelector((state) => state?.auth?.user);
-  if(!user) return <FullScreenLoader variant="orbit" message="Welcome to Reels Connect" isVisible={!user}/>
+  if(!user) return <FullScreenLoader variant="orbit" message="Welcome to InstaConnector" isVisible={!user}/>
   
   return (
     <div className="min-h-screen bg-background">
