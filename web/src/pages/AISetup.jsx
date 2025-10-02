@@ -105,33 +105,33 @@ export default function AIAssistantSetup() {
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
       <div className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-        <div className="container flex items-center justify-between py-4">
+        <div className="md:container flex items-center justify-between py-4">
           <Button
             variant="ghost"
-            size="sm"
-            className="flex items-center gap-2"
+            size="xs md:sm"
+            className="flex items-center gap-2 px-0 text-xs md:text-sm"
             onClick={() => navigate(-1)}
           >
             <ArrowLeft className="w-4 h-4" />
             Back
           </Button>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center md:gap-1">
             <div className="h-8 w-8 rounded-lg bg-gradient-instagram flex items-center justify-center">
               <Brain className="h-4 w-4 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-foreground">
+            <span className="text-sm md:text-xl font-bold text-foreground">
               AI Assistant Setup
             </span>
           </div>
         <Button
           onClick={handleSave}
           size="sm"
-          className="bg-gradient-instagram shadow-instagram hover:opacity-90 transition"
+          className="bg-gradient-instagram shadow-instagram hover:opacity-90 transition px-0 md:px-2 text-xs md:text-sm gap-1 md:gap-2"
           disabled={isLoading || isButtonDisabled()}
         >
           {!isLoading ? (
             <>
-              <Check className="w-4 h-4 mr-2" />
+              <Check className="w-3 h-3 md:mr-2" />
               Save Profile
             </>
           ) : (
@@ -145,7 +145,7 @@ export default function AIAssistantSetup() {
       </div>
 
       {/* Main Content */}
-      <main className="flex-1 container py-8 space-y-6 max-w-6xl mx-auto">
+      <main className="flex-1 md:container py-8 space-y-6 max-w-6xl mx-auto">
         {/* Intro */}
         <Card className="bg-gradient-card border-border shadow-card">
           <CardContent className="p-6 flex gap-4">
@@ -156,7 +156,7 @@ export default function AIAssistantSetup() {
               <h2 className="text-xl font-semibold text-foreground mb-2">
                 Personalize Your AI Assistant
               </h2>
-              <p className="text-muted-foreground">
+              <p className="text-muted-foreground text-sm md:text-sm">
                 Provide information about yourself so your AI assistant can
                 respond to Instagram DMs with personalized, relevant answers
                 that represent you authentically.
@@ -183,6 +183,7 @@ export default function AIAssistantSetup() {
                     handleInputChange("fullName", e.target.value)
                   }
                   placeholder="Enter your full name"
+                  className=" placeholder:text-xs md:placeholder:text-sm  text text-xs md:text-sm"
                 />
               </div>
               <div>
@@ -193,6 +194,7 @@ export default function AIAssistantSetup() {
                     handleInputChange("profession", e.target.value)
                   }
                   placeholder="e.g., Digital Marketing Expert"
+                   className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                 />
               </div>
               <div>
@@ -201,6 +203,7 @@ export default function AIAssistantSetup() {
                   value={formData.company}
                   onChange={(e) => handleInputChange("company", e.target.value)}
                   placeholder="Your company or personal brand"
+                   className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                 />
               </div>
               <div>
@@ -211,6 +214,7 @@ export default function AIAssistantSetup() {
                     handleInputChange("expertise", e.target.value)
                   }
                   placeholder="List your main skills and expertise areas..."
+                   className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                   rows={3}
                 />
               </div>
@@ -234,6 +238,7 @@ export default function AIAssistantSetup() {
                     handleInputChange("services", e.target.value)
                   }
                   placeholder="Describe what you offer..."
+                  className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                   rows={4}
                 />
               </div>
@@ -245,6 +250,8 @@ export default function AIAssistantSetup() {
                     handleInputChange("achievements", e.target.value)
                   }
                   placeholder="Notable accomplishments, awards..."
+                  className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
+                  
                   rows={3}
                 />
               </div>
@@ -269,6 +276,7 @@ export default function AIAssistantSetup() {
                   handleInputChange("personalBio", e.target.value)
                 }
                 placeholder="Write a comprehensive bio..."
+                className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                 rows={6}
               />
             </div>
@@ -280,6 +288,7 @@ export default function AIAssistantSetup() {
                   handleInputChange("businessDescription", e.target.value)
                 }
                 placeholder="Detailed description of your work, values..."
+                className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                 rows={5}
               />
             </div>
@@ -291,6 +300,7 @@ export default function AIAssistantSetup() {
                   handleInputChange("communication_style", e.target.value)
                 }
                 placeholder="Formal/casual, friendly/professional..."
+                className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                 rows={3}
               />
             </div>
@@ -302,6 +312,7 @@ export default function AIAssistantSetup() {
                   handleInputChange("faq_topics", e.target.value)
                 }
                 placeholder="List common questions you get..."
+                className=" placeholder:text-xs md:placeholder:text-sm text-xs md:text-sm"
                 rows={4}
               />
             </div>
@@ -320,7 +331,7 @@ export default function AIAssistantSetup() {
             <div className="border-2 border-dashed rounded-lg p-6 text-center">
               <FileText className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
               <Label htmlFor="fileUpload" className="cursor-pointer">
-                <span className="text-sm text-muted-foreground">
+                <span className="md:text-sm text-muted-foreground">
                   Upload PDFs with additional context (resumes, portfolios,
                   etc.)
                 </span>
@@ -347,9 +358,9 @@ export default function AIAssistantSetup() {
                     key={index}
                     className="flex items-center justify-between p-2 bg-secondary/50 rounded"
                   >
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-col md:flex-row">
                       <FileText className="h-4 w-4 text-primary" />
-                      <span className="text-sm">{file.name}</span>
+                      <span className="text-xs md:text-sm">{file.name}</span>
                       <span className="text-xs text-muted-foreground">
                         ({Math.round(file.size / 1024)} KB)
                       </span>
