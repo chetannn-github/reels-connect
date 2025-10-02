@@ -129,7 +129,7 @@ const AIAutomation = ({ reelId }) => {
           <Badge variant="secondary" className="ml-2 text-xs">Pro</Badge>
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="grid lg:grid-cols-2 gap-3">
         <div className="space-y-3 p-4 border rounded-lg bg-muted/30">
           <h3 className="font-medium text-sm flex items-center gap-2">
             <Plus className="w-4 h-4" />

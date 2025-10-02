@@ -33,7 +33,7 @@ const Dashboard = () => {
         <div className="max-w-7xl mx-auto px-6 py-8 space-y-8"> 
           <ReelsSection />
           {selectedReel ? (
-            <div className="grid lg:grid-cols-2 gap-8 max-w-7xl mx-auto ">
+            <div className="grid gap-8 max-w-7xl mx-auto ">
               {hasAIPro ? (
                 <Tabs defaultValue="keyword" className="w-full">
                   <TabsList className="grid w-full grid-cols-2 h-10 mb-4">
@@ -47,12 +47,12 @@ const Dashboard = () => {
                     </TabsTrigger>
                   </TabsList>
 
-                  <TabsContent value="keyword" className="space-y-4">
+                  <TabsContent value="keyword" className="grid lg:grid-cols-2 gap-3">
                     <KeywordSection />
                     <SavedAutomation />
                   </TabsContent>
 
-                  <TabsContent value="ai">
+                  <TabsContent value="ai" className=" ">
                     <AIAutomation reelId={selectedReel} />
                   </TabsContent>
                 </Tabs>
