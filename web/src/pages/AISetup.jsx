@@ -77,7 +77,7 @@ export default function AIAssistantSetup() {
       data.append("files", file);
     });
 
-    const res = await fetch(BASE+"/api/auth/store-info", {
+    const res = await fetch(BASE+"/auth/store-info", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("jwt")}`,
