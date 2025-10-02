@@ -58,7 +58,7 @@ const Footer = () => {
 
         <div className="border-t border-border/50 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-muted-foreground text-sm">
-            © 2025 Reels Connecy. All rights reserved.
+            © 2025 InstaConnector. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-muted-foreground">
             <a href="https://www.termsfeed.com/live/d6c011a0-2cd0-4da7-8797-f9dcf42705a8" className="hover:text-foreground transition-colors">Privacy Policy</a>
