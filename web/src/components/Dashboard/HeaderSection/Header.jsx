@@ -113,7 +113,7 @@ function Header() {
             <CardContent className="min-h-[80px] sm:min-h-[88px] md:p-6 p-2 flex items-center justify-between">
               <div>
                 <p className="text-xs sm:text-sm text-muted-foreground">Access</p>
-                <p className="text-sm sm:text-lg md:text-xl font-semibold">Automation Hub</p>
+                <p className="text-sm sm:text-lg md:text-xl font-semibold">DM Automation</p>
               </div>
               <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-tr from-purple-500 to-indigo-500 flex items-center justify-center ring-2 shadow">
                 <Bot className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white" />
