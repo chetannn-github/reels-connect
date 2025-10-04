@@ -46,7 +46,7 @@ const ReelMarquee = () => {
                 </div>
                 <div className="p-4">
                   <p className="text-center font-semibold text-primary">
-                    #{reel.keyword}
+                    {reel.keyword}
                   </p>
                 </div>
               </Card>
