@@ -12,17 +12,48 @@ import Plans from "./pages/Plans";
 import AIAssistantSetup from "./pages/AISetup";
 import DMAutomation from "./pages/DMAutomation/DMAutomation";
 import Dashboard from "./pages/Dashboard";
+import Maintenance from "./pages/Maintainence";
+import { useFeatureFlow }  from 'feature-flow-react-sdk';
+import DiwaliTheme from "./components/FestiveThemes/DiwaliTheme";
+import ChristmasTheme from "./components/FestiveThemes/ChristmasTheme";
+import HalloweenTheme from "./components/FestiveThemes/HalloweenTheme";
 
 
 
 function App() {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.user);
-  const [isLoading, setIsLoading] = useState(true);
+  const user = useSelector((state) => state?.auth?.user);
+  const { data, loading } = useFeatureFlow("fZs259BrnMs73Z4K1n6AYIrJQ3N8SZJa");
+  const [isLoading, setIsLoading] = useState(loading);
+  const [isMaintenance, setIsMaintenance] = useState(false);
+  const [isDiwaliTheme, setIsDiwaliTheme] = useState(false);
+  const [isChristmasTheme, setIsChristmasTheme] = useState(false);
+  const [isHalloweenTheme, setIsHalloweenTheme] = useState(false);
+
+  
+  const checkFeatureFlagData = async() => {
+    try {
+      setIsLoading(true);
+      if(data?.isMaintenance) setIsMaintenance(true);
+      if(data?.isDiwaliTheme) setIsDiwaliTheme(true);
+      if(data?.isChristmasTheme) setIsChristmasTheme(true);
+      if(data?.isHalloweenTheme) setIsHalloweenTheme(true);
+      
+    } catch (error) {
+      
+    }finally {
+      setIsLoading(false);
+    }
+  }
+  
+  useEffect(()=> {
+    checkFeatureFlagData();
+  },[loading,data])
   
   useEffect(() => {
       const fetchUser = async () => {
         try {
+          setIsLoading(true)
           const token = localStorage.getItem("jwt");
           if(!token) return;
           
@@ -32,28 +63,35 @@ function App() {
         } catch (err) {
           console.error("Failed to fetch user info:", err);
         } finally {
-          setIsLoading(false);
+          setIsLoading(loading);
         }
       };
   
       fetchUser();
   }, [dispatch]);
 
+  
   if(isLoading) return <FullScreenLoader variant="orbit" message="Welcome to InstaConnector" isVisible={isLoading}/>
+  if(isMaintenance) return <Maintenance/>
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/ig-success" element={<IGSuccess />} />
-        <Route path="/plans" element={<Plans />} />
-        <Route path="/dm-automation" element={<ProtectedRoute ><DMAutomation/></ProtectedRoute>} />
-        <Route path="/ai-setup" element={<ProtectedRoute ><AIAssistantSetup/></ProtectedRoute>} />
-        <Route path="/dashboard" element={<ProtectedRoute ><Dashboard/></ProtectedRoute>} />
+    <>
+      <DiwaliTheme DIWALI_MODE={isDiwaliTheme} />
+      <ChristmasTheme CHRISTMAS_MODE={isChristmasTheme}/>
+      <HalloweenTheme HALLOWEEN_MODE={isHalloweenTheme}/>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/ig-success" element={<IGSuccess />} />
+          <Route path="/plans" element={<Plans />} />
+          <Route path="/dm-automation" element={<ProtectedRoute ><DMAutomation/></ProtectedRoute>} />
+          <Route path="/ai-setup" element={<ProtectedRoute ><AIAssistantSetup/></ProtectedRoute>} />
+          <Route path="/dashboard" element={<ProtectedRoute ><Dashboard/></ProtectedRoute>} />
 
 
 
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+     </>
   );
 }
 
