@@ -1,5 +1,5 @@
 import { Settings, Wrench, Clock, Cog, RefreshCw, Zap } from "lucide-react";
-import { Card } from "../components/ui/card";
+import { Card } from "../components/ui/Card";
 
 const Maintenance = () => {
   return (
