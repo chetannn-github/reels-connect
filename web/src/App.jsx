@@ -17,6 +17,7 @@ import { useFeatureFlow }  from 'feature-flow-react-sdk';
 import DiwaliTheme from "./components/FestiveThemes/DiwaliTheme";
 import ChristmasTheme from "./components/FestiveThemes/ChristmasTheme";
 import HalloweenTheme from "./components/FestiveThemes/HalloweenTheme";
+import HoliTheme from "./components/FestiveThemes/HoliTheme";
 
 
 
@@ -29,6 +30,7 @@ function App() {
   const [isDiwaliTheme, setIsDiwaliTheme] = useState(false);
   const [isChristmasTheme, setIsChristmasTheme] = useState(false);
   const [isHalloweenTheme, setIsHalloweenTheme] = useState(false);
+  const [isHoliTheme, setIsHoliTheme] = useState(false);
 
   
   const checkFeatureFlagData = async() => {
@@ -38,7 +40,8 @@ function App() {
       if(data?.isDiwaliTheme) setIsDiwaliTheme(true);
       if(data?.isChristmasTheme) setIsChristmasTheme(true);
       if(data?.isHalloweenTheme) setIsHalloweenTheme(true);
-      
+      if(data?.isHoliTheme) setIsHoliTheme(true);
+
     } catch (error) {
       
     }finally {
@@ -78,6 +81,7 @@ function App() {
       <DiwaliTheme DIWALI_MODE={isDiwaliTheme} />
       <ChristmasTheme CHRISTMAS_MODE={isChristmasTheme}/>
       <HalloweenTheme HALLOWEEN_MODE={isHalloweenTheme}/>
+      <HoliTheme HOLI_MODE={isHoliTheme}/>
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
