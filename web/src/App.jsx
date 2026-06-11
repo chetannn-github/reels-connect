@@ -35,7 +35,6 @@ function App() {
   
   const checkFeatureFlagData = async() => {
     try {
-      setIsLoading(true);
       if(data?.isMaintenance) setIsMaintenance(true);
       if(data?.isDiwaliTheme) setIsDiwaliTheme(true);
       if(data?.isChristmasTheme) setIsChristmasTheme(true);
@@ -44,14 +43,12 @@ function App() {
 
     } catch (error) {
       
-    }finally {
-      setIsLoading(false);
     }
   }
   
   useEffect(()=> {
     checkFeatureFlagData();
-  },[loading,data])
+  },[])
   
   useEffect(() => {
       const fetchUser = async () => {
@@ -66,7 +63,7 @@ function App() {
         } catch (err) {
           console.error("Failed to fetch user info:", err);
         } finally {
-          setIsLoading(loading);
+          setIsLoading(false);
         }
       };
   
