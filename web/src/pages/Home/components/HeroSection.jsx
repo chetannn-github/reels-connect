@@ -76,7 +76,7 @@ const HeroSection = () => {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-            Connect your Instagram, select keywords, and let AI create and post engaging reels automatically. 
+            Connect your Instagram, select keywords, and let AI engaging reels automatically. 
             Scale your content creation like never before.
           </p>
           
