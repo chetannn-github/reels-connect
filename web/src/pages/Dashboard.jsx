@@ -19,10 +19,12 @@ const Dashboard = () => {
     }
     return () => {
       localStorage.removeItem("firework");
+      setTrigger(false);
     }
   }, []);
 
   const user = useSelector((state) => state?.auth?.user);
+  console.log("USER", user)
   if(!user) return <FullScreenLoader variant="orbit" message="Welcome to InstaConnector" isVisible={!user}/>
   
   return (
