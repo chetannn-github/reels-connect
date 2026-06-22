@@ -35,6 +35,7 @@ function App() {
   
   const checkFeatureFlagData = async() => {
     try {
+      setIsLoading(true);
       if(data?.isMaintenance) setIsMaintenance(true);
       if(data?.isDiwaliTheme) setIsDiwaliTheme(true);
       if(data?.isChristmasTheme) setIsChristmasTheme(true);
@@ -43,6 +44,8 @@ function App() {
 
     } catch (error) {
       
+    }finally {
+      setIsLoading(false);
     }
   }
   
