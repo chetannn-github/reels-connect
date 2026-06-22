@@ -51,7 +51,7 @@ function App() {
   
   useEffect(()=> {
     checkFeatureFlagData();
-  },[])
+  },[data])
   
   useEffect(() => {
       const fetchUser = async () => {
